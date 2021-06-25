@@ -44,7 +44,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
     return supply;
   }
 
-  get({ or }: CxRequest<TValue> = {}): TValue | null {
+  get(request: CxRequest<TValue> = {}): TValue | null {
 
     let hasValue = false;
     let value: TValue | undefined;
@@ -55,11 +55,14 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
       value = newValue;
     };
 
-    definition.assign?.(assigner);
+    definition.assign?.(assigner, request);
 
     if (hasValue) {
       return value!;
     }
+
+    const { or } = request;
+
     if (or !== undefined) {
       return or;
     }
