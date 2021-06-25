@@ -14,9 +14,9 @@ This library allows to construct an [IoC] context conforming to [@proc7ts/contex
 [npm-url]: https://www.npmjs.com/package/@proc7ts/context-builder
 [build-status-img]: https://github.com/proc7ts/context-builder/workflows/Build/badge.svg
 [build-status-link]: https://github.com/proc7ts/context-builder/actions?query=workflow:Build
-[quality-img]: https://app.codacy.com/project/badge/Grade/69f604f1399d49d58f12202fce675048
+[quality-img]: https://app.codacy.com/project/badge/Grade/73faff6037244e9eae5b408c61a5077b
 [quality-link]: https://www.codacy.com/gh/proc7ts/context-builder/dashboard?utm_source=github.com&utm_medium=referral&utm_content=proc7ts/context-builder&utm_campaign=Badge_Grade
-[coverage-img]: https://app.codacy.com/project/badge/Coverage/69f604f1399d49d58f12202fce675048
+[coverage-img]: https://app.codacy.com/project/badge/Coverage/73faff6037244e9eae5b408c61a5077b
 [coverage-link]: https://www.codacy.com/gh/proc7ts/context-builder/dashboard?utm_source=github.com&utm_medium=referral&utm_content=proc7ts/context-builder&utm_campaign=Badge_Coverage
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
 [github-url]: https://github.com/proc7ts/context-builder
