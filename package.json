@@ -1,0 +1,72 @@
+{
+  "name": "@proc7ts/context-builder",
+  "version": "7.0.0-dev.0",
+  "description": "IoC context builder",
+  "keywords": [
+    "ioc"
+  ],
+  "homepage": "https://github.com/proc7ts/context-builder",
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:proc7ts/context-builder.git"
+  },
+  "license": "MIT",
+  "author": "Ruslan Lopatin <ruslan.lopatin@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/proc7ts/context-builder/issues"
+  },
+  "type": "module",
+  "main": "./dist/context-builder.js",
+  "types": "./index.d.ts",
+  "exports": "./dist/context-builder.js",
+  "peerDependencies": {
+    "@proc7ts/context-values": "^7.0.0-dev.0",
+    "@proc7ts/fun-events": "^10.5.0"
+  },
+  "dependencies": {
+    "@proc7ts/primitives": "^3.0.2",
+    "@proc7ts/push-iterator": "^2.6.0",
+    "@proc7ts/supply": "^1.1.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "^27.0.5",
+    "@proc7ts/context-values": "^7.0.0-dev.0",
+    "@proc7ts/fun-events": "^10.5.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@run-z/eslint-config": "^1.3.0",
+    "@run-z/rollup-helpers": "^1.1.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
+    "eslint": "^7.29.0",
+    "eslint-plugin-jest": "^24.3.6",
+    "gh-pages": "^3.2.3",
+    "jest": "^27.0.5",
+    "jest-junit": "^12.2.0",
+    "jest-mock": "^27.0.3",
+    "remark-cli": "^9.0.0",
+    "remark-preset-lint-recommended": "^5.0.0",
+    "rollup": "^2.52.2",
+    "rollup-plugin-flat-dts": "^1.2.2",
+    "rollup-plugin-sourcemaps": "^0.6.3",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "run-z": "^1.9.1",
+    "shx": "^0.3.3",
+    "ts-jest": "^27.0.3",
+    "tslib": "^2.3.0",
+    "typedoc": "^0.21.0",
+    "typescript": "^4.3.4"
+  },
+  "scripts": {
+    "all": "run-z build,lint,test",
+    "bootstrap": "rollup -c",
+    "build": "run-z +z bootstrap",
+    "ci:all": "run-z all +test/--ci/--runInBand",
+    "clean": "run-z +z --then shx rm -rf 'index.d.ts?(.map)' '*/index.d.ts?(.map)' dist target",
+    "doc": "run-z +z --then typedoc",
+    "doc:publish": "run-z doc --then gh-pages --dist target/typedoc --dotfiles",
+    "lint": "run-z + lint:md --and eslint .",
+    "lint:md": "run-z +z --then remark .",
+    "test": "run-z +z env:NODE_OPTIONS='--experimental-vm-modules --no-warnings' --then jest",
+    "z": "run-z +cmd:rollup,+cmd:typedoc,+cmd:eslint,+cmd:remark,+cmd:jest"
+  }
+}
