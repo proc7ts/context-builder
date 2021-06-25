@@ -1,0 +1,402 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>IoC Context Builder</title>
+	<meta name="description" content="Documentation for IoC Context Builder">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">IoC Context Builder</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>IoC Context Builder</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Namespaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-namespace"><a href="modules/cxbuilder.html" class="tsd-kind-icon">Cx<wbr>Builder</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/cxbuilder.html" class="tsd-kind-icon">Cx<wbr>Builder</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias"><a href="modules.html#cxsupply" class="tsd-kind-icon">Cx<wbr>Supply</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable"><a href="modules.html#cxsupply" class="tsd-kind-icon">Cx<wbr>Supply</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#cxaliasasset" class="tsd-kind-icon">cx<wbr>Alias<wbr>Asset</a></li>
+								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#cxbuildasset" class="tsd-kind-icon">cx<wbr>Build<wbr>Asset</a></li>
+								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#cxconstasset" class="tsd-kind-icon">cx<wbr>Const<wbr>Asset</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="cxsupply" class="tsd-anchor"></a>
+					<h3>Cx<wbr>Supply</h3>
+					<div class="tsd-signature tsd-kind-icon">Cx<wbr>Supply<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Supply</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/233935b/src/entries/supply.ts#L11">entries/supply.ts:11</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Context values supply.</p>
+						</div>
+						<p>It is used to signal when context is no longer used (e.g. destroyed).</p>
+						<p>A context value entry should destroy the provided value in such case.</p>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="cxsupply" class="tsd-anchor"></a>
+					<h3>Cx<wbr>Supply</h3>
+					<div class="tsd-signature tsd-kind-icon">Cx<wbr>Supply<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CxEntry</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Supply</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Supply</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/233935b/src/entries/supply.ts#L20">entries/supply.ts:20</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Context entry containing <a href="modules.html#cxsupply">context values supply</a> as its value.</p>
+						</div>
+						<p>It is guaranteed to present.</p>
+						<p>Predefined to the {@link CxValues.supply supply of the context} if present. Defaults to supply-always otherwise.</p>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
+					<a name="cxaliasasset" class="tsd-anchor"></a>
+					<h3>cx<wbr>Alias<wbr>Asset</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">cx<wbr>Alias<wbr>Asset&lt;TAsset, TContext&gt;<span class="tsd-signature-symbol">(</span>entry<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CxEntry</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span>, alias<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CxEntry</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span>, supply<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Supply</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CxAsset</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/233935b/src/assets/alias.asset.ts#L15">assets/alias.asset.ts:15</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates aliasing context entry asset.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>TAsset</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Context value asset type.</p>
+									</div>
+								</li>
+								<li>
+									<h4>TContext<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CxValues</span> = <span class="tsd-signature-type">CxValues</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Context type.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>entry: <span class="tsd-signature-type">CxEntry</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Target context entry.</p>
+									</div>
+								</li>
+								<li>
+									<h5>alias: <span class="tsd-signature-type">CxEntry</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Context entry which value is used as an asset of the <code>target</code> entry.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> supply: <span class="tsd-signature-type">Supply</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Asset supply. Removes the created asset once cut off.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">CxAsset</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>New context entry asset.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
+					<a name="cxbuildasset" class="tsd-anchor"></a>
+					<h3>cx<wbr>Build<wbr>Asset</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">cx<wbr>Build<wbr>Asset&lt;TValue, TAsset, TContext&gt;<span class="tsd-signature-symbol">(</span>entry<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CxEntry</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span>, build<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CxEntry.Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">CxAsset.Placeholder</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span>, supply<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Supply</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CxAsset</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/233935b/src/assets/build.asset.ts#L16">assets/build.asset.ts:16</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates context entry asset that builds asset value with the given builder function.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>TValue</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Context value type.</p>
+									</div>
+								</li>
+								<li>
+									<h4>TAsset = <span class="tsd-signature-type">TValue</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Context value asset type.</p>
+									</div>
+								</li>
+								<li>
+									<h4>TContext<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CxValues</span> = <span class="tsd-signature-type">CxValues</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Context type.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>entry: <span class="tsd-signature-type">CxEntry</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Target context entry.</p>
+									</div>
+								</li>
+								<li>
+									<h5>build: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CxEntry.Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">CxAsset.Placeholder</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Asset builder function accepting entry definition target as its only parameter.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CxEntry.Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">CxAsset.Placeholder</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>this: <span class="tsd-signature-type">void</span></h5>
+														</li>
+														<li>
+															<h5>target: <span class="tsd-signature-type">CxEntry.Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">CxAsset.Placeholder</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> supply: <span class="tsd-signature-type">Supply</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Asset supply. Removes the created asset once cut off.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">CxAsset</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>New context entry asset.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
+					<a name="cxconstasset" class="tsd-anchor"></a>
+					<h3>cx<wbr>Const<wbr>Asset</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">cx<wbr>Const<wbr>Asset&lt;TAsset, TContext&gt;<span class="tsd-signature-symbol">(</span>entry<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CxEntry</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">CxAsset.Placeholder</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span>, supply<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Supply</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CxAsset</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/233935b/src/assets/const.asset.ts#L15">assets/const.asset.ts:15</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates constant context entry asset.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>TAsset</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Context value asset type.</p>
+									</div>
+								</li>
+								<li>
+									<h4>TContext<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CxValues</span> = <span class="tsd-signature-type">CxValues</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Context type.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>entry: <span class="tsd-signature-type">CxEntry</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Target context entry.</p>
+									</div>
+								</li>
+								<li>
+									<h5>value: <span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">CxAsset.Placeholder</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Constant value asset, its resolver, or <code>null</code>/<code>undefined</code> to not provide any assets.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> supply: <span class="tsd-signature-type">Supply</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Asset supply. Removes the created asset once cut off.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">CxAsset</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>New context entry asset.</p>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="current ">
+						<a href="modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="modules/cxbuilder.html">Cx<wbr>Builder</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/cxbuilder.html" class="tsd-kind-icon">Cx<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#cxsupply" class="tsd-kind-icon">Cx<wbr>Supply</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#cxsupply" class="tsd-kind-icon">Cx<wbr>Supply</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#cxaliasasset" class="tsd-kind-icon">cx<wbr>Alias<wbr>Asset</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#cxbuildasset" class="tsd-kind-icon">cx<wbr>Build<wbr>Asset</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#cxconstasset" class="tsd-kind-icon">cx<wbr>Const<wbr>Asset</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
