@@ -77,7 +77,9 @@ export class CxBuilder<TContext extends CxValues = CxValues>
     return this._cx();
   }
 
-  get<TValue>(entry: CxEntry<TValue, any>, request?: CxRequest.WithFallback<TValue>): TValue;
+  get<TValue>(entry: CxEntry<TValue, any>, request?: CxRequest.WithoutFallback<TValue>): TValue;
+
+  get<TValue>(entry: CxEntry<TValue, any>, request: CxRequest.WithFallback<TValue>): TValue;
 
   get<TValue>(entry: CxEntry<TValue, any>, request?: CxRequest<TValue>): TValue | null;
 

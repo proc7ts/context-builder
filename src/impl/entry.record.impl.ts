@@ -1,4 +1,4 @@
-import { CxAsset, CxEntry, CxReferenceError, CxRequest, CxValues } from '@proc7ts/context-values';
+import { CxAsset, CxEntry, CxReferenceError, CxRequest, CxRequestMethod, CxValues } from '@proc7ts/context-values';
 import { EventEmitter, EventReceiver, eventReceiver } from '@proc7ts/fun-events';
 import { lazyValue, valueProvider } from '@proc7ts/primitives';
 import { alwaysSupply, Supply } from '@proc7ts/supply';
@@ -46,30 +46,46 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
 
   get(request: CxRequest<TValue> = {}): TValue | null {
 
-    let hasValue = false;
-    let value: TValue | undefined;
-
+    const { by = CxRequestMethod.Fallback, or, set } = request;
     const definition = this.define();
-    const assigner = (newValue: TValue): void => {
-      hasValue = true;
-      value = newValue;
-    };
 
-    definition.assign?.(assigner, request);
+    let hasResult = false;
+    let result: TValue | null | undefined;
 
-    if (hasValue) {
-      return value!;
+    if (by >= 0) {
+      definition.assign?.(
+          (value: TValue, by = CxRequestMethod.Assets): void => {
+            set?.(value, by);
+            hasResult = true;
+            result = value;
+          },
+          request,
+      );
+
+      if (hasResult) {
+        return result!;
+      }
+      if (or !== undefined /* fallback specified */) {
+        set?.(or, CxRequestMethod.Fallback);
+        return or;
+      }
     }
 
-    const { or } = request;
+    definition.assignDefault?.(
+        (value: TValue, by = CxRequestMethod.Defaults): void => {
+          set?.(value, by);
+          hasResult = true;
+          result = value;
+        },
+        request,
+    );
 
-    if (or !== undefined) {
+    if (hasResult) {
+      return result!;
+    }
+    if (by /* only defaults requested */ && or !== undefined /* fallback specified */) {
+      set?.(or, CxRequestMethod.Fallback);
       return or;
-    }
-
-    definition.assignDefault?.(assigner);
-    if (hasValue) {
-      return value!;
     }
 
     throw new CxReferenceError(this.entry);

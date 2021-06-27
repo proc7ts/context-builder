@@ -20,19 +20,21 @@ export function cxAliasAsset<TAsset, TContext extends CxValues = CxValues>(
   return {
     entry,
     placeAsset(target, collector) {
-
-      let asset: TAsset;
-
       try {
-        asset = target.get(alias);
+        target.get(
+            alias,
+            {
+              set(asset: TAsset) {
+                collector(asset);
+              },
+            },
+        );
       } catch (reason) {
         if (reason instanceof CxReferenceError) {
           throw new CxReferenceError(target.entry, undefined, reason);
         }
         throw reason;
       }
-
-      collector(asset);
     },
     supply,
   };
