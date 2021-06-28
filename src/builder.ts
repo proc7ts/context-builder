@@ -55,17 +55,18 @@ export class CxBuilder<TContext extends CxValues = CxValues>
   /**
    * Constructs context builder.
    *
-   * @param createContext - Context creator function. Accepts context value getter as its only parameter and returns
-   * created context.
+   * @param createContext - Context creator function. Accepts context value {@link CxValues.Getter getter} and the
+   * builder itself as parameters, and returns created context.
    * @param initial - Initial context value assets provider. These assets applies before the ones provided
    * {@link provide explicitly}.
    */
   constructor(
-      createContext: (this: void, getValue: CxValues.Getter) => TContext,
+      createContext: (this: void, getValue: CxValues.Getter, builder: CxBuilder<TContext>) => TContext,
       initial: CxBuilder.AssetSource = CxBuilder$noAssets,
   ) {
     this._cx = lazyValue(() => createContext(
         (entry, request) => this.get(entry, request),
+        this,
     ));
     this._initial = initial;
   }
