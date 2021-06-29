@@ -9,19 +9,18 @@ import { CxEntry$Target } from './entry.target.impl';
 
 export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
 
+  readonly target: CxEntry.Target<TValue, TAsset, TContext>;
+  readonly supply: (this: void) => Supply;
   private readonly define: () => CxEntry.Definition<TValue>;
   private readonly assets = new Map<Supply, CxAsset<TValue, TAsset, TContext>>();
   private readonly senders = new Map<Supply, CxEntry$AssetSender<TValue, TAsset, TContext>>();
-  readonly supply: (this: void) => Supply;
 
-  constructor(
-      readonly builder: CxBuilder<TContext>,
-      readonly entry: CxEntry<TValue, TAsset>,
-  ) {
+  constructor(readonly builder: CxBuilder<TContext>, readonly entry: CxEntry<TValue, TAsset>) {
     this.supply = entry === CxSupply as CxEntry<any>
         ? valueProvider(alwaysSupply())
         : lazyValue(() => new Supply().needs(builder.context.get(CxSupply)));
-    this.define = lazyValue(() => entry.perContext(new CxEntry$Target(this, this.supply)));
+    this.target = new CxEntry$Target(this, this.supply);
+    this.define = lazyValue(() => entry.perContext(this.target));
   }
 
   provide(asset: CxAsset<TValue, TAsset, TContext>): Supply {

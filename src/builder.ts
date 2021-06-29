@@ -54,6 +54,11 @@ export class CxBuilder<TContext extends CxValues = CxValues>
   readonly _peer: CxPeer<TContext>;
 
   /**
+   * @internal
+   */
+  private readonly _bound: () => CxPeer = lazyValue(() => new CxBuilder$BoundPeer(this));
+
+  /**
    * Constructs context builder.
    *
    * @param createContext - Context creator function. Accepts context value {@link CxValues.Getter getter} and the
@@ -73,10 +78,19 @@ export class CxBuilder<TContext extends CxValues = CxValues>
   }
 
   /**
-   * Modified context.
+   * Context to build.
    */
   get context(): TContext {
     return this._cx();
+  }
+
+  /**
+   * A peer providing assets bound to {@link context}.
+   *
+   * Unlike the builder itself, this peer may provide assets for any context, as they constructed in compatible one.
+   */
+  get boundPeer(): CxPeer {
+    return this._bound();
   }
 
   get<TValue>(entry: CxEntry<TValue, any>, request?: CxRequest.WithoutFallback<TValue>): TValue;
@@ -114,7 +128,7 @@ export class CxBuilder<TContext extends CxValues = CxValues>
     return this._record(target.entry).trackAssets(target, receiver);
   }
 
-  private _record<TValue, TAsset>(entry: CxEntry<TValue, TAsset>): CxEntry$Record<TValue, TAsset, TContext> {
+  _record<TValue, TAsset>(entry: CxEntry<TValue, TAsset>): CxEntry$Record<TValue, TAsset, TContext> {
 
     let record: CxEntry$Record<TValue, TAsset, TContext> | undefined = this._records.get(entry);
 
@@ -123,6 +137,43 @@ export class CxBuilder<TContext extends CxValues = CxValues>
     }
 
     return record;
+  }
+
+}
+
+class CxBuilder$BoundPeer<TContext extends CxValues> implements CxPeer {
+
+  constructor(private readonly _cb: CxBuilder<TContext>) {
+  }
+
+  eachAsset<TValue, TAsset>(
+      target: CxEntry.Target<TValue, TAsset>,
+      callback: CxAsset.Callback<TAsset>,
+  ): void {
+
+    const record = this._cb._record(target.entry);
+
+    record.eachAsset(record.target, callback);
+  }
+
+  eachRecentAsset<TValue, TAsset>(
+      target: CxEntry.Target<TValue, TAsset>,
+      callback: CxAsset.Callback<TAsset>,
+  ): void {
+
+    const record = this._cb._record(target.entry);
+
+    record.eachRecentAsset(record.target, callback);
+  }
+
+  trackAssets<TValue, TAsset>(
+      target: CxEntry.Target<TValue, TAsset>,
+      receiver: EventReceiver<[CxAsset.Provided<TAsset>]>,
+  ): Supply {
+
+    const record = this._cb._record(target.entry);
+
+    return record.trackAssets(record.target, receiver);
   }
 
 }
