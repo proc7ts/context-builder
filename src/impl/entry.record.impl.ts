@@ -98,22 +98,24 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
       return;
     }
 
-    let goOn: unknown;
+    let goOn = true;
     const cb: CxAsset.Callback<TAsset> = asset => goOn = !target.supply.isOff
         && callback(asset) !== false
         && !target.supply.isOff;
 
-    this.builder._peer.eachAsset(target, cb);
+    for (const peer of this.builder._peers) {
+      peer.eachAsset(target, cb);
+      if (!goOn) {
+        return;
+      }
+    }
 
-    if (goOn !== false) {
+    const collector = CxAsset$collector(target, cb);
 
-      const collector = CxAsset$collector(target, cb);
-
-      for (const asset of this.assets.values()) {
-        asset.placeAsset(target, collector);
-        if (goOn === false) {
-          break;
-        }
+    for (const asset of this.assets.values()) {
+      asset.placeAsset(target, collector);
+      if (!goOn) {
+        break;
       }
     }
   }
@@ -127,12 +129,12 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
     }
 
     let goOn = true;
-    const collector = CxAsset$collector(
-        target,
-        asset => goOn = !target.supply.isOff && callback(asset) !== false && !target.supply.isOff,
-    );
+    const cb: CxAsset.Callback<TAsset> = asset => goOn = !target.supply.isOff
+        && callback(asset) !== false
+        && !target.supply.isOff;
+    const collector = CxAsset$collector(target, cb);
 
-    // Iterate in reverse order.
+    // Iterate in most-recent-first order.
     for (const asset of [...this.assets.values()].reverse()) {
       asset.placeAsset(target, collector);
       if (!goOn) {
@@ -140,8 +142,15 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
       }
     }
 
-    // Do the same for initial assets.
-    this.builder._peer.eachRecentAsset(target, callback);
+    // Do the same for peers in most-recent-first order.
+    const peers = this.builder._peers;
+
+    for (let i = peers.length - 1; i >= 0; --i) {
+      peers[i].eachRecentAsset(target, cb);
+      if (!goOn) {
+        return;
+      }
+    }
   }
 
   trackAssets(
@@ -161,16 +170,24 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
     this.senders.set(trackingSupply, sender);
     trackingSupply.whenOff(() => this.senders.delete(trackingSupply));
 
-    this.builder._peer.trackAssets(
-        target,
-        {
-          supply: trackingSupply,
-          receive: (ecx, provided) => rcv.receive(
-              ecx,
-              new CxAsset$Derived(provided),
-          ),
-        },
-    ).needs(trackingSupply);
+    let rankOffset = 1;
+
+    for (const peer of this.builder._peers) {
+
+      const firstRank = rankOffset;
+
+      rankOffset += peer.rankCount;
+      peer.trackAssets(
+          target,
+          {
+            supply: trackingSupply,
+            receive: (ecx, provided) => rcv.receive(
+                ecx,
+                new CxAsset$Derived(provided, firstRank + provided.rank),
+            ),
+          },
+      ).needs(trackingSupply);
+    }
 
     for (const [assetSupply, iterator] of this.assets) {
       this.sendAssets(

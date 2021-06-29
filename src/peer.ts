@@ -10,6 +10,11 @@ import { Supply } from '@proc7ts/supply';
 export interface CxPeer<TContext extends CxValues = CxValues> {
 
   /**
+   * The number of {@link CxAsset.Provided.rank asset ranks} this peer contains.
+   */
+  readonly rankCount: number;
+
+  /**
    * Iterates over particular entry assets in the same order they are provided.
    *
    * Each asset reported to the given `callback` function until the latter returns `false` or there are no more

@@ -1,34 +1,9 @@
 import { CxAsset, CxEntry, CxRequest, CxValues } from '@proc7ts/context-values';
 import { EventReceiver } from '@proc7ts/fun-events';
 import { lazyValue } from '@proc7ts/primitives';
-import { neverSupply, Supply } from '@proc7ts/supply';
+import { Supply } from '@proc7ts/supply';
 import { CxEntry$Record } from './impl';
 import { CxPeer } from './peer';
-
-const CxPeer$noAssets: CxPeer = {
-
-  eachAsset<TValue, TAsset>(
-      _target: CxEntry.Target<TValue, TAsset>,
-      _callback: CxAsset.Callback<TAsset>,
-  ): void {
-    // No assets to iterate.
-  },
-
-  eachRecentAsset<TValue, TAsset>(
-      _target: CxEntry.Target<TValue, TAsset>,
-      _callback: CxAsset.Callback<TAsset>,
-  ): void {
-    // No assets to iterate.
-  },
-
-  trackAssets<TValue, TAsset>(
-      _target: CxEntry.Target<TValue, TAsset>,
-      _receiver: EventReceiver<[CxAsset.Provided<TAsset>]>,
-  ): Supply {
-    return neverSupply();
-  },
-
-};
 
 /**
  * Context builder.
@@ -51,7 +26,12 @@ export class CxBuilder<TContext extends CxValues = CxValues>
   /**
    * @internal
    */
-  readonly _peer: CxPeer<TContext>;
+  readonly _peers: readonly CxPeer<TContext>[];
+
+  /**
+   * @internal
+   */
+  private _rankCount = 0;
 
   /**
    * @internal
@@ -63,18 +43,18 @@ export class CxBuilder<TContext extends CxValues = CxValues>
    *
    * @param createContext - Context creator function. Accepts context value {@link CxValues.Getter getter} and the
    * builder itself as parameters, and returns created context.
-   * @param peer - Context peer to apply assets from. These assets applied before the ones provided
+   * @param peers - Context peers to apply assets from. These assets applied before the ones provided
    * {@link provide explicitly}.
    */
   constructor(
       createContext: (this: void, getValue: CxValues.Getter, builder: CxBuilder<TContext>) => TContext,
-      peer: CxPeer<TContext> = CxPeer$noAssets,
+      ...peers: CxPeer<TContext>[]
   ) {
     this._cx = lazyValue(() => createContext(
         (entry, request) => this.get(entry, request),
         this,
     ));
-    this._peer = peer;
+    this._peers = peers;
   }
 
   /**
@@ -82,6 +62,10 @@ export class CxBuilder<TContext extends CxValues = CxValues>
    */
   get context(): TContext {
     return this._cx();
+  }
+
+  get rankCount(): number {
+    return this._rankCount ||= this._peers.reduce((rankCount, peer) => rankCount + peer.rankCount, 1);
   }
 
   /**
@@ -144,6 +128,10 @@ export class CxBuilder<TContext extends CxValues = CxValues>
 class CxBuilder$BoundPeer<TContext extends CxValues> implements CxPeer {
 
   constructor(private readonly _cb: CxBuilder<TContext>) {
+  }
+
+  get rankCount(): number {
+    return this._cb.rankCount;
   }
 
   eachAsset<TValue, TAsset>(
