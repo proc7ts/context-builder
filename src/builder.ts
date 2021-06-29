@@ -1,4 +1,4 @@
-import { CxAsset, CxEntry, CxRequest, CxValues } from '@proc7ts/context-values';
+import { CxAccessor, CxAsset, CxEntry, CxGetter, CxModifier, CxRequest, CxValues } from '@proc7ts/context-values';
 import { EventReceiver } from '@proc7ts/fun-events';
 import { lazyValue } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
@@ -11,7 +11,7 @@ import { CxPeer } from './peer';
  * Provides value assets for the context.
  */
 export class CxBuilder<TContext extends CxValues = CxValues>
-    implements CxValues.Modifier<TContext>, CxValues.Accessor, CxPeer<TContext> {
+    implements CxModifier<TContext>, CxAccessor, CxPeer<TContext> {
 
   /**
    * @internal
@@ -47,7 +47,7 @@ export class CxBuilder<TContext extends CxValues = CxValues>
    * {@link provide explicitly}.
    */
   constructor(
-      createContext: (this: void, getValue: CxValues.Getter, builder: CxBuilder<TContext>) => TContext,
+      createContext: (this: void, getValue: CxGetter, builder: CxBuilder<TContext>) => TContext,
       ...peers: CxPeer<TContext>[]
   ) {
     this._cx = lazyValue(() => createContext(
@@ -112,6 +112,9 @@ export class CxBuilder<TContext extends CxValues = CxValues>
     return this._record(target.entry).trackAssets(target, receiver);
   }
 
+  /**
+   * @internal
+   */
   _record<TValue, TAsset>(entry: CxEntry<TValue, TAsset>): CxEntry$Record<TValue, TAsset, TContext> {
 
     let record: CxEntry$Record<TValue, TAsset, TContext> | undefined = this._records.get(entry);

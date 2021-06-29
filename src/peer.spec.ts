@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
-import { CxEntry, cxEvaluated, cxSingle, CxValues } from '@proc7ts/context-values';
+import { CxEntry, cxEvaluated, CxGetter, cxSingle, CxValues } from '@proc7ts/context-values';
 import { cxBuildAsset } from './assets';
 import { CxBuilder } from './builder';
 
@@ -9,7 +9,7 @@ describe('CxPeer', () => {
 
     readonly test1: { readonly id: number };
 
-    constructor(id: number, readonly get: CxValues.Getter) {
+    constructor(id: number, readonly get: CxGetter) {
       this.test1 = { id };
     }
 
@@ -17,7 +17,7 @@ describe('CxPeer', () => {
 
   class TestContext2 implements CxValues {
 
-    constructor(readonly get: CxValues.Getter) {
+    constructor(readonly get: CxGetter) {
     }
 
     get test2(): { readonly id: 2 } {
