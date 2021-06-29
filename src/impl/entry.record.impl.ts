@@ -10,8 +10,8 @@ import { CxEntry$Target } from './entry.target.impl';
 export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
 
   private readonly define: () => CxEntry.Definition<TValue>;
-  private readonly assets = new Map<Supply, CxAsset<TValue, TAsset>>();
-  private readonly senders = new Map<Supply, CxEntry$AssetSender<TValue, TAsset>>();
+  private readonly assets = new Map<Supply, CxAsset<TValue, TAsset, TContext>>();
+  private readonly senders = new Map<Supply, CxEntry$AssetSender<TValue, TAsset, TContext>>();
   readonly supply: (this: void) => Supply;
 
   constructor(
@@ -24,7 +24,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
     this.define = lazyValue(() => entry.perContext(new CxEntry$Target(this, this.supply)));
   }
 
-  provide(asset: CxAsset<TValue, TAsset>): Supply {
+  provide(asset: CxAsset<TValue, TAsset, TContext>): Supply {
 
     const { supply = new Supply() } = asset;
 
@@ -92,7 +92,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
   }
 
   eachAsset(
-      target: CxEntry.Target<TValue, TAsset>,
+      target: CxEntry.Target<TValue, TAsset, TContext>,
       callback: CxAsset.Callback<TAsset>,
   ): void {
     if (target.supply.isOff) {
@@ -104,7 +104,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
         && callback(asset) !== false
         && !target.supply.isOff;
 
-    this.builder._initial.eachAsset(target, cb);
+    this.builder._peer.eachAsset(target, cb);
 
     if (goOn !== false) {
 
@@ -120,7 +120,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
   }
 
   eachRecentAsset(
-      target: CxEntry.Target<TValue, TAsset>,
+      target: CxEntry.Target<TValue, TAsset, TContext>,
       callback: CxAsset.Callback<TAsset>,
   ): void {
     if (target.supply.isOff) {
@@ -142,11 +142,11 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
     }
 
     // Do the same for initial assets.
-    this.builder._initial.eachRecentAsset(target, callback);
+    this.builder._peer.eachRecentAsset(target, callback);
   }
 
   trackAssets(
-      target: CxEntry.Target<TValue, TAsset>,
+      target: CxEntry.Target<TValue, TAsset, TContext>,
       receiver: EventReceiver<[CxAsset.Provided<TAsset>]>,
   ): Supply {
 
@@ -157,12 +157,12 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
     emitter.supply.needs(target);
     emitter.on(rcv);
 
-    const sender: CxEntry$AssetSender<TValue, TAsset> = [target, emitter];
+    const sender: CxEntry$AssetSender<TValue, TAsset, TContext> = [target, emitter];
 
     this.senders.set(trackingSupply, sender);
     trackingSupply.whenOff(() => this.senders.delete(trackingSupply));
 
-    this.builder._initial.trackAssets(
+    this.builder._peer.trackAssets(
         target,
         {
           supply: trackingSupply,
@@ -185,7 +185,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
   }
 
   private sendAssets(
-      [target, emitter]: CxEntry$AssetSender<TValue, TAsset>,
+      [target, emitter]: CxEntry$AssetSender<TValue, TAsset, TContext>,
       asset: CxAsset<TValue, TAsset>,
       supply: Supply,
   ): void {
@@ -194,7 +194,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
 
 }
 
-type CxEntry$AssetSender<TValue, TAsset> = readonly [
-  target: CxEntry.Target<TValue, TAsset>,
+type CxEntry$AssetSender<TValue, TAsset, TContext extends CxValues> = readonly [
+  target: CxEntry.Target<TValue, TAsset, TContext>,
   emitter: EventEmitter<[CxAsset.Provided<TAsset>]>,
 ];
