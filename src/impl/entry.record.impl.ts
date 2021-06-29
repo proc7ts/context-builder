@@ -41,7 +41,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
       );
     }
 
-    asset.setupAsset?.(new CxEntry$Target(this, () => supply.needs(this.supply())));
+    asset.setupAsset?.(new CxEntry$Target(this, lazyValue(() => supply.needs(this.supply()))));
 
     return supply;
   }
