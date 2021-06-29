@@ -2,8 +2,8 @@ import { CxAsset, CxEntry, CxReferenceError, CxRequest, CxRequestMethod, CxValue
 import { EventEmitter, EventReceiver, eventReceiver } from '@proc7ts/fun-events';
 import { lazyValue, valueProvider } from '@proc7ts/primitives';
 import { alwaysSupply, Supply } from '@proc7ts/supply';
-import { CxBuilder } from '../builder';
 import { CxSupply } from '../entries';
+import { CxPeerBuilder } from '../peer-builder';
 import { CxAsset$collector, CxAsset$Derived, CxAsset$Provided } from './asset.provided.impl';
 import { CxEntry$Target } from './entry.target.impl';
 
@@ -15,7 +15,10 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
   private readonly assets = new Map<Supply, CxAsset<TValue, TAsset, TContext>>();
   private readonly senders = new Map<Supply, CxEntry$AssetSender<TValue, TAsset, TContext>>();
 
-  constructor(readonly builder: CxBuilder<TContext>, readonly entry: CxEntry<TValue, TAsset>) {
+  constructor(
+      readonly builder: CxPeerBuilder<TContext>,
+      readonly entry: CxEntry<TValue, TAsset>,
+  ) {
     this.supply = entry === CxSupply as CxEntry<any>
         ? valueProvider(alwaysSupply())
         : lazyValue(() => new Supply().needs(builder.context.get(CxSupply)));

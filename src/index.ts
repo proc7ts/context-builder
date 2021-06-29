@@ -6,3 +6,4 @@ export * from './assets';
 export * from './builder';
 export * from './entries';
 export * from './peer';
+export * from './peer-builder';

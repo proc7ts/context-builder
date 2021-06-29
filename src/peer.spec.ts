@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from '@jest/globals';
 import { CxEntry, cxEvaluated, CxGetter, cxSingle, CxValues } from '@proc7ts/context-values';
 import { cxBuildAsset } from './assets';
 import { CxBuilder } from './builder';
+import { CxPeerBuilder } from './peer-builder';
 
 describe('CxPeer', () => {
 
@@ -28,11 +29,13 @@ describe('CxPeer', () => {
 
   const entry: CxEntry<string> = { perContext: cxSingle() };
 
+  let peer1: CxPeerBuilder<TestContext1>;
   let builder1: CxBuilder<TestContext1>;
   let context1: TestContext1;
 
   beforeEach(() => {
-    builder1 = new CxBuilder(get => new TestContext1(1, get));
+    peer1 = new CxPeerBuilder();
+    builder1 = new CxBuilder(get => new TestContext1(1, get), peer1);
     context1 = builder1.context;
   });
 
@@ -139,12 +142,13 @@ describe('CxPeer', () => {
         expect(context1.get(entry)).toBe('');
 
         builder1.provide(cxBuildAsset(entry, target => `#1.${target.context.test1.id}`));
-        expect(context2.get(entry)).toBe('#1.1@1');
-        expect(context1.get(entry)).toBe('#1.1@0');
+        peer1.provide(cxBuildAsset(entry, target => `#1-peer.${target.context.test1.id}`));
+        expect(context2.get(entry)).toBe('#1-peer.1@2#1.1@1');
+        expect(context1.get(entry)).toBe('#1-peer.1@1#1.1@0');
 
         builder2.provide(cxBuildAsset(entry, target => `#2.${target.context.test2.id}`));
-        expect(context2.get(entry)).toBe('#1.1@1#2.2@0');
-        expect(context1.get(entry)).toBe('#1.1@0');
+        expect(context2.get(entry)).toBe('#1-peer.1@2#1.1@1#2.2@0');
+        expect(context1.get(entry)).toBe('#1-peer.1@1#1.1@0');
       });
     });
   });
@@ -252,12 +256,13 @@ describe('CxPeer', () => {
         expect(context1.get(entry)).toBe('');
 
         builder1.provide(cxBuildAsset(entry, target => `#1.${target.context.test1.id}`));
-        expect(context2.get(entry)).toBe('#1.2@1');
-        expect(context1.get(entry)).toBe('#1.1@0');
+        peer1.provide(cxBuildAsset(entry, target => `#1-peer.${target.context.test1.id}`));
+        expect(context2.get(entry)).toBe('#1-peer.2@2#1.2@1');
+        expect(context1.get(entry)).toBe('#1-peer.1@1#1.1@0');
 
         builder2.provide(cxBuildAsset(entry, target => `#2.${target.context.test1.id}`));
-        expect(context2.get(entry)).toBe('#1.2@1#2.2@0');
-        expect(context1.get(entry)).toBe('#1.1@0');
+        expect(context2.get(entry)).toBe('#1-peer.2@2#1.2@1#2.2@0');
+        expect(context1.get(entry)).toBe('#1-peer.1@1#1.1@0');
       });
     });
   });
