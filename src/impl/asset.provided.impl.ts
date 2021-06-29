@@ -59,10 +59,7 @@ export class CxAsset$Provided<TAsset> implements CxAsset.Provided<TAsset> {
 
 export class CxAsset$Derived<TAsset> implements CxAsset.Provided<TAsset> {
 
-  readonly rank: number;
-
-  constructor(private readonly $: CxAsset.Provided<any>) {
-    this.rank = $.rank + 1;
+  constructor(private readonly $: CxAsset.Provided<any>, readonly rank: number) {
   }
 
   get supply(): Supply {

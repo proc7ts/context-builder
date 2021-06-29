@@ -6,7 +6,7 @@ import { Supply } from '@proc7ts/supply';
  *
  * @typeParam TValue - Context value type.
  * @typeParam TAsset - Context value asset type.
- * @typeParam TContext - Context type.
+ * @typeParam TContext - Supported context type.
  * @param entry - Target context entry.
  * @param build - Asset builder function accepting entry definition target as its only parameter.
  * @param supply - Asset supply. Removes the created asset once cut off.
@@ -17,7 +17,7 @@ export function cxBuildAsset<TValue, TAsset = TValue, TContext extends CxValues 
     entry: CxEntry<TValue, TAsset>,
     build: (
         this: void,
-        target: CxEntry.Target<TValue, TAsset>,
+        target: CxEntry.Target<TValue, TAsset, TContext>,
     ) => TAsset | CxAsset.Placeholder<TAsset> | null | undefined,
     supply?: Supply,
 ): CxAsset<TValue, TAsset, TContext> {

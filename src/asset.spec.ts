@@ -89,7 +89,7 @@ describe('CxAsset', () => {
           },
         });
 
-        expect(context2.get(entry)).toEqual([1, 13]);
+        expect(context2.get(entry)).toEqual([13, 1]);
       });
     });
     describe('eachRecentAsset', () => {
@@ -132,7 +132,7 @@ describe('CxAsset', () => {
           },
         });
 
-        expect(context2.get(entry)).toEqual([1, 13, 12, 11]);
+        expect(context2.get(entry)).toEqual([13, 12, 11, 1]);
       });
     });
   });

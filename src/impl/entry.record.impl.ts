@@ -2,29 +2,31 @@ import { CxAsset, CxEntry, CxReferenceError, CxRequest, CxRequestMethod, CxValue
 import { EventEmitter, EventReceiver, eventReceiver } from '@proc7ts/fun-events';
 import { lazyValue, valueProvider } from '@proc7ts/primitives';
 import { alwaysSupply, Supply } from '@proc7ts/supply';
-import { CxBuilder } from '../builder';
 import { CxSupply } from '../entries';
+import { CxPeerBuilder } from '../peer-builder';
 import { CxAsset$collector, CxAsset$Derived, CxAsset$Provided } from './asset.provided.impl';
 import { CxEntry$Target } from './entry.target.impl';
 
 export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
 
-  private readonly define: () => CxEntry.Definition<TValue>;
-  private readonly assets = new Map<Supply, CxAsset<TValue, TAsset>>();
-  private readonly senders = new Map<Supply, CxEntry$AssetSender<TValue, TAsset>>();
+  readonly target: CxEntry.Target<TValue, TAsset, TContext>;
   readonly supply: (this: void) => Supply;
+  private readonly define: () => CxEntry.Definition<TValue>;
+  private readonly assets = new Map<Supply, CxAsset<TValue, TAsset, TContext>>();
+  private readonly senders = new Map<Supply, CxEntry$AssetSender<TValue, TAsset, TContext>>();
 
   constructor(
-      readonly builder: CxBuilder<TContext>,
+      readonly builder: CxPeerBuilder<TContext>,
       readonly entry: CxEntry<TValue, TAsset>,
   ) {
     this.supply = entry === CxSupply as CxEntry<any>
         ? valueProvider(alwaysSupply())
         : lazyValue(() => new Supply().needs(builder.context.get(CxSupply)));
-    this.define = lazyValue(() => entry.perContext(new CxEntry$Target(this, this.supply)));
+    this.target = new CxEntry$Target(this, this.supply);
+    this.define = lazyValue(() => entry.perContext(this.target));
   }
 
-  provide(asset: CxAsset<TValue, TAsset>): Supply {
+  provide(asset: CxAsset<TValue, TAsset, TContext>): Supply {
 
     const { supply = new Supply() } = asset;
 
@@ -92,35 +94,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
   }
 
   eachAsset(
-      target: CxEntry.Target<TValue, TAsset>,
-      callback: CxAsset.Callback<TAsset>,
-  ): void {
-    if (target.supply.isOff) {
-      return;
-    }
-
-    let goOn: unknown;
-    const cb: CxAsset.Callback<TAsset> = asset => goOn = !target.supply.isOff
-        && callback(asset) !== false
-        && !target.supply.isOff;
-
-    this.builder._initial.eachAsset(target, cb);
-
-    if (goOn !== false) {
-
-      const collector = CxAsset$collector(target, cb);
-
-      for (const asset of this.assets.values()) {
-        asset.placeAsset(target, collector);
-        if (goOn === false) {
-          break;
-        }
-      }
-    }
-  }
-
-  eachRecentAsset(
-      target: CxEntry.Target<TValue, TAsset>,
+      target: CxEntry.Target<TValue, TAsset, TContext>,
       callback: CxAsset.Callback<TAsset>,
   ): void {
     if (target.supply.isOff) {
@@ -128,12 +102,42 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
     }
 
     let goOn = true;
-    const collector = CxAsset$collector(
-        target,
-        asset => goOn = !target.supply.isOff && callback(asset) !== false && !target.supply.isOff,
-    );
+    const cb: CxAsset.Callback<TAsset> = asset => goOn = !target.supply.isOff
+        && callback(asset) !== false
+        && !target.supply.isOff;
 
-    // Iterate in reverse order.
+    for (const peer of this.builder._peers) {
+      peer.eachAsset(target, cb);
+      if (!goOn) {
+        return;
+      }
+    }
+
+    const collector = CxAsset$collector(target, cb);
+
+    for (const asset of this.assets.values()) {
+      asset.placeAsset(target, collector);
+      if (!goOn) {
+        break;
+      }
+    }
+  }
+
+  eachRecentAsset(
+      target: CxEntry.Target<TValue, TAsset, TContext>,
+      callback: CxAsset.Callback<TAsset>,
+  ): void {
+    if (target.supply.isOff) {
+      return;
+    }
+
+    let goOn = true;
+    const cb: CxAsset.Callback<TAsset> = asset => goOn = !target.supply.isOff
+        && callback(asset) !== false
+        && !target.supply.isOff;
+    const collector = CxAsset$collector(target, cb);
+
+    // Iterate in most-recent-first order.
     for (const asset of [...this.assets.values()].reverse()) {
       asset.placeAsset(target, collector);
       if (!goOn) {
@@ -141,12 +145,19 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
       }
     }
 
-    // Do the same for initial assets.
-    this.builder._initial.eachRecentAsset(target, callback);
+    // Do the same for peers in most-recent-first order.
+    const peers = this.builder._peers;
+
+    for (let i = peers.length - 1; i >= 0; --i) {
+      peers[i].eachRecentAsset(target, cb);
+      if (!goOn) {
+        return;
+      }
+    }
   }
 
   trackAssets(
-      target: CxEntry.Target<TValue, TAsset>,
+      target: CxEntry.Target<TValue, TAsset, TContext>,
       receiver: EventReceiver<[CxAsset.Provided<TAsset>]>,
   ): Supply {
 
@@ -157,21 +168,29 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
     emitter.supply.needs(target);
     emitter.on(rcv);
 
-    const sender: CxEntry$AssetSender<TValue, TAsset> = [target, emitter];
+    const sender: CxEntry$AssetSender<TValue, TAsset, TContext> = [target, emitter];
 
     this.senders.set(trackingSupply, sender);
     trackingSupply.whenOff(() => this.senders.delete(trackingSupply));
 
-    this.builder._initial.trackAssets(
-        target,
-        {
-          supply: trackingSupply,
-          receive: (ecx, provided) => rcv.receive(
-              ecx,
-              new CxAsset$Derived(provided),
-          ),
-        },
-    ).needs(trackingSupply);
+    let rankOffset = 1;
+
+    for (const peer of this.builder._peers) {
+
+      const firstRank = rankOffset;
+
+      rankOffset += peer.rankCount;
+      peer.trackAssets(
+          target,
+          {
+            supply: trackingSupply,
+            receive: (ecx, provided) => rcv.receive(
+                ecx,
+                new CxAsset$Derived(provided, firstRank + provided.rank),
+            ),
+          },
+      ).needs(trackingSupply);
+    }
 
     for (const [assetSupply, iterator] of this.assets) {
       this.sendAssets(
@@ -185,7 +204,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
   }
 
   private sendAssets(
-      [target, emitter]: CxEntry$AssetSender<TValue, TAsset>,
+      [target, emitter]: CxEntry$AssetSender<TValue, TAsset, TContext>,
       asset: CxAsset<TValue, TAsset>,
       supply: Supply,
   ): void {
@@ -194,7 +213,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
 
 }
 
-type CxEntry$AssetSender<TValue, TAsset> = readonly [
-  target: CxEntry.Target<TValue, TAsset>,
+type CxEntry$AssetSender<TValue, TAsset, TContext extends CxValues> = readonly [
+  target: CxEntry.Target<TValue, TAsset, TContext>,
   emitter: EventEmitter<[CxAsset.Provided<TAsset>]>,
 ];

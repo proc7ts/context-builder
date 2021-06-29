@@ -65,7 +65,7 @@ describe('cxDynamic', () => {
         builder.provide(cxConstAsset(entry, 1));
         builder2.provide(cxBuildAsset(entry, () => 2));
 
-        expect(context2.get(entry)).toEqual([2, 1]);
+        expect(context2.get(entry)).toEqual([1, 2]);
       });
       it('updates the value when asset revoked from parent context', () => {
         expect(context2.get(entry)).toEqual([]);
@@ -75,7 +75,7 @@ describe('cxDynamic', () => {
         expect(context2.get(entry)).toEqual([1]);
 
         builder2.provide(cxConstAsset(entry, 2));
-        expect(context2.get(entry)).toEqual([2, 1]);
+        expect(context2.get(entry)).toEqual([1, 2]);
 
         supply.off();
         expect(context2.get(entry)).toEqual([2]);
