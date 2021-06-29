@@ -5,18 +5,17 @@ import { Supply } from '@proc7ts/supply';
  * Creates constant context entry asset.
  *
  * @typeParam TAsset - Context value asset type.
- * @typeParam TContext - Context type.
  * @param entry - Target context entry.
  * @param value - Constant value asset, its resolver, or `null`/`undefined` to not provide any assets.
  * @param supply - Asset supply. Removes the created asset once cut off.
  *
  * @returns New context entry asset.
  */
-export function cxConstAsset<TAsset, TContext extends CxValues = CxValues>(
+export function cxConstAsset<TAsset>(
     entry: CxEntry<unknown, TAsset>,
     value: TAsset | CxAsset.Placeholder<TAsset> | null | undefined,
     supply?: Supply,
-): CxAsset<unknown, TAsset, TContext> {
+): CxAsset<unknown, TAsset> {
   return {
     entry,
     placeAsset: value != null

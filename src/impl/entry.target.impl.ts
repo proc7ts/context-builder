@@ -1,7 +1,7 @@
 import { CxAsset, CxEntry, CxRequest, CxValues } from '@proc7ts/context-values';
 import { deduplicateAfter_, EventReceiver, mapAfter_ } from '@proc7ts/fun-events';
 import { lazyValue } from '@proc7ts/primitives';
-import { flatMapIt, itsElements } from '@proc7ts/push-iterator';
+import { flatMapIt, itsElements, reverseArray } from '@proc7ts/push-iterator';
 import { Supply } from '@proc7ts/supply';
 import { CxEntry$assetsByRank, CxEntry$recentAsset } from './entry.assets-by-rank.impl';
 import { CxEntry$Record } from './entry.record.impl';
@@ -68,7 +68,10 @@ export class CxEntry$Target<TValue, TAsset, TContext extends CxValues>
 
   trackAssetList(receiver: EventReceiver<[CxAsset.Provided<TAsset>[]]>): Supply {
     return CxEntry$assetsByRank(this).read.do(
-        mapAfter_(assetByRank => itsElements(flatMapIt(assetByRank, rankAssets => rankAssets.values()))),
+        mapAfter_(assetByRank => itsElements(flatMapIt(
+            reverseArray(assetByRank),
+            rankAssets => rankAssets.values(),
+        ))),
     )(receiver);
   }
 
