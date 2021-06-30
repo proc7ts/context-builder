@@ -1,16 +1,28 @@
-import { beforeEach, describe, expect, it } from '@jest/globals';
-import { cxDynamic, CxEntry, CxValues } from '@proc7ts/context-values';
+import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
+import { cxDynamic, CxEntry, CxReferenceError, CxValues } from '@proc7ts/context-values';
+import { noop } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { cxBuildAsset, cxConstAsset } from '../assets';
 import { CxBuilder } from '../builder';
+import { CxSupply } from './supply';
 
 describe('cxDynamic', () => {
 
   let builder: CxBuilder;
   let context: CxValues;
+  let cxSupply: CxSupply;
 
   beforeEach(() => {
-    builder = new CxBuilder<CxValues>(get => ({ get }));
+    cxSupply = new Supply();
+    builder = new CxBuilder<CxValues>(get => ({ get, supply: cxSupply }));
     context = builder.context;
+  });
+
+  beforeEach(() => {
+    Supply.onUnexpectedAbort(noop);
+  });
+  afterEach(() => {
+    Supply.onUnexpectedAbort();
   });
 
   describe('array-valued', () => {
@@ -18,7 +30,7 @@ describe('cxDynamic', () => {
     let entry: CxEntry<readonly number[], number>;
 
     beforeEach(() => {
-      entry = { perContext: cxDynamic() };
+      entry = { perContext: cxDynamic(), toString: () => '[CxEntry test]' };
     });
 
     it('provides empty array initially', () => {
@@ -47,6 +59,31 @@ describe('cxDynamic', () => {
       supply.off();
 
       expect(context.get(entry)).toEqual([2]);
+    });
+    it('is unavailable if context disposed', () => {
+
+      const reason = new Error('Disposed');
+
+      cxSupply.off(reason);
+
+      expect(() => context.get(entry)).toThrow(new CxReferenceError(
+          entry,
+          'The [CxEntry test] is unavailable',
+          reason,
+      ));
+    });
+    it('becomes unavailable after context disposal', () => {
+      expect(context.get(entry)).toEqual([]);
+
+      const reason = new Error('Disposed');
+
+      cxSupply.off(reason);
+
+      expect(() => context.get(entry)).toThrow(new CxReferenceError(
+          entry,
+          'The [CxEntry test] is unavailable',
+          reason,
+      ));
     });
 
     describe('context derivation', () => {
