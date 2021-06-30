@@ -83,29 +83,16 @@ describe('cxDynamic', () => {
     });
   });
 
-  describe('with custom updater', () => {
+  describe('with internal state', () => {
 
     let entry: CxEntry<number, number>;
 
     beforeEach(() => {
       entry = {
-        perContext: cxDynamic({
-          createUpdater() {
-
-            let value = -1;
-
-            return {
-              get() {
-                return value;
-              },
-              set(assets) {
-                value = assets.reduce((prev, asset) => prev + asset, 0);
-              },
-              reset() {
-                value = 0;
-              },
-            };
-          },
+        perContext: cxDynamic<number, number, { sum: number }>({
+          create: assets => ({ sum: assets.reduce((prev, asset) => prev + asset, 0) }),
+          byDefault: () => ({ sum: 0 }),
+          access: get => () => get().sum,
         }),
       };
     });
