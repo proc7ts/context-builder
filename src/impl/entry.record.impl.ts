@@ -1,8 +1,7 @@
 import { CxAsset, CxEntry, CxReferenceError, CxRequest, CxRequestMethod, CxValues } from '@proc7ts/context-values';
 import { EventEmitter, EventReceiver, eventReceiver } from '@proc7ts/fun-events';
-import { lazyValue, valueProvider } from '@proc7ts/primitives';
-import { alwaysSupply, Supply } from '@proc7ts/supply';
-import { CxSupply } from '../entries';
+import { lazyValue } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { CxPeerBuilder } from '../peer-builder';
 import { CxAsset$collector, CxAsset$Derived, CxAsset$Provided } from './asset.provided.impl';
 import { CxEntry$Target } from './entry.target.impl';
@@ -10,7 +9,7 @@ import { CxEntry$Target } from './entry.target.impl';
 export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
 
   readonly target: CxEntry.Target<TValue, TAsset, TContext>;
-  readonly supply: (this: void) => Supply;
+  readonly supply: Supply;
   private readonly define: () => CxEntry.Definition<TValue>;
   private readonly assets = new Map<Supply, CxAsset<TValue, TAsset, TContext>>();
   private readonly senders = new Map<Supply, CxEntry$AssetSender<TValue, TAsset, TContext>>();
@@ -19,16 +18,16 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
       readonly builder: CxPeerBuilder<TContext>,
       readonly entry: CxEntry<TValue, TAsset>,
   ) {
-    this.supply = entry === CxSupply as CxEntry<any>
-        ? valueProvider(alwaysSupply())
-        : lazyValue(() => new Supply().needs(builder.context.get(CxSupply)));
-    this.target = new CxEntry$Target(this, this.supply);
+    this.supply = new Supply().needs(builder.supply);
+    this.target = new CxEntry$Target(this, new Supply().needs(builder.supply));
     this.define = lazyValue(() => entry.perContext(this.target));
   }
 
   provide(asset: CxAsset<TValue, TAsset, TContext>): Supply {
 
     const { supply = new Supply() } = asset;
+
+    supply.needs(this.supply);
 
     this.assets.set(supply, asset);
     supply.whenOff(() => this.assets.delete(supply));
@@ -41,7 +40,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
       );
     }
 
-    asset.setupAsset?.(new CxEntry$Target(this, lazyValue(() => supply.needs(this.supply()))));
+    asset.setupAsset?.(new CxEntry$Target(this, supply));
 
     return supply;
   }
@@ -192,10 +191,10 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
       ).needs(trackingSupply);
     }
 
-    for (const [assetSupply, iterator] of this.assets) {
+    for (const [assetSupply, asset] of this.assets) {
       this.sendAssets(
           sender,
-          iterator,
+          asset,
           new Supply().needs(assetSupply).needs(trackingSupply),
       );
     }

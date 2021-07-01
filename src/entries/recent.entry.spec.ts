@@ -4,17 +4,14 @@ import { noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 import { cxBuildAsset, cxConstAsset } from '../assets';
 import { CxBuilder } from '../builder';
-import { CxSupply } from './supply';
 
 describe('cxRecent', () => {
 
   let builder: CxBuilder;
   let context: CxValues;
-  let cxSupply: CxSupply;
 
   beforeEach(() => {
-    cxSupply = new Supply();
-    builder = new CxBuilder<CxValues>(get => ({ get, supply: cxSupply }));
+    builder = new CxBuilder<CxValues>(get => ({ get }));
     context = builder.context;
   });
 
@@ -66,7 +63,7 @@ describe('cxRecent', () => {
 
       const reason = new Error('Disposed');
 
-      cxSupply.off(reason);
+      builder.supply.off(reason);
 
       expect(() => context.get(entry)).toThrow(new CxReferenceError(
           entry,
@@ -79,7 +76,7 @@ describe('cxRecent', () => {
 
       const reason = new Error('Disposed');
 
-      cxSupply.off(reason);
+      builder.supply.off(reason);
 
       expect(() => context.get(entry)).toThrow(new CxReferenceError(
           entry,

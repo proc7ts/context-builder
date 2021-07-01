@@ -28,6 +28,11 @@ export class CxPeerBuilder<TContext extends CxValues = CxValues> implements CxMo
   /**
    * @internal
    */
+  private readonly _supply = new Supply();
+
+  /**
+   * @internal
+   */
   private _rankCount = 0;
 
   /**
@@ -46,6 +51,10 @@ export class CxPeerBuilder<TContext extends CxValues = CxValues> implements CxMo
 
   get rankCount(): number {
     return this._rankCount ||= this._peers.reduce((rankCount, peer) => rankCount + peer.rankCount, 1);
+  }
+
+  get supply(): Supply {
+    return this._supply;
   }
 
   provide<TValue, TAsset = TValue>(asset: CxAsset<TValue, TAsset, TContext>): Supply {

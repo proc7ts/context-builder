@@ -1,18 +1,25 @@
 import { CxAsset, CxEntry, CxValues } from '@proc7ts/context-values';
 import { EventReceiver } from '@proc7ts/fun-events';
-import { Supply } from '@proc7ts/supply';
+import { Supply, SupplyPeer } from '@proc7ts/supply';
 
 /**
  * Context peer providing assets preceding those from {@link CxBuilder.provide context builder}.
  *
  * @typeParam TContext - Context type the assets provided for.
  */
-export interface CxPeer<TContext extends CxValues = CxValues> {
+export interface CxPeer<TContext extends CxValues = CxValues> extends SupplyPeer {
 
   /**
    * The number of {@link CxAsset.Provided.rank asset ranks} this peer contains.
    */
   readonly rankCount: number;
+
+  /**
+   * Context peer supply.
+   *
+   * Revokes all assets provided by this peer once cut off.
+   */
+  readonly supply: Supply;
 
   /**
    * Iterates over particular entry assets in the same order they are provided.
