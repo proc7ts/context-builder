@@ -11,7 +11,7 @@ export class CxEntry$Target<TValue, TAsset, TContext extends CxValues>
 
   constructor(
       private readonly _record: CxEntry$Record<TValue, TAsset, TContext>,
-      private readonly _getSupply: () => Supply,
+      readonly supply: Supply,
   ) {
   }
 
@@ -21,10 +21,6 @@ export class CxEntry$Target<TValue, TAsset, TContext extends CxValues>
 
   get context(): TContext {
     return this._record.builder.context;
-  }
-
-  get supply(): Supply {
-    return this._getSupply();
   }
 
   get recentAsset(): TAsset | undefined {

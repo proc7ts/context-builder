@@ -88,6 +88,15 @@ describe('CxEntry', () => {
         expect(context2.get(entry)).toBe('abc');
         expect(context2.get(entry)).toBe('');
       });
+      it('is not aborted when parent context supply cut off', () => {
+        builder.provide(cxConstAsset(entry, 'a'));
+        builder2.provide(cxConstAsset(entry, 'e'));
+
+        expect(context2.get(entry)).toBe('ae');
+
+        builder.supply.off();
+        expect(context2.get(entry)).toBe('e');
+      });
     });
 
     describe('eachRecentAsset', () => {

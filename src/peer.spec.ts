@@ -61,6 +61,12 @@ describe('CxPeer', () => {
       expect(context1.get(entry)).toBe('#1.1');
     });
 
+    describe('supply', () => {
+      it('is the same as builder supply', () => {
+        expect(builder1.boundPeer.supply).toBe(builder1.supply);
+      });
+    });
+
     describe('eachAsset', () => {
       it('iterates over assets', () => {
 

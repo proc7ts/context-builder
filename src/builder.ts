@@ -1,4 +1,4 @@
-import { CxAccessor, CxAsset, CxEntry, CxGetter, CxRequest, CxValues } from '@proc7ts/context-values';
+import { CxAsset, CxEntry, CxGetter, CxRequest, CxValues } from '@proc7ts/context-values';
 import { EventReceiver } from '@proc7ts/fun-events';
 import { lazyValue } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
@@ -12,7 +12,7 @@ import { CxPeerBuilder } from './peer-builder';
  *
  * @typeParam TContext - A type of context to build.
  */
-export class CxBuilder<TContext extends CxValues = CxValues> extends CxPeerBuilder<TContext> implements CxAccessor {
+export class CxBuilder<TContext extends CxValues = CxValues> extends CxPeerBuilder<TContext> implements CxValues {
 
   /**
    * @internal
@@ -74,6 +74,10 @@ export class CxBuilder<TContext extends CxValues = CxValues> extends CxPeerBuild
 class CxBuilder$BoundPeer<TContext extends CxValues> implements CxPeer {
 
   constructor(private readonly _cb: CxBuilder<TContext>) {
+  }
+
+  get supply(): Supply {
+    return this._cb.supply;
   }
 
   get rankCount(): number {
