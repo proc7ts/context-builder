@@ -89,7 +89,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">CxPeer</span>
+						<span class="tsd-signature-type">SupplyPeer</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">CxPeer</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -107,6 +112,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="cxpeer.html#rankcount" class="tsd-kind-icon">rank<wbr>Count</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="cxpeer.html#supply" class="tsd-kind-icon">supply</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -128,13 +134,30 @@
 					<div class="tsd-signature tsd-kind-icon">rank<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/f7e7f22/src/peer.ts#L15">peer.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/554a546/src/peer.ts#L15">peer.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The number of {@link CxAsset.Provided.rank asset ranks} this peer contains.</p>
 						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+					<a name="supply" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> supply</h3>
+					<div class="tsd-signature tsd-kind-icon">supply<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Supply</span></div>
+					<aside class="tsd-sources">
+						<p>Overrides SupplyPeer.supply</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/554a546/src/peer.ts#L22">peer.ts:22</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Context peer supply.</p>
+						</div>
+						<p>Revokes all assets provided by this peer once cut off.</p>
 					</div>
 				</section>
 			</section>
@@ -150,7 +173,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/f7e7f22/src/peer.ts#L26">peer.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/554a546/src/peer.ts#L33">peer.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -198,7 +221,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/f7e7f22/src/peer.ts#L41">peer.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/554a546/src/peer.ts#L48">peer.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -247,7 +270,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/f7e7f22/src/peer.ts#L54">peer.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/554a546/src/peer.ts#L61">peer.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -310,6 +333,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="cxpeer.html#rankcount" class="tsd-kind-icon">rank<wbr>Count</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="cxpeer.html#supply" class="tsd-kind-icon">supply</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
 								<a href="cxpeer.html#eachasset" class="tsd-kind-icon">each<wbr>Asset</a>
 							</li>
@@ -323,12 +349,6 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-type-alias">
-						<a href="../modules.html#cxsupply" class="tsd-kind-icon">Cx<wbr>Supply</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="../modules.html#cxsupply" class="tsd-kind-icon">Cx<wbr>Supply</a>
-					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="../modules.html#cxaliasasset" class="tsd-kind-icon">cx<wbr>Alias<wbr>Asset</a>
 					</li>
