@@ -18,7 +18,7 @@ export function cxBuildAsset<TValue, TAsset = TValue, TContext extends CxValues 
     build: (
         this: void,
         target: CxEntry.Target<TValue, TAsset, TContext>,
-    ) => TAsset | CxAsset.Placeholder<TAsset> | null | undefined,
+    ) => TAsset | null | undefined,
     supply?: Supply,
 ): CxAsset<TValue, TAsset, TContext> {
   return {

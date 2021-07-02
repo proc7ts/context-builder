@@ -6,14 +6,14 @@ import { Supply } from '@proc7ts/supply';
  *
  * @typeParam TAsset - Context value asset type.
  * @param entry - Target context entry.
- * @param value - Constant value asset, its resolver, or `null`/`undefined` to not provide any assets.
+ * @param value - Constant value asset, or `null`/`undefined` to not provide any assets.
  * @param supply - Asset supply. Removes the created asset once cut off.
  *
  * @returns New context entry asset.
  */
 export function cxConstAsset<TAsset>(
     entry: CxEntry<unknown, TAsset>,
-    value: TAsset | CxAsset.Placeholder<TAsset> | null | undefined,
+    value: TAsset | null | undefined,
     supply?: Supply,
 ): CxAsset<unknown, TAsset> {
   return {
