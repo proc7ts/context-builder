@@ -19,8 +19,8 @@ describe('cxAliasAsset', () => {
   let alias: CxEntry<string>;
 
   beforeEach(() => {
-    origin = { perContext: cxSingle() };
-    alias = { perContext: cxSingle() };
+    origin = { perContext: cxSingle(), toString: () => '[CxEntry origin]' };
+    alias = { perContext: cxSingle(), toString: () => '[CxEntry alias]' };
     builder.provide(cxAliasAsset(alias, origin));
   });
 
@@ -29,7 +29,7 @@ describe('cxAliasAsset', () => {
     expect(context.get(alias)).toBe('aliased');
   });
   it('throws when nothing to alias', () => {
-    expect(() => context.get(alias)).toThrow(new CxReferenceError(alias));
+    expect(() => context.get(alias)).toThrow(new CxReferenceError(alias, undefined, new CxReferenceError(origin)));
 
     let error!: CxReferenceError;
 
@@ -40,7 +40,7 @@ describe('cxAliasAsset', () => {
     }
 
     expect(error.entry).toBe(alias);
-    expect(error.message).toBe(new CxReferenceError(alias).message);
+    expect(error.message).toBe(new CxReferenceError(alias, undefined, new CxReferenceError(origin)).message);
 
     const reason = error.reason as CxReferenceError;
 

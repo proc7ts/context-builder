@@ -3,7 +3,7 @@ import { EventEmitter, EventReceiver, eventReceiver } from '@proc7ts/fun-events'
 import { lazyValue } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 import { CxPeerBuilder } from '../peer-builder';
-import { CxAsset$collector, CxAsset$Derived, CxAsset$Provided } from './asset.provided.impl';
+import { CxAsset$Derived, CxAsset$Provided } from './asset.provided.impl';
 import { CxEntry$Target } from './entry.target.impl';
 
 export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
@@ -157,7 +157,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
     }
 
     let goOn = true;
-    const cb: CxAsset.Callback<TAsset> = asset => goOn = !target.supply.isOff
+    const cb: CxAsset.Collector<TAsset> = asset => goOn = !target.supply.isOff
         && callback(asset) !== false
         && !target.supply.isOff;
 
@@ -168,10 +168,8 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
       }
     }
 
-    const collector = CxAsset$collector(target, cb);
-
     for (const asset of this.assets.values()) {
-      asset.placeAsset(target, collector);
+      asset.placeAsset(target, cb);
       if (!goOn) {
         break;
       }
@@ -190,11 +188,10 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
     const cb: CxAsset.Callback<TAsset> = asset => goOn = !target.supply.isOff
         && callback(asset) !== false
         && !target.supply.isOff;
-    const collector = CxAsset$collector(target, cb);
 
     // Iterate in most-recent-first order.
     for (const asset of [...this.assets.values()].reverse()) {
-      asset.placeAsset(target, collector);
+      asset.placeAsset(target, cb);
       if (!goOn) {
         return;
       }

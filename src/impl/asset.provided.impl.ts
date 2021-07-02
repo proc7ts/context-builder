@@ -37,7 +37,7 @@ export class CxAsset$Provided<TAsset> implements CxAsset.Provided<TAsset> {
   }
 
   eachAsset(callback: CxAsset.Callback<TAsset>): void {
-    this._asset.placeAsset(this._target, CxAsset$collector(this._target, callback));
+    this._asset.placeAsset(this._target, callback);
   }
 
   eachRecentAsset(callback: CxAsset.Callback<TAsset>): void {
@@ -78,20 +78,4 @@ export class CxAsset$Derived<TAsset> implements CxAsset.Provided<TAsset> {
     return this.$.eachRecentAsset(callback);
   }
 
-}
-
-export function CxAsset$collector<TAsset>(
-    target: CxEntry.Target<unknown, TAsset>,
-    callback: CxAsset.Callback<TAsset>,
-): CxAsset.Collector<TAsset> {
-  return asset => CxAsset$isPlaceholder(asset)
-      ? asset.placeAsset(target, callback)
-      : callback(asset);
-}
-
-function CxAsset$isPlaceholder<TAsset>(
-    asset: TAsset | CxAsset.Placeholder<TAsset>,
-): asset is CxAsset.Placeholder<TAsset> {
-  return (typeof asset === 'object' && !!asset || typeof asset === 'function')
-      && typeof (asset as Partial<CxAsset.Placeholder<TAsset>>).placeAsset === 'function';
 }

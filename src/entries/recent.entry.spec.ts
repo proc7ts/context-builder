@@ -30,6 +30,9 @@ describe('cxRecent', () => {
       entry = { perContext: cxRecent(), toString: () => '[CxEntry test]' };
     });
 
+    it('throws on access', () => {
+      expect(() => context.get(entry)).toThrow(new CxReferenceError(entry));
+    });
     it('supports `Assets` request method', () => {
       expect(() => context.get(entry, { by: CxRequestMethod.Assets })).toThrow(new CxReferenceError(entry));
       expect(context.get(entry, { by: CxRequestMethod.Assets, or: null })).toBeNull();
@@ -58,10 +61,6 @@ describe('cxRecent', () => {
 
     it('provides default value initially', () => {
       expect(context.get(entry)).toBe('default');
-    });
-    it('throws without default value', () => {
-      entry = { perContext: cxRecent(), toString: () => '[CxEntry test]' };
-      expect(() => context.get(entry)).toThrow(new CxReferenceError(entry, 'The [CxEntry test] has no value'));
     });
     it('provides the most recent value', () => {
       builder.provide(cxConstAsset(entry, 'value1'));
