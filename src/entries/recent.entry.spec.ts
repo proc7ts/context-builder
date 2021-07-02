@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
-import { CxEntry, cxRecent, CxReferenceError, CxValues } from '@proc7ts/context-values';
+import { CxEntry, cxRecent, CxReferenceError, CxRequestMethod, CxValues } from '@proc7ts/context-values';
 import { noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 import { cxBuildAsset, cxConstAsset } from '../assets';
@@ -22,6 +22,32 @@ describe('cxRecent', () => {
     Supply.onUnexpectedAbort();
   });
 
+  describe('without default value', () => {
+
+    let entry: CxEntry<string>;
+
+    beforeEach(() => {
+      entry = { perContext: cxRecent(), toString: () => '[CxEntry test]' };
+    });
+
+    it('supports `Assets` request method', () => {
+      expect(() => context.get(entry, { by: CxRequestMethod.Assets })).toThrow(new CxReferenceError(entry));
+      expect(context.get(entry, { by: CxRequestMethod.Assets, or: null })).toBeNull();
+
+      builder.provide(cxConstAsset(entry, 'test'));
+      expect(context.get(entry, { by: CxRequestMethod.Assets })).toBe('test');
+      expect(context.get(entry, { by: CxRequestMethod.Assets, or: null })).toBe('test');
+    });
+    it('supports `Defaults` request method', () => {
+      expect(() => context.get(entry, { by: CxRequestMethod.Defaults })).toThrow(new CxReferenceError(entry));
+      expect(context.get(entry, { by: CxRequestMethod.Defaults, or: null })).toBeNull();
+
+      builder.provide(cxConstAsset(entry, 'test'));
+      expect(() => context.get(entry, { by: CxRequestMethod.Defaults })).toThrow(new CxReferenceError(entry));
+      expect(context.get(entry, { by: CxRequestMethod.Defaults, or: null })).toBeNull();
+    });
+  });
+
   describe('with default value', () => {
 
     let entry: CxEntry<string>;
@@ -35,7 +61,7 @@ describe('cxRecent', () => {
     });
     it('throws without default value', () => {
       entry = { perContext: cxRecent(), toString: () => '[CxEntry test]' };
-      expect(() => context.get(entry)).toThrow(new CxReferenceError(entry, 'The [CxEntry test] is unavailable'));
+      expect(() => context.get(entry)).toThrow(new CxReferenceError(entry, 'The [CxEntry test] has no value'));
     });
     it('provides the most recent value', () => {
       builder.provide(cxConstAsset(entry, 'value1'));
@@ -83,6 +109,23 @@ describe('cxRecent', () => {
           'The [CxEntry test] is unavailable',
           reason,
       ));
+    });
+    it('supports `Assets` request method', () => {
+      expect(() => context.get(entry, { by: CxRequestMethod.Assets }))
+          .toThrow(new CxReferenceError(entry, 'No value provided for [CxEntry test]'));
+      expect(context.get(entry, { by: CxRequestMethod.Assets, or: null })).toBeNull();
+
+      builder.provide(cxConstAsset(entry, 'test'));
+      expect(context.get(entry, { by: CxRequestMethod.Assets })).toBe('test');
+      expect(context.get(entry, { by: CxRequestMethod.Assets, or: null })).toBe('test');
+    });
+    it('supports `Defaults` request method', () => {
+      expect(context.get(entry, { by: CxRequestMethod.Defaults })).toBe('default');
+      expect(context.get(entry, { by: CxRequestMethod.Defaults, or: null })).toBe('default');
+
+      builder.provide(cxConstAsset(entry, 'test'));
+      expect(context.get(entry, { by: CxRequestMethod.Defaults })).toBe('default');
+      expect(context.get(entry, { by: CxRequestMethod.Defaults, or: null })).toBe('default');
     });
 
     describe('context derivation', () => {
