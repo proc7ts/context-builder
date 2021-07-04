@@ -1,5 +1,4 @@
-import { CxAsset, CxEntry, CxGetter, CxRequest, CxValues } from '@proc7ts/context-values';
-import { EventReceiver } from '@proc7ts/fun-events';
+import { CxAsset, CxEntry, CxGetter, CxRequest, CxTracking, CxValues } from '@proc7ts/context-values';
 import { lazyValue } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 import { CxPeer } from './peer';
@@ -106,12 +105,13 @@ class CxBuilder$BoundPeer<TContext extends CxValues> implements CxPeer {
 
   trackAssets<TValue, TAsset>(
       target: CxEntry.Target<TValue, TAsset>,
-      receiver: EventReceiver<[CxAsset.Provided<TAsset>]>,
+      receiver: CxAsset.Receiver<TAsset>,
+      tracking?: CxTracking,
   ): Supply {
 
     const record = this._cb._record(target.entry);
 
-    return record.trackAssets(record.target, receiver);
+    return record.trackAssets(record.target, receiver, tracking);
   }
 
 }

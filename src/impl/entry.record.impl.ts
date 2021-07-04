@@ -1,5 +1,13 @@
-import { CxAsset, CxEntry, CxReferenceError, CxRequest, CxRequestMethod, CxValues } from '@proc7ts/context-values';
-import { EventEmitter, EventReceiver, eventReceiver } from '@proc7ts/fun-events';
+import {
+  CxAsset,
+  CxEntry,
+  CxReferenceError,
+  CxRequest,
+  CxRequestMethod,
+  CxTracking,
+  CxValues,
+} from '@proc7ts/context-values';
+import { EventEmitter, EventReceiver } from '@proc7ts/fun-events';
 import { lazyValue } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 import { CxPeerBuilder } from '../peer-builder';
@@ -210,11 +218,16 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
 
   trackAssets(
       target: CxEntry.Target<TValue, TAsset, TContext>,
-      receiver: EventReceiver<[CxAsset.Provided<TAsset>]>,
+      receiver: CxAsset.Receiver<TAsset>,
+      { supply = new Supply() }: CxTracking = {},
   ): Supply {
 
-    const rcv = eventReceiver(receiver);
-    const trackingSupply = rcv.supply;
+    const rcv: EventReceiver.Generic<[CxAsset.Provided<TAsset>]> = {
+      supply,
+      receive(_ctx, asset) {
+        receiver(asset);
+      },
+    };
     const emitter = new EventEmitter();
 
     emitter.supply.needs(target);
@@ -222,8 +235,8 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
 
     const sender: CxEntry$AssetSender<TValue, TAsset, TContext> = [target, emitter];
 
-    this.senders.set(trackingSupply, sender);
-    trackingSupply.whenOff(() => this.senders.delete(trackingSupply));
+    this.senders.set(supply, sender);
+    supply.whenOff(() => this.senders.delete(supply));
 
     let rankOffset = 1;
 
@@ -234,25 +247,20 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> {
       rankOffset += peer.rankCount;
       peer.trackAssets(
           target,
-          {
-            supply: trackingSupply,
-            receive: (ecx, provided) => rcv.receive(
-                ecx,
-                new CxAsset$Derived(provided, firstRank + provided.rank),
-            ),
-          },
-      ).needs(trackingSupply);
+          provided => receiver(new CxAsset$Derived(provided, firstRank + provided.rank)),
+          supply,
+      );
     }
 
     for (const [assetSupply, asset] of this.assets) {
       this.sendAssets(
           sender,
           asset,
-          new Supply().needs(assetSupply).needs(trackingSupply),
+          new Supply().needs(assetSupply).needs(supply),
       );
     }
 
-    return trackingSupply;
+    return supply;
   }
 
   private sendAssets(

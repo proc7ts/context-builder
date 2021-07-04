@@ -1,5 +1,4 @@
-import { CxAsset, CxEntry, CxModifier, CxValues } from '@proc7ts/context-values';
-import { EventReceiver } from '@proc7ts/fun-events';
+import { CxAsset, CxEntry, CxModifier, CxTracking, CxValues } from '@proc7ts/context-values';
 import { Supply } from '@proc7ts/supply';
 import { CxEntry$Record } from './impl';
 import { CxPeer } from './peer';
@@ -77,9 +76,10 @@ export class CxPeerBuilder<TContext extends CxValues = CxValues> implements CxMo
 
   trackAssets<TValue, TAsset>(
       target: CxEntry.Target<TValue, TAsset, TContext>,
-      receiver: EventReceiver<[CxAsset.Provided<TAsset>]>,
+      receiver: CxAsset.Receiver<TAsset>,
+      tracking?: CxTracking,
   ): Supply {
-    return this._record(target.entry).trackAssets(target, receiver);
+    return this._record(target.entry).trackAssets(target, receiver, tracking);
   }
 
   /**
