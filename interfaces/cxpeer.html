@@ -134,7 +134,7 @@
 					<div class="tsd-signature tsd-kind-icon">rank<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/554a546/src/peer.ts#L15">peer.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/peer.ts#L14">peer.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -150,7 +150,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides SupplyPeer.supply</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/554a546/src/peer.ts#L22">peer.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/peer.ts#L21">peer.ts:21</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -173,7 +173,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/554a546/src/peer.ts#L33">peer.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/peer.ts#L32">peer.ts:32</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -221,7 +221,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/554a546/src/peer.ts#L48">peer.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/peer.ts#L47">peer.ts:47</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -264,13 +264,13 @@
 					<a name="trackassets" class="tsd-anchor"></a>
 					<h3>track<wbr>Assets</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">track<wbr>Assets&lt;TValue, TAsset&gt;<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span>, receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Provided</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Supply</span></li>
+						<li class="tsd-signature tsd-kind-icon">track<wbr>Assets&lt;TValue, TAsset&gt;<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span>, receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Receiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span>, tracking<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">CxTracking</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Supply</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/554a546/src/peer.ts#L61">peer.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/peer.ts#L61">peer.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -296,9 +296,15 @@
 									</div>
 								</li>
 								<li>
-									<h5>receiver: <span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Provided</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>receiver: <span class="tsd-signature-type">Receiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>A receiver to report existing and added assets to.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> tracking: <span class="tsd-signature-type">CxTracking</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Tracking options.</p>
 									</div>
 								</li>
 							</ul>
