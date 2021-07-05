@@ -1,4 +1,4 @@
-import { CxAsset, CxEntry, CxGetter, CxRequest, CxTracking, CxValues } from '@proc7ts/context-values';
+import { CxAccessor, CxAsset, CxEntry, CxRequest, CxTracking, CxValues } from '@proc7ts/context-values';
 import { lazyValue } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 import { CxPeer } from './peer';
@@ -26,13 +26,13 @@ export class CxBuilder<TContext extends CxValues = CxValues> extends CxPeerBuild
   /**
    * Constructs context builder.
    *
-   * @param createContext - Context creator function. Accepts context value getter and the builder itself as parameters,
-   * and returns created context.
+   * @param createContext - Context creator function. Accepts context value accessor and the builder itself as
+   * parameters, and returns created context.
    * @param peers - Context peers to apply assets from. These assets applied before the ones provided
    * {@link provide explicitly}.
    */
   constructor(
-      createContext: (this: void, getValue: CxGetter, builder: CxBuilder<TContext>) => TContext,
+      createContext: (this: void, getValue: CxAccessor, builder: CxBuilder<TContext>) => TContext,
       ...peers: CxPeer<TContext>[]
   ) {
     super(...peers);
