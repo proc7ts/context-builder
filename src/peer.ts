@@ -1,5 +1,4 @@
-import { CxAsset, CxEntry, CxValues } from '@proc7ts/context-values';
-import { EventReceiver } from '@proc7ts/fun-events';
+import { CxAsset, CxEntry, CxTracking, CxValues } from '@proc7ts/context-values';
 import { Supply, SupplyPeer } from '@proc7ts/supply';
 
 /**
@@ -55,12 +54,14 @@ export interface CxPeer<TContext extends CxValues = CxValues> extends SupplyPeer
    *
    * @param target - Context entry definition target to track assets for.
    * @param receiver - A receiver to report existing and added assets to.
+   * @param tracking - Tracking options.
    *
    * @returns Assets supply. Stops assets tracking once cut off.
    */
   trackAssets<TValue, TAsset>(
       target: CxEntry.Target<TValue, TAsset, TContext>,
-      receiver: EventReceiver<[CxAsset.Provided<TAsset>]>,
+      receiver: CxAsset.Receiver<TAsset>,
+      tracking?: CxTracking,
   ): Supply;
 
 }

@@ -1,5 +1,5 @@
-import { CxAsset, CxEntry, CxRequest, CxValues } from '@proc7ts/context-values';
-import { deduplicateAfter_, EventReceiver, mapAfter_ } from '@proc7ts/fun-events';
+import { CxAsset, CxEntry, CxRequest, CxTracking, CxValues } from '@proc7ts/context-values';
+import { deduplicateAfter_, mapAfter_ } from '@proc7ts/fun-events';
 import { lazyValue } from '@proc7ts/primitives';
 import { flatMapIt, itsElements, reverseArray } from '@proc7ts/push-iterator';
 import { Supply } from '@proc7ts/supply';
@@ -51,24 +51,34 @@ export class CxEntry$Target<TValue, TAsset, TContext extends CxValues>
     this._record.builder.eachRecentAsset(this, callback);
   }
 
-  trackAssets(receiver: EventReceiver<[CxAsset.Provided<TAsset>]>): Supply {
-    return this._record.builder.trackAssets(this, receiver);
+  trackAssets(receiver: CxAsset.Receiver<TAsset>, tracking?: CxTracking): Supply {
+    return this._record.builder.trackAssets(this, receiver, tracking);
   }
 
-  trackRecentAsset(receiver: EventReceiver<[CxAsset.Evaluated<TAsset> | undefined]>): Supply {
+  trackRecentAsset(receiver: CxAsset.RecentReceiver<TAsset>, { supply = new Supply() }: CxTracking = {}): Supply {
     return CxEntry$assetsByRank(this).read.do(
         mapAfter_(CxEntry$recentAsset),
         deduplicateAfter_(),
-    )(receiver);
+    )({
+      supply,
+      receive(_ctx, evaluated) {
+        receiver(evaluated);
+      },
+    });
   }
 
-  trackAssetList(receiver: EventReceiver<[CxAsset.Provided<TAsset>[]]>): Supply {
+  trackAssetList(receiver: CxAsset.ListReceiver<TAsset>, { supply = new Supply() }: CxTracking = {}): Supply {
     return CxEntry$assetsByRank(this).read.do(
         mapAfter_(assetByRank => itsElements(flatMapIt(
             reverseArray(assetByRank),
             rankAssets => rankAssets.values(),
         ))),
-    )(receiver);
+    )({
+      supply,
+      receive(_ctx, list) {
+        receiver(list);
+      },
+    });
   }
 
   lazy<T>(evaluator: (this: void, target: this) => T): (this: void) => T {

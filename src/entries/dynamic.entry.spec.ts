@@ -177,7 +177,7 @@ describe('cxDynamic', () => {
         perContext: cxDynamic<number, number, { sum: number }>({
           create: assets => ({ sum: assets.reduce((prev, asset) => prev + asset, 0) }),
           byDefault: () => ({ sum: 0 }),
-          access: get => () => get().sum,
+          assign: ({ to }) => receiver => to(({ sum }, by) => receiver(sum, by)),
         }),
       };
     });
