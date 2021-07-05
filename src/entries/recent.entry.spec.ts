@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
-import { CxEntry, cxRecent, CxReferenceError, CxRequestMethod, CxValues } from '@proc7ts/context-values';
-import { noop } from '@proc7ts/primitives';
+import { CxEntry, cxRecent, CxReferenceError, CxRequestMethod, CxTracker, CxValues } from '@proc7ts/context-values';
+import { asis, noop, valueProvider } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 import { cxBuildAsset, cxConstAsset } from '../assets';
 import { CxBuilder } from '../builder';
@@ -177,7 +177,7 @@ describe('cxRecent', () => {
         perContext: cxRecent<string, string, { message: string }>({
           create: recent => ({ message: recent }),
           byDefault: () => ({ message: 'default' }),
-          access: get => () => get().message + '!',
+          assign: ({ to }) => receiver => to(({ message }, by) => receiver(message + '!', by)),
         }),
       };
     });
@@ -266,6 +266,83 @@ describe('cxRecent', () => {
 
         expect(context.get(entry)).toBe('value2!');
       });
+    });
+  });
+
+  describe('tracking with default value', () => {
+
+    let entry: CxEntry<CxTracker.Mandatory<string>, string>;
+
+    beforeEach(() => {
+      entry = {
+        perContext: cxRecent<CxTracker.Mandatory<string>, string, string>({
+          create: asis,
+          byDefault: valueProvider('default'),
+          assign: tracker => receiver => receiver(tracker),
+        }),
+        toString: () => '[CxEntry test]',
+      };
+    });
+
+    it('tracks value changes', () => {
+
+      let current!: string;
+      let currentMethod!: CxRequestMethod;
+
+      context.get(entry).track((value, by) => {
+        current = value;
+        currentMethod = by;
+      });
+
+      expect(current).toBe('default');
+      expect(currentMethod).toBe(CxRequestMethod.Defaults);
+
+      const supply = builder.provide(cxConstAsset(entry, 'test'));
+
+      expect(current).toBe('test');
+      expect(currentMethod).toBe(CxRequestMethod.Assets);
+
+      supply.off();
+      expect(current).toBe('default');
+      expect(currentMethod).toBe(CxRequestMethod.Defaults);
+    });
+  });
+
+  describe('tracking without default value', () => {
+
+    let entry: CxEntry<CxTracker<string>, string>;
+
+    beforeEach(() => {
+      entry = {
+        perContext: cxRecent<CxTracker<string>, string, string>({
+          create: asis,
+          assign: tracker => receiver => receiver(tracker),
+        }),
+        toString: () => '[CxEntry test]',
+      };
+    });
+
+    it('tracks value changes', () => {
+
+      let current: string | undefined;
+      let currentMethod: CxRequestMethod | undefined;
+
+      context.get(entry).track((value?, by?) => {
+        current = value;
+        currentMethod = by;
+      });
+
+      expect(current).toBeUndefined();
+      expect(currentMethod).toBeUndefined();
+
+      const supply = builder.provide(cxConstAsset(entry, 'test'));
+
+      expect(current).toBe('test');
+      expect(currentMethod).toBe(CxRequestMethod.Assets);
+
+      supply.off();
+      expect(current).toBeUndefined();
+      expect(currentMethod).toBeUndefined();
     });
   });
 });
