@@ -119,6 +119,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="cxbuilder.html#_bound" class="tsd-kind-icon">_bound</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="cxbuilder.html#_cache" class="tsd-kind-icon">_cache</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="cxbuilder.html#_cx" class="tsd-kind-icon">_cx</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="cxbuilder.html#_peers" class="tsd-kind-icon">_peers</a></li>
 							</ul>
@@ -127,6 +128,7 @@
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="cxbuilder.html#boundpeer" class="tsd-kind-icon">bound<wbr>Peer</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="cxbuilder.html#cache" class="tsd-kind-icon">cache</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="cxbuilder.html#context" class="tsd-kind-icon">context</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="cxbuilder.html#rankcount" class="tsd-kind-icon">rank<wbr>Count</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="cxbuilder.html#supply" class="tsd-kind-icon">supply</a></li>
@@ -159,7 +161,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="cxpeerbuilder.html">CxPeerBuilder</a>.<a href="cxpeerbuilder.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/builder.ts#L24">builder.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/builder.ts#L30">builder.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -206,8 +208,7 @@
 								<li>
 									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>peers: <a href="../interfaces/cxpeer.html" class="tsd-signature-type" data-tsd-kind="Interface">CxPeer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Context peers to apply assets from. These assets applied before the ones provided
-										<a href="cxbuilder.html#provide">explicitly</a>.</p>
+										<p>Context peers to apply assets from. These assets applied before the ones provided <a href="cxbuilder.html#provide">explicitly</a>. Peers listed later have lesser {@link CxAsset.Provided.rank rank values} than the ones listed earlier.</p>
 									</div>
 								</li>
 							</ul>
@@ -224,7 +225,7 @@
 					<div class="tsd-signature tsd-kind-icon">_bound<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../interfaces/cxpeer.html" class="tsd-signature-type" data-tsd-kind="Interface">CxPeer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CxValues</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/builder.ts#L24">builder.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/builder.ts#L30">builder.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -244,12 +245,28 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_cache" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> _cache</h3>
+					<div class="tsd-signature tsd-kind-icon">_cache<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CxBuilder$Cache</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/builder.ts#L25">builder.ts:25</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>internal</dt>
+							<dd></dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="_cx" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> _cx</h3>
 					<div class="tsd-signature tsd-kind-icon">_cx<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TContext</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/builder.ts#L19">builder.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/builder.ts#L20">builder.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -275,7 +292,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="cxpeerbuilder.html">CxPeerBuilder</a>.<a href="cxpeerbuilder.html#_peers">_peers</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/peer-builder.ts#L25">peer-builder.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/peer-builder.ts#L26">peer-builder.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -298,7 +315,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/builder.ts#L57">builder.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/builder.ts#L67">builder.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -308,6 +325,23 @@
 								<p>Unlike the builder itself, this peer may provide assets for any context, as they constructed in compatible one.</p>
 							</div>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/cxpeer.html" class="tsd-signature-type" data-tsd-kind="Interface">CxPeer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CxValues</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="cache" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> cache</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> cache<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/cxbuilder.cache.html" class="tsd-signature-type" data-tsd-kind="Interface">Cache</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/builder.ts#L58">builder.ts:58</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/cxbuilder.cache.html" class="tsd-signature-type" data-tsd-kind="Interface">Cache</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -321,7 +355,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/builder.ts#L48">builder.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/builder.ts#L54">builder.ts:54</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -343,7 +377,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/peer-builder.ts#L51">peer-builder.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/peer-builder.ts#L53">peer-builder.ts:53</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -360,7 +394,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/peer-builder.ts#L55">peer-builder.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/peer-builder.ts#L57">peer-builder.ts:57</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Supply</span></h4>
@@ -381,7 +415,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cxpeerbuilder.html">CxPeerBuilder</a>.<a href="cxpeerbuilder.html#_record">_record</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/peer-builder.ts#L88">peer-builder.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/peer-builder.ts#L97">peer-builder.ts:97</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -413,14 +447,14 @@
 					<a name="eachasset" class="tsd-anchor"></a>
 					<h3>each<wbr>Asset</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">each<wbr>Asset&lt;TValue, TAsset&gt;<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Callback</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">each<wbr>Asset&lt;TValue, TAsset&gt;<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span>, cache<span class="tsd-signature-symbol">: </span><a href="../interfaces/cxbuilder.cache.html" class="tsd-signature-type" data-tsd-kind="Interface">Cache</a>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Callback</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cxpeerbuilder.html">CxPeerBuilder</a>.<a href="cxpeerbuilder.html#eachasset">eachAsset</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/peer-builder.ts#L63">peer-builder.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/peer-builder.ts#L69">peer-builder.ts:69</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -445,6 +479,9 @@
 									<h5>target: <span class="tsd-signature-type">Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
+									<h5>cache: <a href="../interfaces/cxbuilder.cache.html" class="tsd-signature-type" data-tsd-kind="Interface">Cache</a></h5>
+								</li>
+								<li>
 									<h5>callback: <span class="tsd-signature-type">Callback</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
@@ -456,14 +493,14 @@
 					<a name="eachrecentasset" class="tsd-anchor"></a>
 					<h3>each<wbr>Recent<wbr>Asset</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">each<wbr>Recent<wbr>Asset&lt;TValue, TAsset&gt;<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Callback</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">each<wbr>Recent<wbr>Asset&lt;TValue, TAsset&gt;<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span>, cache<span class="tsd-signature-symbol">: </span><a href="../interfaces/cxbuilder.cache.html" class="tsd-signature-type" data-tsd-kind="Interface">Cache</a>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Callback</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cxpeerbuilder.html">CxPeerBuilder</a>.<a href="cxpeerbuilder.html#eachrecentasset">eachRecentAsset</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/peer-builder.ts#L70">peer-builder.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/peer-builder.ts#L77">peer-builder.ts:77</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -489,6 +526,9 @@
 									<h5>target: <span class="tsd-signature-type">Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
+									<h5>cache: <a href="../interfaces/cxbuilder.cache.html" class="tsd-signature-type" data-tsd-kind="Interface">Cache</a></h5>
+								</li>
+								<li>
 									<h5>callback: <span class="tsd-signature-type">Callback</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
@@ -509,7 +549,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of CxValues.get</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/builder.ts#L61">builder.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/builder.ts#L71">builder.ts:71</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -533,7 +573,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of CxValues.get</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/builder.ts#L63">builder.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/builder.ts#L73">builder.ts:73</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -557,7 +597,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of CxValues.get</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/builder.ts#L65">builder.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/builder.ts#L75">builder.ts:75</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -590,7 +630,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cxpeerbuilder.html">CxPeerBuilder</a>.<a href="cxpeerbuilder.html#provide">provide</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/peer-builder.ts#L59">peer-builder.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/peer-builder.ts#L65">peer-builder.ts:65</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -616,14 +656,14 @@
 					<a name="trackassets" class="tsd-anchor"></a>
 					<h3>track<wbr>Assets</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">track<wbr>Assets&lt;TValue, TAsset&gt;<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span>, receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Receiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span>, tracking<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">CxTracking</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Supply</span></li>
+						<li class="tsd-signature tsd-kind-icon">track<wbr>Assets&lt;TValue, TAsset&gt;<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span>, cache<span class="tsd-signature-symbol">: </span><a href="../interfaces/cxbuilder.cache.html" class="tsd-signature-type" data-tsd-kind="Interface">Cache</a>, receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Receiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span>, tracking<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">CxTracking</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Supply</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cxpeerbuilder.html">CxPeerBuilder</a>.<a href="cxpeerbuilder.html#trackassets">trackAssets</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/031c0e8/src/peer-builder.ts#L77">peer-builder.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/context-builder/blob/6a11d19/src/peer-builder.ts#L85">peer-builder.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -644,6 +684,9 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>target: <span class="tsd-signature-type">Target</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TContext</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>cache: <a href="../interfaces/cxbuilder.cache.html" class="tsd-signature-type" data-tsd-kind="Interface">Cache</a></h5>
 								</li>
 								<li>
 									<h5>receiver: <span class="tsd-signature-type">Receiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAsset</span><span class="tsd-signature-symbol">&gt;</span></h5>
@@ -681,6 +724,9 @@
 								<a href="cxbuilder.html#_bound" class="tsd-kind-icon">_bound</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="cxbuilder.html#_cache" class="tsd-kind-icon">_cache</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="cxbuilder.html#_cx" class="tsd-kind-icon">_cx</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
@@ -688,6 +734,9 @@
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="cxbuilder.html#boundpeer" class="tsd-kind-icon">bound<wbr>Peer</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="cxbuilder.html#cache" class="tsd-kind-icon">cache</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 								<a href="cxbuilder.html#context" class="tsd-kind-icon">context</a>
