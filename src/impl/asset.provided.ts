@@ -1,14 +1,17 @@
-import { CxAsset, CxEntry } from '@proc7ts/context-values';
+import { CxAsset, CxEntry, CxValues } from '@proc7ts/context-values';
 import { lazyValue } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
+import { CxBuilder } from '../builder';
+import { CxAsset$Placer } from './asset.placer';
 
-export class CxAsset$Provided<TAsset> implements CxAsset.Provided<TAsset> {
+export class CxAsset$Provided<TValue, TAsset, TContext extends CxValues> implements CxAsset.Provided<TAsset> {
 
   readonly _recentAsset: () => CxAsset.Evaluated<TAsset> | undefined;
 
   constructor(
-      private readonly _target: CxEntry.Target<unknown, TAsset>,
-      private readonly _asset: CxAsset<unknown, TAsset>,
+      private readonly _target: CxEntry.Target<TValue, TAsset, TContext>,
+      private readonly _cache: CxBuilder.Cache,
+      private readonly _placer: CxAsset$Placer<TValue, TAsset, TContext>,
       readonly supply: Supply,
   ) {
     this._recentAsset = lazyValue(() => {
@@ -37,7 +40,7 @@ export class CxAsset$Provided<TAsset> implements CxAsset.Provided<TAsset> {
   }
 
   eachAsset(callback: CxAsset.Callback<TAsset>): void {
-    this._asset.placeAsset(this._target, callback);
+    this._placer(this._target, this._cache, callback);
   }
 
   eachRecentAsset(callback: CxAsset.Callback<TAsset>): void {
