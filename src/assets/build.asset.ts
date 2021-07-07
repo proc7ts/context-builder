@@ -2,7 +2,9 @@ import { CxAsset, CxEntry, CxValues } from '@proc7ts/context-values';
 import { Supply } from '@proc7ts/supply';
 
 /**
- * Creates context entry asset that builds asset value with the given builder function.
+ * Creates context entry asset that builds value asset with the given builder function.
+ *
+ * Evaluates value asset at most once per context.
  *
  * @typeParam TValue - Context value type.
  * @typeParam TAsset - Context value asset type.
@@ -23,14 +25,16 @@ export function cxBuildAsset<TValue, TAsset = TValue, TContext extends CxValues 
 ): CxAsset<TValue, TAsset, TContext> {
   return {
     entry,
-    placeAsset(target, collector) {
+    buildAsset(target) {
 
       const asset = build(target);
 
-      if (asset != null) {
-        collector(asset);
-      }
+      return asset != null ? collector => collector(asset) : cxBuildAsset$empty;
     },
     supply,
   };
+}
+
+function cxBuildAsset$empty<TAsset>(_collector: CxAsset.Collector<TAsset>): void {
+  // No assets.
 }

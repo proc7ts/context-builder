@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
 import { CxEntry, cxSingle, CxValues } from '@proc7ts/context-values';
-import { Supply } from '@proc7ts/supply';
+import { neverSupply, Supply } from '@proc7ts/supply';
 import { cxBuildAsset, cxConstAsset } from './assets';
 import { CxBuilder } from './builder';
 
@@ -45,6 +45,48 @@ describe('CxAsset', () => {
 
       supply.off();
       expect(nestedSupply.isOff).toBe(true);
+    });
+    it('performs only setup', () => {
+
+      const entry = { perContext: cxSingle<string>() };
+      const nestedSupply = new Supply();
+      const supply = builder.provide({
+        entry,
+        setupAsset(target) {
+          target.provide(cxConstAsset(entry, 'test', nestedSupply));
+        },
+      });
+
+      expect(supply.isOff).toBe(false);
+      expect(nestedSupply.isOff).toBe(false);
+      expect(context.get(entry)).toBe('test');
+
+      supply.off();
+      expect(nestedSupply.isOff).toBe(true);
+    });
+  });
+
+  describe('supply', () => {
+    it('makes aspect ignored when cut off initially', () => {
+
+      const entry = { perContext: cxSingle<string>() };
+      const nestedEntry = { perContext: cxSingle<string>() };
+      const nestedSupply = new Supply();
+      const supply = builder.provide({
+        entry,
+        supply: neverSupply(),
+        placeAsset(_target, collector) {
+          collector('test');
+        },
+        setupAsset(target) {
+          target.provide(cxConstAsset(nestedEntry, 'nested', nestedSupply));
+        },
+      });
+
+      expect(supply.isOff).toBe(true);
+      expect(nestedSupply.isOff).toBe(false);
+      expect(context.get(entry, { or: null })).toBeNull();
+      expect(context.get(nestedEntry, { or: null })).toBeNull();
     });
   });
 

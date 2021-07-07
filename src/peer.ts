@@ -1,5 +1,6 @@
 import { CxAsset, CxEntry, CxTracking, CxValues } from '@proc7ts/context-values';
 import { Supply, SupplyPeer } from '@proc7ts/supply';
+import { CxBuilder } from './builder';
 
 /**
  * Context peer providing assets preceding those from {@link CxBuilder.provide context builder}.
@@ -27,10 +28,12 @@ export interface CxPeer<TContext extends CxValues = CxValues> extends SupplyPeer
    * assets.
    *
    * @param target - Context entry definition target to iterate over assets of.
+   * @param cache - Target context cache.
    * @param callback - Assets callback.
    */
   eachAsset<TValue, TAsset>(
       target: CxEntry.Target<TValue, TAsset, TContext>,
+      cache: CxBuilder.Cache,
       callback: CxAsset.Callback<TAsset>,
   ): void;
 
@@ -42,10 +45,12 @@ export interface CxPeer<TContext extends CxValues = CxValues> extends SupplyPeer
    * assets.
    *
    * @param target - Context entry definition target to iterate over assets of.
+   * @param cache - Target context cache.
    * @param callback - Assets callback.
    */
   eachRecentAsset<TValue, TAsset>(
       target: CxEntry.Target<TValue, TAsset, TContext>,
+      cache: CxBuilder.Cache,
       callback: CxAsset.Callback<TAsset>,
   ): void;
 
@@ -53,6 +58,7 @@ export interface CxPeer<TContext extends CxValues = CxValues> extends SupplyPeer
    * Reads assets of particular entry value and start tracking of their additions.
    *
    * @param target - Context entry definition target to track assets for.
+   * @param cache - Target context cache.
    * @param receiver - A receiver to report existing and added assets to.
    * @param tracking - Tracking options.
    *
@@ -60,6 +66,7 @@ export interface CxPeer<TContext extends CxValues = CxValues> extends SupplyPeer
    */
   trackAssets<TValue, TAsset>(
       target: CxEntry.Target<TValue, TAsset, TContext>,
+      cache: CxBuilder.Cache,
       receiver: CxAsset.Receiver<TAsset>,
       tracking?: CxTracking,
   ): Supply;

@@ -3,8 +3,8 @@ import { deduplicateAfter_, mapAfter_ } from '@proc7ts/fun-events';
 import { lazyValue } from '@proc7ts/primitives';
 import { flatMapIt, itsElements, reverseArray } from '@proc7ts/push-iterator';
 import { Supply } from '@proc7ts/supply';
-import { CxEntry$assetsByRank, CxEntry$recentAsset } from './entry.assets-by-rank.impl';
-import { CxEntry$Record } from './entry.record.impl';
+import { CxEntry$assetsByRank, CxEntry$recentAsset } from './entry.assets-by-rank';
+import { CxEntry$Record } from './entry.record';
 
 export class CxEntry$Target<TValue, TAsset, TContext extends CxValues>
     implements CxEntry.Target<TValue, TAsset, TContext> {
@@ -44,15 +44,15 @@ export class CxEntry$Target<TValue, TAsset, TContext extends CxValues>
   }
 
   eachAsset(callback: CxAsset.Callback<TAsset>): void {
-    this._record.builder.eachAsset(this, callback);
+    this._record.builder.eachAsset(this, this._record.cache, callback);
   }
 
   eachRecentAsset(callback: CxAsset.Callback<TAsset>): void {
-    this._record.builder.eachRecentAsset(this, callback);
+    this._record.builder.eachRecentAsset(this, this._record.cache, callback);
   }
 
   trackAssets(receiver: CxAsset.Receiver<TAsset>, tracking?: CxTracking): Supply {
-    return this._record.builder.trackAssets(this, receiver, tracking);
+    return this._record.builder.trackAssets(this, this._record.cache, receiver, tracking);
   }
 
   trackRecentAsset(receiver: CxAsset.RecentReceiver<TAsset>, { supply = new Supply() }: CxTracking = {}): Supply {

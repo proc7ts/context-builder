@@ -1,6 +1,7 @@
-import { CxAccessor, CxAsset, CxEntry, CxRequest, CxTracking, CxValues } from '@proc7ts/context-values';
+import { CxAccessor, CxEntry, CxRequest, CxValues } from '@proc7ts/context-values';
 import { lazyValue } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
+import { CxBuilder$BoundPeer, CxBuilder$Cache } from './impl';
 import { CxPeer } from './peer';
 import { CxPeerBuilder } from './peer-builder';
 
@@ -21,15 +22,20 @@ export class CxBuilder<TContext extends CxValues = CxValues> extends CxPeerBuild
   /**
    * @internal
    */
-  private readonly _bound: () => CxPeer = lazyValue(() => new CxBuilder$BoundPeer(this));
+  private readonly _cache = new CxBuilder$Cache();
+
+  /**
+   * @internal
+   */
+  private readonly _bound: () => CxPeer = lazyValue(() => new CxBuilder$BoundPeer(this, this.cache));
 
   /**
    * Constructs context builder.
    *
    * @param createContext - Context creator function. Accepts context value accessor and the builder itself as
    * parameters, and returns created context.
-   * @param peers - Context peers to apply assets from. These assets applied before the ones provided
-   * {@link provide explicitly}.
+   * @param peers - Context peers to apply assets from. These assets applied before the ones provided {@link provide
+   * explicitly}. Peers listed later have lesser {@link CxAsset.Provided.rank rank values} than the ones listed earlier.
    */
   constructor(
       createContext: (this: void, getValue: CxAccessor, builder: CxBuilder<TContext>) => TContext,
@@ -47,6 +53,10 @@ export class CxBuilder<TContext extends CxValues = CxValues> extends CxPeerBuild
    */
   override get context(): TContext {
     return this._cx();
+  }
+
+  protected override get cache(): CxBuilder.Cache {
+    return this._cache;
   }
 
   /**
@@ -70,48 +80,33 @@ export class CxBuilder<TContext extends CxValues = CxValues> extends CxPeerBuild
 
 }
 
-class CxBuilder$BoundPeer<TContext extends CxValues> implements CxPeer {
+export namespace CxBuilder {
 
-  constructor(private readonly _cb: CxBuilder<TContext>) {
-  }
+  /**
+   * Context cache the {@link CxPeer context peer} may use to store intermediate data.
+   *
+   * There is only one cache instance exists per context.
+   */
+  export interface Cache {
 
-  get supply(): Supply {
-    return this._cb.supply;
-  }
+    /**
+     * Obtains a value previously {@link put cached} under the given `key`.
+     *
+     * @param key - Cached value key.
+     *
+     * @returns Either cached value, or `undefined` if the value did not cached.
+     */
+    get(key: unknown): unknown | undefined;
 
-  get rankCount(): number {
-    return this._cb.rankCount;
-  }
+    /**
+     * Caches the `value` under the given `key`.
+     *
+     * @param key - Cached value key.
+     * @param value - A value to cache.
+     * @param supply - Value supply. The value will be removed from cache once this supply cut off.
+     */
+    put(key: unknown, value: unknown, supply: Supply): void;
 
-  eachAsset<TValue, TAsset>(
-      target: CxEntry.Target<TValue, TAsset>,
-      callback: CxAsset.Callback<TAsset>,
-  ): void {
-
-    const record = this._cb._record(target.entry);
-
-    record.eachAsset(record.target, callback);
-  }
-
-  eachRecentAsset<TValue, TAsset>(
-      target: CxEntry.Target<TValue, TAsset>,
-      callback: CxAsset.Callback<TAsset>,
-  ): void {
-
-    const record = this._cb._record(target.entry);
-
-    record.eachRecentAsset(record.target, callback);
-  }
-
-  trackAssets<TValue, TAsset>(
-      target: CxEntry.Target<TValue, TAsset>,
-      receiver: CxAsset.Receiver<TAsset>,
-      tracking?: CxTracking,
-  ): Supply {
-
-    const record = this._cb._record(target.entry);
-
-    return record.trackAssets(record.target, receiver, tracking);
   }
 
 }
