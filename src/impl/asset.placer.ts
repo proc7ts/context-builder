@@ -27,12 +27,16 @@ export function CxAsset$placerOf<TValue, TAsset, TContext extends CxValues>(
 
       let provider = cache.get(key) as ((collector: CxAsset.Collector<TAsset>) => void) | undefined;
 
-      if (!provider) {
-        provider = asset.buildAsset(target);
+      if (provider === undefined) {
+        provider = asset.buildAsset(target) || CxAsset$noneProvider;
         cache.put(key, provider, supply);
       }
 
       provider(collector);
     };
   }
+}
+
+function CxAsset$noneProvider(_collector: CxAsset.Collector<any>): void {
+  // No assets.
 }

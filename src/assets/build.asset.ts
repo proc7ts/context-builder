@@ -29,12 +29,8 @@ export function cxBuildAsset<TValue, TAsset = TValue, TContext extends CxValues 
 
       const asset = build(target);
 
-      return asset != null ? collector => collector(asset) : cxBuildAsset$empty;
+      return asset && (collector => collector(asset));
     },
     supply,
   };
-}
-
-function cxBuildAsset$empty<TAsset>(_collector: CxAsset.Collector<TAsset>): void {
-  // No assets.
 }
