@@ -1,6 +1,6 @@
 {
   "name": "@proc7ts/context-builder",
-  "version": "7.0.0-dev.9",
+  "version": "7.0.0-dev.10",
   "description": "IoC context builder",
   "keywords": [
     "ioc"
