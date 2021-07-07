@@ -29,7 +29,7 @@ export function cxBuildAsset<TValue, TAsset = TValue, TContext extends CxValues 
 
       const asset = build(target);
 
-      return asset && (collector => collector(asset));
+      return asset != null && (collector => collector(asset));
     },
     supply,
   };
