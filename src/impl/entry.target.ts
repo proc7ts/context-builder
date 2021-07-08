@@ -56,29 +56,19 @@ export class CxEntry$Target<TValue, TAsset, TContext extends CxValues>
   }
 
   trackRecentAsset(receiver: CxAsset.RecentReceiver<TAsset>, { supply = new Supply() }: CxTracking = {}): Supply {
-    return CxEntry$assetsByRank(this).read.do(
+    return CxEntry$assetsByRank(this, supply).read.do(
         mapAfter_(CxEntry$recentAsset),
         deduplicateAfter_(),
-    )({
-      supply,
-      receive(_ctx, evaluated) {
-        receiver(evaluated);
-      },
-    });
+    )(receiver);
   }
 
   trackAssetList(receiver: CxAsset.ListReceiver<TAsset>, { supply = new Supply() }: CxTracking = {}): Supply {
-    return CxEntry$assetsByRank(this).read.do(
+    return CxEntry$assetsByRank(this, supply).read.do(
         mapAfter_(assetByRank => itsElements(flatMapIt(
             reverseArray(assetByRank),
             rankAssets => rankAssets.values(),
         ))),
-    )({
-      supply,
-      receive(_ctx, list) {
-        receiver(list);
-      },
-    });
+    )(receiver);
   }
 
   lazy<T>(evaluator: (this: void, target: this) => T): (this: void) => T {

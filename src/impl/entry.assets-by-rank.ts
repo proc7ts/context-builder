@@ -7,11 +7,12 @@ export type CxEntry$AssetsByRank<TAsset> = Map<Supply, CxAsset.Provided<TAsset>>
 
 export function CxEntry$assetsByRank<TAsset>(
     target: CxEntry.Target<unknown, TAsset>,
+    trackingSupply: Supply,
 ): ValueTracker<CxEntry$AssetsByRank<TAsset>> {
 
   const assetsByRank = trackValue<CxEntry$AssetsByRank<TAsset>>([]);
 
-  assetsByRank.supply.needs(target);
+  assetsByRank.supply.needs(trackingSupply).needs(target);
 
   const removeAsset = (supply: Supply, rank: number): void => {
 
@@ -21,6 +22,7 @@ export function CxEntry$assetsByRank<TAsset>(
     rankAssets.delete(supply);
     assetsByRank.it = ranks;
   };
+  const updateAsset = (): unknown => assetsByRank.it = [...assetsByRank.it];
   const addAsset = (asset: CxAsset.Provided<TAsset>): void => {
 
     const { supply, rank } = asset;
@@ -36,9 +38,10 @@ export function CxEntry$assetsByRank<TAsset>(
     assetsByRank.it = ranks;
 
     supply.whenOff(() => removeAsset(supply, rank));
+    asset.onUpdate(updateAsset);
   };
 
-  target.trackAssets(addAsset);
+  target.trackAssets(addAsset, assetsByRank);
 
   return assetsByRank;
 }
