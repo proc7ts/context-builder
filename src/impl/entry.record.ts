@@ -45,8 +45,12 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
     const placer = CxAsset$placerOf(asset, supply);
 
     if (placer) {
-      this.placers.set(supply, placer);
-      supply.whenOff(() => this.placers.delete(supply));
+
+      const placerSupply = new Supply().as(supply);
+
+      this.placers.set(placerSupply, placer);
+      placerSupply.whenOff(() => this.placers.delete(placerSupply));
+
       for (const [trackingSupply, sender] of this.senders) {
         this.sendAssets(
             sender,
@@ -266,11 +270,11 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
       );
     }
 
-    for (const [assetSupply, placer] of this.placers) {
+    for (const [placerSupply, placer] of this.placers) {
       this.sendAssets(
           sender,
           placer,
-          new Supply().needs(assetSupply).needs(supply),
+          new Supply().needs(placerSupply).needs(supply),
       );
     }
 
