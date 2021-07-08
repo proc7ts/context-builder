@@ -1,4 +1,4 @@
-import { CxAsset, CxEntry, CxValues } from '@proc7ts/context-values';
+import { CxAsset, CxEntry, CxTracking, CxValues } from '@proc7ts/context-values';
 import { lazyValue } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 import { CxBuilder } from '../builder';
@@ -40,7 +40,7 @@ export class CxAsset$Provided<TValue, TAsset, TContext extends CxValues> impleme
   }
 
   eachAsset(callback: CxAsset.Callback<TAsset>): void {
-    this._placer(this._target, this._cache, callback);
+    this._placer.place(this._target, this._cache, callback);
   }
 
   eachRecentAsset(callback: CxAsset.Callback<TAsset>): void {
@@ -56,6 +56,13 @@ export class CxAsset$Provided<TValue, TAsset, TContext extends CxValues> impleme
         break;
       }
     }
+  }
+
+  onUpdate(receiver: (this: void) => void, { supply = new Supply() }: CxTracking = {}): Supply {
+    return this._placer.onUpdate({
+      receive: _ctx => receiver(),
+      supply: supply.needs(this.supply),
+    });
   }
 
 }
@@ -79,6 +86,10 @@ export class CxAsset$Derived<TAsset> implements CxAsset.Provided<TAsset> {
 
   eachRecentAsset(callback: CxAsset.Callback<TAsset>): void {
     return this.$.eachRecentAsset(callback);
+  }
+
+  onUpdate(receiver: (this: void) => void, tracking?: CxTracking): Supply {
+    return this.$.onUpdate(receiver, tracking);
   }
 
 }

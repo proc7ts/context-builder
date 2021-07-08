@@ -190,7 +190,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
     }
 
     for (const placer of this.placers.values()) {
-      placer(target, cache, collector);
+      placer.place(target, cache, collector);
       if (!goOn) {
         break;
       }
@@ -213,7 +213,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
 
     // Iterate in most-recent-first order.
     for (const placer of [...this.placers.values()].reverse()) {
-      placer(target, cache, collector);
+      placer.place(target, cache, collector);
       if (!goOn) {
         return;
       }
