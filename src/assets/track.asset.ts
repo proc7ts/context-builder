@@ -1,5 +1,4 @@
 import { CxAsset, CxEntry, CxValues } from '@proc7ts/context-values';
-import { afterEventBy, sendEventsTo } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 
@@ -32,17 +31,17 @@ export function cxTrackAsset<TValue, TAsset = TValue, TContext extends CxValues 
     entry,
     buildAsset(target, update) {
 
-      let assets: TAsset[];
+      let assets: TAsset[] = [];
       let sendUpdate: () => void = noop;
-      const readUpdates = afterEventBy<TAsset[]>(rcv => track(target, sendEventsTo(rcv), rcv.supply), () => []);
 
-      readUpdates({
-        receive(_ctx, ...updates) {
-          assets = updates;
-          sendUpdate();
-        },
-        supply: new Supply().needs(supply).needs(target),
-      });
+      track(
+          target,
+          (...updates) => {
+            assets = updates;
+            sendUpdate();
+          },
+          new Supply().needs(supply).needs(target),
+      );
 
       sendUpdate = update; // Start actually sending updates only after receiver registration.
 
