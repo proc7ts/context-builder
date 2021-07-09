@@ -1,11 +1,12 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
 import { cxDynamic, CxEntry, cxRecent } from '@proc7ts/context-values';
-import { EventEmitter } from '@proc7ts/fun-events';
-import { noop, valueProvider } from '@proc7ts/primitives';
+import { EventEmitter, EventSupplier, onSupplied } from '@proc7ts/fun-events';
+import { valueProvider } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { CxBuilder } from '../builder';
-import { cxOnAsset } from './on.asset';
+import { cxTrackAsset } from './track.asset';
 
-describe('cxOnAsset', () => {
+describe('cxTrackAsset', () => {
 
   let builder: CxBuilder;
 
@@ -28,7 +29,7 @@ describe('cxOnAsset', () => {
 
       const assets = new EventEmitter<number[]>();
 
-      builder.provide(cxOnAsset(entry, () => assets));
+      builder.provide(cxTrackAsset(entry, track(assets)));
       expect(builder.get(entry)).toEqual([]);
 
       assets.send(1, 2, 3);
@@ -36,10 +37,6 @@ describe('cxOnAsset', () => {
 
       assets.send(4, 5);
       expect(builder.get(entry)).toEqual([4, 5]);
-    });
-    it('supplies nothing without supplier', () => {
-      builder.provide(cxOnAsset(entry, noop));
-      expect(builder.get(entry)).toEqual([]);
     });
   });
 
@@ -58,7 +55,7 @@ describe('cxOnAsset', () => {
 
       const assets = new EventEmitter<number[]>();
 
-      builder.provide(cxOnAsset(entry, () => assets));
+      builder.provide(cxTrackAsset(entry, track(assets)));
       expect(builder.get(entry)).toBe(0);
 
       assets.send(1, 2, 3);
@@ -91,7 +88,7 @@ describe('cxOnAsset', () => {
 
       const assets = new EventEmitter<number[]>();
 
-      builder.provide(cxOnAsset(entry, () => assets));
+      builder.provide(cxTrackAsset(entry, track(assets)));
       expect(builder.get(entry)).toBe(0);
 
       assets.send(1, 2, 3);
@@ -102,4 +99,13 @@ describe('cxOnAsset', () => {
     });
   });
 
+  function track<TValue, TAsset = TValue>(onAssets: EventSupplier<TAsset[]>): (
+      target: CxEntry.Target<TValue, TAsset>,
+      receiver: (...assets: TAsset[]) => void,
+      supply: Supply) => void {
+    return (_target, receiver, supply) => onSupplied(onAssets)({
+      receive: (_, ...assets) => receiver(...assets),
+      supply,
+    });
+  }
 });

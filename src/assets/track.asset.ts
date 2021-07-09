@@ -1,28 +1,31 @@
 import { CxAsset, CxEntry, CxValues } from '@proc7ts/context-values';
-import { afterSupplied, EventSupplier } from '@proc7ts/fun-events';
+import { afterEventBy, sendEventsTo } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 
 /**
- * Creates context entry asset that updates value assets on each received event.
+ * Creates context entry asset that tracks for value asset updates.
  *
- * Evaluates event supplier at most once per context. Then treats the received event as array of value assets.
+ * Starts tracking at most once per context.
  *
  * @typeParam TValue - Context value type.
  * @typeParam TAsset - Context value asset type.
  * @typeParam TContext - Supported context type.
  * @param entry - Target context entry.
- * @param build - Asset supplier builder function accepting entry definition target as its only parameter.
+ * @param track - Starts assets tracking. Accepts context entry definition target, assets receiver function, and assets
+ * supply as parameters. Passes updated assets to receiver until supply cut off.
  * @param supply - Asset supply. Removes the created asset once cut off.
  *
  * @returns New context entry asset.
  */
-export function cxOnAsset<TValue, TAsset = TValue, TContext extends CxValues = CxValues>(
+export function cxTrackAsset<TValue, TAsset = TValue, TContext extends CxValues = CxValues>(
     entry: CxEntry<TValue, TAsset>,
-    build: (
+    track: (
         this: void,
         target: CxEntry.Target<TValue, TAsset, TContext>,
-    ) => EventSupplier<TAsset[]> | false | null | undefined,
+        receiver: (this: void, ...assets: TAsset[]) => void,
+        supply: Supply,
+    ) => void,
     supply = new Supply(),
 ): CxAsset<TValue, TAsset, TContext> {
   return {
@@ -31,15 +34,11 @@ export function cxOnAsset<TValue, TAsset = TValue, TContext extends CxValues = C
 
       let assets: TAsset[];
       let sendUpdate: () => void = noop;
-      const supplier = build(target);
+      const readUpdates = afterEventBy<TAsset[]>(rcv => track(target, sendEventsTo(rcv), rcv.supply), () => []);
 
-      if (!supplier) {
-        return;
-      }
-
-      afterSupplied(supplier, () => [])({
-        receive(_ctx, ...event) {
-          assets = event;
+      readUpdates({
+        receive(_ctx, ...updates) {
+          assets = updates;
           sendUpdate();
         },
         supply: new Supply().needs(supply).needs(target),
