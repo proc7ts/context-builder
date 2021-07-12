@@ -103,7 +103,7 @@ cxBuilder.provide(cxAliasAsset(Bar, Foo));
 cxBuilder.get(Bar); // 'foo'
 ```
 
-[CxAsset]: https://proc7ts.github.io/context-builder/interfaces/CxAsset.html
+[CxAsset]: https://proc7ts.github.io/context-values/interfaces/CxAsset.html
 [cxAliasAsset()]: https://proc7ts.github.io/context-builder/modules.html#cxAliasAsset
 [cxBuildAsset()]: https://proc7ts.github.io/context-builder/modules.html#cxBuildAsset
 [cxConstAsset()]: https://proc7ts.github.io/context-builder/modules.html#cxConstAsset
