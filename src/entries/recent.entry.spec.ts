@@ -92,7 +92,7 @@ describe('cxRecent', () => {
 
       expect(() => context.get(entry)).toThrow(new CxReferenceError(
           entry,
-          'The [CxEntry test] is unavailable',
+          'The [CxEntry test] is no longer available',
           reason,
       ));
     });
@@ -105,7 +105,7 @@ describe('cxRecent', () => {
 
       expect(() => context.get(entry)).toThrow(new CxReferenceError(
           entry,
-          'The [CxEntry test] is unavailable',
+          'The [CxEntry test] is no longer available',
           reason,
       ));
     });
