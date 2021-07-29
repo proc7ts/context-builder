@@ -23,7 +23,7 @@
     "@proc7ts/context-values": "^7.0.0"
   },
   "dependencies": {
-    "@proc7ts/fun-events": "^10.5.0",
+    "@proc7ts/fun-events": "^10.5.1",
     "@proc7ts/primitives": "^3.0.2",
     "@proc7ts/push-iterator": "^3.1.0",
     "@proc7ts/supply": "^1.2.3"
