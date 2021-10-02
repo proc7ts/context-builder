@@ -75,6 +75,7 @@ describe('cxTrackAsset', () => {
             assign(receiver) {
               target.eachAsset(asset => {
                 receiver(asset);
+
                 return false;
               });
             },

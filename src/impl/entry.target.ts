@@ -29,6 +29,7 @@ export class CxEntry$Target<TValue, TAsset, TContext extends CxValues>
 
     this.eachRecentAsset(asset => {
       mostRecent = asset;
+
       return false;
     });
 

@@ -221,6 +221,7 @@ describe('CxEntry', () => {
             };
           },
         };
+
         builder.provide(cxConstAsset(entry, 'a'));
         builder.provide(cxConstAsset(entry, 'b'));
         builder.provide(cxConstAsset(entry, 'c'));

@@ -65,6 +65,7 @@ export class CxAsset$Provided<TValue, TAsset, TContext extends CxValues> impleme
           rank: this.rank,
           supply: this.supply,
         };
+
         return false;
       });
 

@@ -89,6 +89,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
         if (resultBy >= 0 /* either explicitly provided, or fallback value received */) {
           // Report and return it.
           set(result!, resultBy);
+
           return result!;
         }
 
@@ -106,6 +107,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
       if (or !== undefined /* fallback specified */) {
         // Report and return fallback value.
         set(or, CxRequestMethod.Fallback);
+
         return or;
       }
     }
@@ -137,6 +139,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
       if (resultBy <= 0 /* either default, or fallback value received */) {
         // Report and return it.
         set(result!, resultBy);
+
         return result!;
       }
 
@@ -161,6 +164,7 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
     if (by < 0 /* default value requested */ && or !== undefined /* ...and fallback specified */) {
       // Report and return fallback value.
       set(or, CxRequestMethod.Fallback);
+
       return or;
     }
 
