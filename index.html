@@ -1,240 +1,45 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IoC Context Builder</title>
-	<meta name="description" content="Documentation for IoC Context Builder">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">IoC Context Builder</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>IoC Context Builder</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#ioc-context-builder" id="ioc-context-builder" style="color: inherit; text-decoration: none;">
-					<h1>IoC Context Builder</h1>
-				</a>
-				<p><a href="https://www.npmjs.com/package/@proc7ts/context-builder"><img src="https://img.shields.io/npm/v/@proc7ts/context-builder.svg?logo=npm" alt="NPM"></a>
-					<a href="https://github.com/proc7ts/context-builder/actions?query=workflow:Build"><img src="https://github.com/proc7ts/context-builder/workflows/Build/badge.svg" alt="Build Status"></a>
-					<a href="https://www.codacy.com/gh/proc7ts/context-builder/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=proc7ts/context-builder&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/73faff6037244e9eae5b408c61a5077b" alt="Code Quality"></a>
-					<a href="https://www.codacy.com/gh/proc7ts/context-builder/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=proc7ts/context-builder&amp;utm_campaign=Badge_Coverage"><img src="https://app.codacy.com/project/badge/Coverage/73faff6037244e9eae5b408c61a5077b" alt="Coverage"></a>
-					<a href="https://github.com/proc7ts/context-builder"><img src="https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational" alt="GitHub Project"></a>
-				<a href="https://proc7ts.github.io/context-builder/"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
-				<p>This library allows to build an <a href="https://en.wikipedia.org/wiki/Inversion_of_control">IoC</a> context conforming to <a href="https://www.npmjs.com/package/@proc7ts/context-values">@proc7ts/context-values</a> API.</p>
-				<a href="#creating-context" id="creating-context" style="color: inherit; text-decoration: none;">
-					<h2>Creating Context</h2>
-				</a>
-				<p><a href="https://en.wikipedia.org/wiki/Inversion_of_control">IoC</a> context interface may be any. The only required method is <code>get()</code>.</p>
-				<p><a href="https://proc7ts.github.io/context-builder/classes/CxBuilder.html">CxBuilder</a> constructor accepts context builder function as its first parameter:</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">CxBuilder</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/context-builder&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">CxEntry</span><span style="color: #000000">, </span><span style="color: #001080">cxSingle</span><span style="color: #000000">, </span><span style="color: #001080">CxValues</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/context-values&#039;</span><span style="color: #000000">;</span>
+<!DOCTYPE html><html class="default no-js"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>IoC Context Builder</title><meta name="description" content="Documentation for IoC Context Builder"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">IoC Context Builder</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>IoC Context Builder</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#ioc-context-builder" id="ioc-context-builder" style="color: inherit; text-decoration: none;">
+  <h1>IoC Context Builder</h1>
+</a>
+<p><a href="https://www.npmjs.com/package/@proc7ts/context-builder"><img src="https://img.shields.io/npm/v/@proc7ts/context-builder.svg?logo=npm" alt="NPM"></a>
+<a href="https://github.com/proc7ts/context-builder/actions?query=workflow:Build"><img src="https://github.com/proc7ts/context-builder/workflows/Build/badge.svg" alt="Build Status"></a>
+<a href="https://www.codacy.com/gh/proc7ts/context-builder/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=proc7ts/context-builder&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/73faff6037244e9eae5b408c61a5077b" alt="Code Quality"></a>
+<a href="https://www.codacy.com/gh/proc7ts/context-builder/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=proc7ts/context-builder&amp;utm_campaign=Badge_Coverage"><img src="https://app.codacy.com/project/badge/Coverage/73faff6037244e9eae5b408c61a5077b" alt="Coverage"></a>
+<a href="https://github.com/proc7ts/context-builder"><img src="https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational" alt="GitHub Project"></a>
+<a href="https://proc7ts.github.io/context-builder/"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
+<p>This library allows to build an <a href="https://en.wikipedia.org/wiki/Inversion_of_control">IoC</a> context conforming to <a href="https://www.npmjs.com/package/@proc7ts/context-values">@proc7ts/context-values</a> API.</p>
 
-<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">Foo</span><span style="color: #000000"> = </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
-
-<span style="color: #267F99">export</span><span style="color: #000000"> </span><span style="color: #267F99">const</span><span style="color: #000000"> </span><span style="color: #267F99">Foo</span><span style="color: #000000">: </span><span style="color: #267F99">CxEntry</span><span style="color: #000000">&lt;</span><span style="color: #267F99">Foo</span><span style="color: #000000">&gt; = {</span>
-<span style="color: #000000">  </span><span style="color: #001080">perContext</span><span style="color: #000000">: </span><span style="color: #267F99">cxSingle</span><span style="color: #000000">({ </span><span style="color: #795E26">byDefault</span><span style="color: #000000">: () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;default&#039;</span><span style="color: #000000"> }),</span>
-<span style="color: #000000">  </span><span style="color: #795E26">toString</span><span style="color: #000000">: () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;[Foo]&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">}</span>
-
-<span style="color: #008000">// Custom context interface.</span>
-<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">MyContext</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">CxValues</span><span style="color: #000000"> {</span>
-<span style="color: #000000"> </span>
-<span style="color: #000000">  </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">name</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;  </span>
-
-<span style="color: #000000">  </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">foo</span><span style="color: #000000">: </span><span style="color: #267F99">Foo</span><span style="color: #000000">;</span>
-<span style="color: #000000">  </span>
-<span style="color: #000000">}</span>
-
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">cxBuilder</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">CxBuilder</span><span style="color: #000000">&lt;</span><span style="color: #267F99">MyContext</span><span style="color: #000000">&gt;(</span><span style="color: #001080">get</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> (</span><span style="color: #008000">/* MyContext */</span><span style="color: #000000"> { </span>
-<span style="color: #000000">  </span><span style="color: #001080">get</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;MyContext&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">get</span><span style="color: #000000"> </span><span style="color: #795E26">foo</span><span style="color: #000000">() {</span>
-<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">Foo</span><span style="color: #000000">);</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">}));</span>
-
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">context</span><span style="color: #000000">: </span><span style="color: #267F99">MyContext</span><span style="color: #000000"> = </span><span style="color: #001080">cxBuilder</span><span style="color: #000000">.</span><span style="color: #001080">context</span><span style="color: #000000">;</span>
+<a href="#creating-context" id="creating-context" style="color: inherit; text-decoration: none;">
+  <h2>Creating Context</h2>
+</a>
+<p><a href="https://en.wikipedia.org/wiki/Inversion_of_control">IoC</a> context interface may be any. The only required method is <code>get()</code>.</p>
+<p><a href="https://proc7ts.github.io/context-builder/classes/CxBuilder.html">CxBuilder</a> constructor accepts context builder function as its first parameter:</p>
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">CxBuilder</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/context-builder&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">CxEntry</span><span class="hl-1">, </span><span class="hl-2">cxSingle</span><span class="hl-1">, </span><span class="hl-2">CxValues</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/context-values&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-0">export</span><span class="hl-1"> </span><span class="hl-4">interface</span><span class="hl-1"> </span><span class="hl-5">Foo</span><span class="hl-1"> = </span><span class="hl-5">string</span><span class="hl-1">;</span><br/><br/><span class="hl-5">export</span><span class="hl-1"> </span><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-5">Foo</span><span class="hl-1">: </span><span class="hl-5">CxEntry</span><span class="hl-1">&lt;</span><span class="hl-5">Foo</span><span class="hl-1">&gt; = {</span><br/><span class="hl-1">  </span><span class="hl-2">perContext</span><span class="hl-1">: </span><span class="hl-5">cxSingle</span><span class="hl-1">({ </span><span class="hl-6">byDefault</span><span class="hl-1">: () </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-3">&#39;default&#39;</span><span class="hl-1"> }),</span><br/><span class="hl-1">  </span><span class="hl-6">toString</span><span class="hl-1">: () </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-3">&#39;[Foo]&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-7">// Custom context interface.</span><br/><span class="hl-0">export</span><span class="hl-1"> </span><span class="hl-4">interface</span><span class="hl-1"> </span><span class="hl-5">MyContext</span><span class="hl-1"> </span><span class="hl-4">extends</span><span class="hl-1"> </span><span class="hl-5">CxValues</span><span class="hl-1"> {</span><br/><span class="hl-1"> </span><br/><span class="hl-1">  </span><span class="hl-4">readonly</span><span class="hl-1"> </span><span class="hl-2">name</span><span class="hl-1">: </span><span class="hl-5">string</span><span class="hl-1">;  </span><br/><br/><span class="hl-1">  </span><span class="hl-4">readonly</span><span class="hl-1"> </span><span class="hl-2">foo</span><span class="hl-1">: </span><span class="hl-5">Foo</span><span class="hl-1">;</span><br/><span class="hl-1">  </span><br/><span class="hl-1">}</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-8">cxBuilder</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">CxBuilder</span><span class="hl-1">&lt;</span><span class="hl-5">MyContext</span><span class="hl-1">&gt;(</span><span class="hl-2">get</span><span class="hl-1"> </span><span class="hl-4">=&gt;</span><span class="hl-1"> (</span><span class="hl-7">/* MyContext */</span><span class="hl-1"> { </span><br/><span class="hl-1">  </span><span class="hl-2">get</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">name:</span><span class="hl-1"> </span><span class="hl-3">&#39;MyContext&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">get</span><span class="hl-1"> </span><span class="hl-6">foo</span><span class="hl-1">() {</span><br/><span class="hl-1">    </span><span class="hl-0">return</span><span class="hl-1"> </span><span class="hl-4">this</span><span class="hl-1">.</span><span class="hl-6">get</span><span class="hl-1">(</span><span class="hl-2">Foo</span><span class="hl-1">);</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">}));</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-8">context</span><span class="hl-1">: </span><span class="hl-5">MyContext</span><span class="hl-1"> = </span><span class="hl-2">cxBuilder</span><span class="hl-1">.</span><span class="hl-2">context</span><span class="hl-1">;</span>
 </code></pre>
-				<a href="#providing-assets" id="providing-assets" style="color: inherit; text-decoration: none;">
-					<h2>Providing Assets</h2>
-				</a>
-				<p>A <code>provide</code> method of <code>CxBuilder</code> can be used to provide an asset for context entry.</p>
-				<p>The entry asset is an object implementing <a href="https://proc7ts.github.io/context-values/interfaces/CxAsset.html">CxAsset</a> interface.</p>
-				<p>The <a href="https://www.npmjs.com/package/@proc7ts/context-builder">@proc7ts/context-builder</a> contains several asset implementations suitable for most use cases:</p>
-				<ul>
-					<li><a href="https://proc7ts.github.io/context-builder/modules.html#cxAliasAsset">cxAliasAsset()</a> - Asset aliasing other context entry value.</li>
-					<li><a href="https://proc7ts.github.io/context-builder/modules.html#cxBuildAsset">cxBuildAsset()</a> - Builds asset with the given builder function.</li>
-					<li><a href="https://proc7ts.github.io/context-builder/modules.html#cxConstAsset">cxConstAsset()</a> - Constant asset.</li>
-					<li><a href="https://proc7ts.github.io/context-builder/modules.html#cxTrackAsset">cxTrackAsset()</a> - Tracks for value asset updates.</li>
-				</ul>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">cxAliasAsset</span><span style="color: #000000">, </span><span style="color: #001080">CxBuilder</span><span style="color: #000000">, </span><span style="color: #001080">cxConstAsset</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/context-builder&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">CxEntry</span><span style="color: #000000">, </span><span style="color: #001080">cxSingle</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/context-values&#039;</span><span style="color: #000000">;</span>
 
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Foo</span><span style="color: #000000">: </span><span style="color: #267F99">CxEntry</span><span style="color: #000000">&lt;</span><span style="color: #267F99">string</span><span style="color: #000000">&gt; = {</span>
-<span style="color: #000000">  </span><span style="color: #001080">perContext:</span><span style="color: #000000"> </span><span style="color: #795E26">cxSingle</span><span style="color: #000000">(),</span>
-<span style="color: #000000">  </span><span style="color: #795E26">toString</span><span style="color: #001080">:</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;[Foo]&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">};</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Bar</span><span style="color: #000000">: </span><span style="color: #267F99">CxEntry</span><span style="color: #000000">&lt;</span><span style="color: #267F99">string</span><span style="color: #000000">&gt; = {</span>
-<span style="color: #000000">  </span><span style="color: #001080">perContext:</span><span style="color: #000000"> </span><span style="color: #795E26">cxSingle</span><span style="color: #000000">(),</span>
-<span style="color: #000000">  </span><span style="color: #795E26">toString</span><span style="color: #001080">:</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;[Bar]&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">};</span>
-
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">cxBuilder</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">CxBuilder</span><span style="color: #000000">(</span><span style="color: #001080">get</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> ({ </span><span style="color: #001080">get</span><span style="color: #000000"> }));</span>
-
-<span style="color: #001080">cxBuilder</span><span style="color: #000000">.</span><span style="color: #795E26">provide</span><span style="color: #000000">(</span><span style="color: #795E26">cxConstAsset</span><span style="color: #000000">(</span><span style="color: #001080">Foo</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;foo&#039;</span><span style="color: #000000">));</span>
-<span style="color: #001080">cxBuilder</span><span style="color: #000000">.</span><span style="color: #795E26">provide</span><span style="color: #000000">(</span><span style="color: #795E26">cxAliasAsset</span><span style="color: #000000">(</span><span style="color: #001080">Bar</span><span style="color: #000000">, </span><span style="color: #001080">Foo</span><span style="color: #000000">));</span>
-
-<span style="color: #001080">cxBuilder</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">Bar</span><span style="color: #000000">); </span><span style="color: #008000">// &#039;foo&#039;</span>
+<a href="#providing-assets" id="providing-assets" style="color: inherit; text-decoration: none;">
+  <h2>Providing Assets</h2>
+</a>
+<p>A <code>provide</code> method of <code>CxBuilder</code> can be used to provide an asset for context entry.</p>
+<p>The entry asset is an object implementing <a href="https://proc7ts.github.io/context-values/interfaces/CxAsset.html">CxAsset</a> interface.</p>
+<p>The <a href="https://www.npmjs.com/package/@proc7ts/context-builder">@proc7ts/context-builder</a> contains several asset implementations suitable for most use cases:</p>
+<ul>
+<li><a href="https://proc7ts.github.io/context-builder/modules.html#cxAliasAsset">cxAliasAsset()</a> - Asset aliasing other context entry value.</li>
+<li><a href="https://proc7ts.github.io/context-builder/modules.html#cxBuildAsset">cxBuildAsset()</a> - Builds asset with the given builder function.</li>
+<li><a href="https://proc7ts.github.io/context-builder/modules.html#cxConstAsset">cxConstAsset()</a> - Constant asset.</li>
+<li><a href="https://proc7ts.github.io/context-builder/modules.html#cxTrackAsset">cxTrackAsset()</a> - Tracks for value asset updates.</li>
+</ul>
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">cxAliasAsset</span><span class="hl-1">, </span><span class="hl-2">CxBuilder</span><span class="hl-1">, </span><span class="hl-2">cxConstAsset</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/context-builder&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">CxEntry</span><span class="hl-1">, </span><span class="hl-2">cxSingle</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/context-values&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-8">Foo</span><span class="hl-1">: </span><span class="hl-5">CxEntry</span><span class="hl-1">&lt;</span><span class="hl-5">string</span><span class="hl-1">&gt; = {</span><br/><span class="hl-1">  </span><span class="hl-2">perContext:</span><span class="hl-1"> </span><span class="hl-6">cxSingle</span><span class="hl-1">(),</span><br/><span class="hl-1">  </span><span class="hl-6">toString</span><span class="hl-2">:</span><span class="hl-1"> () </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-3">&#39;[Foo]&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">};</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-8">Bar</span><span class="hl-1">: </span><span class="hl-5">CxEntry</span><span class="hl-1">&lt;</span><span class="hl-5">string</span><span class="hl-1">&gt; = {</span><br/><span class="hl-1">  </span><span class="hl-2">perContext:</span><span class="hl-1"> </span><span class="hl-6">cxSingle</span><span class="hl-1">(),</span><br/><span class="hl-1">  </span><span class="hl-6">toString</span><span class="hl-2">:</span><span class="hl-1"> () </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-3">&#39;[Bar]&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-8">cxBuilder</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">CxBuilder</span><span class="hl-1">(</span><span class="hl-2">get</span><span class="hl-1"> </span><span class="hl-4">=&gt;</span><span class="hl-1"> ({ </span><span class="hl-2">get</span><span class="hl-1"> }));</span><br/><br/><span class="hl-2">cxBuilder</span><span class="hl-1">.</span><span class="hl-6">provide</span><span class="hl-1">(</span><span class="hl-6">cxConstAsset</span><span class="hl-1">(</span><span class="hl-2">Foo</span><span class="hl-1">, </span><span class="hl-3">&#39;foo&#39;</span><span class="hl-1">));</span><br/><span class="hl-2">cxBuilder</span><span class="hl-1">.</span><span class="hl-6">provide</span><span class="hl-1">(</span><span class="hl-6">cxAliasAsset</span><span class="hl-1">(</span><span class="hl-2">Bar</span><span class="hl-1">, </span><span class="hl-2">Foo</span><span class="hl-1">));</span><br/><br/><span class="hl-2">cxBuilder</span><span class="hl-1">.</span><span class="hl-6">get</span><span class="hl-1">(</span><span class="hl-2">Bar</span><span class="hl-1">); </span><span class="hl-7">// &#39;foo&#39;</span>
 </code></pre>
-				<a href="#context-peers" id="context-peers" style="color: inherit; text-decoration: none;">
-					<h2>Context Peers</h2>
-				</a>
-				<p>A context peer provides assets for one or more contexts. When one or more context peers passed to context builder, the
-				assets provided by those peers precede the assets provided by builder.</p>
-				<p>A <a href="https://proc7ts.github.io/context-builder/classes/CxPeerBuilder.html">CxPeerBuilder</a> class can be used as a context peer. It is similar to <a href="https://proc7ts.github.io/context-builder/classes/CxBuilder.html">CxBuilder</a>, but does not build any context by
-				itself. The <a href="https://proc7ts.github.io/context-builder/classes/CxBuilder.html">CxBuilder</a> extends <a href="https://proc7ts.github.io/context-builder/classes/CxBuilder.html">CxBuilder</a> and can also be used as a peer of another context.</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">cxBuildAsset</span><span style="color: #000000">, </span><span style="color: #001080">CxBuilder</span><span style="color: #000000">, </span><span style="color: #001080">cxConstAsset</span><span style="color: #000000">, </span><span style="color: #001080">CxPeerBuilder</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/context-builder&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">CxEntry</span><span style="color: #000000">, </span><span style="color: #001080">cxSingle</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/context-values&#039;</span><span style="color: #000000">;</span>
 
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">cxBaseBuilder</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">CxPeerBuilder</span><span style="color: #000000">();</span>
-
-<span style="color: #008000">// Derive contexts from common base peer.</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">cxBuilder1</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">CxBuilder</span><span style="color: #000000">(</span><span style="color: #001080">get</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> ({ </span><span style="color: #001080">get</span><span style="color: #000000"> }), </span><span style="color: #001080">cxBaseBuilder</span><span style="color: #000000">);</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">cxBuilder2</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">CxBuilder</span><span style="color: #000000">(</span><span style="color: #001080">get</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> ({ </span><span style="color: #001080">get</span><span style="color: #000000"> }), </span><span style="color: #001080">cxBaseBuilder</span><span style="color: #000000">);</span>
-
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">BaseEntry</span><span style="color: #000000">: </span><span style="color: #267F99">CxEntry</span><span style="color: #000000">&lt;</span><span style="color: #267F99">string</span><span style="color: #000000">&gt; = {</span>
-<span style="color: #000000">  </span><span style="color: #001080">perContext:</span><span style="color: #000000"> </span><span style="color: #795E26">cxSingle</span><span style="color: #000000">(),</span>
-<span style="color: #000000">  </span><span style="color: #795E26">toString</span><span style="color: #001080">:</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;[BaseEntry]&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">};</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">DerivedEntry</span><span style="color: #000000">: </span><span style="color: #267F99">CxEntry</span><span style="color: #000000">&lt;</span><span style="color: #267F99">string</span><span style="color: #000000">&gt; = {</span>
-<span style="color: #000000">  </span><span style="color: #001080">perContext:</span><span style="color: #000000"> </span><span style="color: #795E26">cxSingle</span><span style="color: #000000">(),</span>
-<span style="color: #000000">  </span><span style="color: #795E26">toString</span><span style="color: #001080">:</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;[DerivedEntry]&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">};</span>
-
-<span style="color: #008000">// Provide base peer assets.</span>
-<span style="color: #001080">cxBaseBuilder</span><span style="color: #000000">.</span><span style="color: #795E26">provide</span><span style="color: #000000">(</span><span style="color: #795E26">cxConstAsset</span><span style="color: #000000">(</span><span style="color: #001080">BaseEntry</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;initial&#039;</span><span style="color: #000000">));</span>
-<span style="color: #001080">cxBaseBuilder</span><span style="color: #000000">.</span><span style="color: #795E26">provide</span><span style="color: #000000">(</span><span style="color: #795E26">cxBuildAsset</span><span style="color: #000000">(</span><span style="color: #001080">DerivedAsset</span><span style="color: #000000">, </span><span style="color: #001080">target</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">target</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">BaseAsset</span><span style="color: #000000">) + </span><span style="color: #A31515">&#039;!&#039;</span><span style="color: #000000">));</span>
-
-<span style="color: #008000">// Override base asset in derived context.</span>
-<span style="color: #001080">cxBuilder2</span><span style="color: #000000">.</span><span style="color: #795E26">provide</span><span style="color: #000000">(</span><span style="color: #795E26">cxConstAsset</span><span style="color: #000000">(</span><span style="color: #001080">BaseEntry</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;overridden&#039;</span><span style="color: #000000">));</span>
-
-<span style="color: #008000">// Derive value from base assets.</span>
-<span style="color: #001080">cxBuilder1</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">DerivedAsset</span><span style="color: #000000">); </span><span style="color: #008000">// &#039;initial!&#039;</span>
-
-<span style="color: #008000">// Refer overridden asset.</span>
-<span style="color: #001080">cxBuilder2</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">DerivedAsset</span><span style="color: #000000">); </span><span style="color: #008000">// &#039;overridden!&#039;</span>
+<a href="#context-peers" id="context-peers" style="color: inherit; text-decoration: none;">
+  <h2>Context Peers</h2>
+</a>
+<p>A context peer provides assets for one or more contexts. When one or more context peers passed to context builder, the
+assets provided by those peers precede the assets provided by builder.</p>
+<p>A <a href="https://proc7ts.github.io/context-builder/classes/CxPeerBuilder.html">CxPeerBuilder</a> class can be used as a context peer. It is similar to <a href="https://proc7ts.github.io/context-builder/classes/CxBuilder.html">CxBuilder</a>, but does not build any context by
+itself. The <a href="https://proc7ts.github.io/context-builder/classes/CxBuilder.html">CxBuilder</a> extends <a href="https://proc7ts.github.io/context-builder/classes/CxBuilder.html">CxBuilder</a> and can also be used as a peer of another context.</p>
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">cxBuildAsset</span><span class="hl-1">, </span><span class="hl-2">CxBuilder</span><span class="hl-1">, </span><span class="hl-2">cxConstAsset</span><span class="hl-1">, </span><span class="hl-2">CxPeerBuilder</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/context-builder&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">CxEntry</span><span class="hl-1">, </span><span class="hl-2">cxSingle</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/context-values&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-8">cxBaseBuilder</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">CxPeerBuilder</span><span class="hl-1">();</span><br/><br/><span class="hl-7">// Derive contexts from common base peer.</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-8">cxBuilder1</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">CxBuilder</span><span class="hl-1">(</span><span class="hl-2">get</span><span class="hl-1"> </span><span class="hl-4">=&gt;</span><span class="hl-1"> ({ </span><span class="hl-2">get</span><span class="hl-1"> }), </span><span class="hl-2">cxBaseBuilder</span><span class="hl-1">);</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-8">cxBuilder2</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">CxBuilder</span><span class="hl-1">(</span><span class="hl-2">get</span><span class="hl-1"> </span><span class="hl-4">=&gt;</span><span class="hl-1"> ({ </span><span class="hl-2">get</span><span class="hl-1"> }), </span><span class="hl-2">cxBaseBuilder</span><span class="hl-1">);</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-8">BaseEntry</span><span class="hl-1">: </span><span class="hl-5">CxEntry</span><span class="hl-1">&lt;</span><span class="hl-5">string</span><span class="hl-1">&gt; = {</span><br/><span class="hl-1">  </span><span class="hl-2">perContext:</span><span class="hl-1"> </span><span class="hl-6">cxSingle</span><span class="hl-1">(),</span><br/><span class="hl-1">  </span><span class="hl-6">toString</span><span class="hl-2">:</span><span class="hl-1"> () </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-3">&#39;[BaseEntry]&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">};</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-8">DerivedEntry</span><span class="hl-1">: </span><span class="hl-5">CxEntry</span><span class="hl-1">&lt;</span><span class="hl-5">string</span><span class="hl-1">&gt; = {</span><br/><span class="hl-1">  </span><span class="hl-2">perContext:</span><span class="hl-1"> </span><span class="hl-6">cxSingle</span><span class="hl-1">(),</span><br/><span class="hl-1">  </span><span class="hl-6">toString</span><span class="hl-2">:</span><span class="hl-1"> () </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-3">&#39;[DerivedEntry]&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-7">// Provide base peer assets.</span><br/><span class="hl-2">cxBaseBuilder</span><span class="hl-1">.</span><span class="hl-6">provide</span><span class="hl-1">(</span><span class="hl-6">cxConstAsset</span><span class="hl-1">(</span><span class="hl-2">BaseEntry</span><span class="hl-1">, </span><span class="hl-3">&#39;initial&#39;</span><span class="hl-1">));</span><br/><span class="hl-2">cxBaseBuilder</span><span class="hl-1">.</span><span class="hl-6">provide</span><span class="hl-1">(</span><span class="hl-6">cxBuildAsset</span><span class="hl-1">(</span><span class="hl-2">DerivedAsset</span><span class="hl-1">, </span><span class="hl-2">target</span><span class="hl-1"> </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-2">target</span><span class="hl-1">.</span><span class="hl-6">get</span><span class="hl-1">(</span><span class="hl-2">BaseAsset</span><span class="hl-1">) + </span><span class="hl-3">&#39;!&#39;</span><span class="hl-1">));</span><br/><br/><span class="hl-7">// Override base asset in derived context.</span><br/><span class="hl-2">cxBuilder2</span><span class="hl-1">.</span><span class="hl-6">provide</span><span class="hl-1">(</span><span class="hl-6">cxConstAsset</span><span class="hl-1">(</span><span class="hl-2">BaseEntry</span><span class="hl-1">, </span><span class="hl-3">&#39;overridden&#39;</span><span class="hl-1">));</span><br/><br/><span class="hl-7">// Derive value from base assets.</span><br/><span class="hl-2">cxBuilder1</span><span class="hl-1">.</span><span class="hl-6">get</span><span class="hl-1">(</span><span class="hl-2">DerivedAsset</span><span class="hl-1">); </span><span class="hl-7">// &#39;initial!&#39;</span><br/><br/><span class="hl-7">// Refer overridden asset.</span><br/><span class="hl-2">cxBuilder2</span><span class="hl-1">.</span><span class="hl-6">get</span><span class="hl-1">(</span><span class="hl-2">DerivedAsset</span><span class="hl-1">); </span><span class="hl-7">// &#39;overridden!&#39;</span>
 </code></pre>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Exports</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/CxBuilder.html">Cx<wbr>Builder</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/CxBuilder.html" class="tsd-kind-icon">Cx<wbr>Builder</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/CxPeerBuilder.html" class="tsd-kind-icon">Cx<wbr>Peer<wbr>Builder</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/CxPeer.html" class="tsd-kind-icon">Cx<wbr>Peer</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="modules.html#cxAliasAsset" class="tsd-kind-icon">cx<wbr>Alias<wbr>Asset</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="modules.html#cxBuildAsset" class="tsd-kind-icon">cx<wbr>Build<wbr>Asset</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="modules.html#cxConstAsset" class="tsd-kind-icon">cx<wbr>Const<wbr>Asset</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="modules.html#cxTrackAsset" class="tsd-kind-icon">cx<wbr>Track<wbr>Asset</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li><li class=" tsd-kind-namespace"><a href="modules/CxBuilder.html">Cx<wbr/>Builder</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/CxBuilder.html" class="tsd-kind-icon">Cx<wbr/>Builder</a></li><li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/CxPeerBuilder.html" class="tsd-kind-icon">Cx<wbr/>Peer<wbr/>Builder</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/CxPeer.html" class="tsd-kind-icon">Cx<wbr/>Peer</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#cxAliasAsset" class="tsd-kind-icon">cx<wbr/>Alias<wbr/>Asset</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#cxBuildAsset" class="tsd-kind-icon">cx<wbr/>Build<wbr/>Asset</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#cxConstAsset" class="tsd-kind-icon">cx<wbr/>Const<wbr/>Asset</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#cxTrackAsset" class="tsd-kind-icon">cx<wbr/>Track<wbr/>Asset</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
