@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module Module @proc7ts/context-builder
+ * @module @proc7ts/context-builder
  */
 export * from './assets';
 export * from './builder';
