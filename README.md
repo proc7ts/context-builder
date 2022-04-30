@@ -1,5 +1,4 @@
-IoC Context Builder
-===================
+# IoC Context Builder
 
 [![NPM][npm-image]][npm-url]
 [![Build Status][build-status-img]][build-status-link]
@@ -22,13 +21,11 @@ This library allows to build an [IoC] context conforming to [@proc7ts/context-va
 [github-url]: https://github.com/proc7ts/context-builder
 [api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
 [api-docs-url]: https://proc7ts.github.io/context-builder/
-[IoC]: https://en.wikipedia.org/wiki/Inversion_of_control
+[ioc]: https://en.wikipedia.org/wiki/Inversion_of_control
 [@proc7ts/context-builder]: https://www.npmjs.com/package/@proc7ts/context-builder
 [@proc7ts/context-values]: https://www.npmjs.com/package/@proc7ts/context-values
 
-
-Creating Context
-----------------
+## Creating Context
 
 [IoC] context interface may be any. The only required method is `get()`.
 
@@ -47,14 +44,14 @@ export const Foo: CxEntry<Foo> = {
 
 // Custom context interface.
 export interface MyContext extends CxValues {
- 
-  readonly name: string;  
+
+  readonly name: string;
 
   readonly foo: Foo;
-  
+
 }
 
-const cxBuilder = new CxBuilder<MyContext>(get => (/* MyContext */ { 
+const cxBuilder = new CxBuilder<MyContext>(get => (/* MyContext */ {
   get,
   name: 'MyContext',
   get foo() {
@@ -65,11 +62,9 @@ const cxBuilder = new CxBuilder<MyContext>(get => (/* MyContext */ {
 const context: MyContext = cxBuilder.context;
 ```
 
-[CxBuilder]: https://proc7ts.github.io/context-builder/classes/CxBuilder.html
+[cxbuilder]: https://proc7ts.github.io/context-builder/classes/CxBuilder.html
 
-
-Providing Assets
-----------------
+## Providing Assets
 
 A `provide` method of `CxBuilder` can be used to provide an asset for context entry.
 
@@ -103,15 +98,13 @@ cxBuilder.provide(cxAliasAsset(Bar, Foo));
 cxBuilder.get(Bar); // 'foo'
 ```
 
-[CxAsset]: https://proc7ts.github.io/context-values/interfaces/CxAsset.html
-[cxAliasAsset()]: https://proc7ts.github.io/context-builder/modules.html#cxAliasAsset
-[cxBuildAsset()]: https://proc7ts.github.io/context-builder/modules.html#cxBuildAsset
-[cxConstAsset()]: https://proc7ts.github.io/context-builder/modules.html#cxConstAsset
-[cxTrackAsset()]: https://proc7ts.github.io/context-builder/modules.html#cxTrackAsset
-                                                                                
+[cxasset]: https://proc7ts.github.io/context-values/interfaces/CxAsset.html
+[cxaliasasset()]: https://proc7ts.github.io/context-builder/modules.html#cxAliasAsset
+[cxbuildasset()]: https://proc7ts.github.io/context-builder/modules.html#cxBuildAsset
+[cxconstasset()]: https://proc7ts.github.io/context-builder/modules.html#cxConstAsset
+[cxtrackasset()]: https://proc7ts.github.io/context-builder/modules.html#cxTrackAsset
 
-Context Peers
--------------
+## Context Peers
 
 A context peer provides assets for one or more contexts. When one or more context peers passed to context builder, the
 assets provided by those peers precede the assets provided by builder.
@@ -152,4 +145,4 @@ cxBuilder1.get(DerivedAsset); // 'initial!'
 cxBuilder2.get(DerivedAsset); // 'overridden!'
 ```
 
-[CxPeerBuilder]: https://proc7ts.github.io/context-builder/classes/CxPeerBuilder.html
+[cxpeerbuilder]: https://proc7ts.github.io/context-builder/classes/CxPeerBuilder.html
