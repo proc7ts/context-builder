@@ -25,7 +25,7 @@ describe('cxScoped', () => {
     entry2 = { perContext: cxScoped(scope, cxSingle()) };
   });
 
-  let set: Mock<void, [string, CxRequestMethod]>;
+  let set: Mock<(value: string, by: CxRequestMethod) => void>;
 
   beforeEach(() => {
     set = jest.fn();
