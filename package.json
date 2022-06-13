@@ -20,7 +20,7 @@
   "types": "./index.d.ts",
   "exports": "./dist/context-builder.js",
   "peerDependencies": {
-    "@proc7ts/context-values": "^7.0.0"
+    "@proc7ts/context-values": "^7.0.1"
   },
   "dependencies": {
     "@proc7ts/fun-events": "^10.5.1",
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^28.1.1",
-    "@proc7ts/context-values": "^7.0.0",
+    "@proc7ts/context-values": "^7.0.1",
     "@run-z/eslint-config": "^3.0.1",
     "@run-z/rollup-helpers": "^2.0.0",
     "@types/node": "^16.11.39",
