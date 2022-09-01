@@ -5,7 +5,6 @@ import { cxBuildAsset, cxConstAsset } from '../assets';
 import { CxBuilder } from '../builder';
 
 describe('cxArray', () => {
-
   let builder: CxBuilder;
   let context: CxValues;
 
@@ -30,14 +29,12 @@ describe('cxArray', () => {
     expect(context.get(entry)).toEqual([]);
   });
   it('provides default value if there is no provider', () => {
-
     const defaultValue = ['default'];
     const entryWithDefaults = { perContext: cxArray({ byDefault: () => defaultValue }) };
 
     expect(context.get(entryWithDefaults)).toEqual(defaultValue);
   });
   it('provides default value if providers did not return any values', () => {
-
     const defaultValue = ['default'];
     const byDefault = jest.fn((_target: CxEntry.Target<readonly string[], string>) => defaultValue);
     const entryWithDefaults = { perContext: cxArray({ byDefault }) };
@@ -46,7 +43,9 @@ describe('cxArray', () => {
     builder.provide(cxConstAsset(entryWithDefaults, undefined));
 
     expect(context.get(entryWithDefaults)).toEqual(defaultValue);
-    expect(byDefault).toHaveBeenCalledWith(expect.objectContaining({ context, entry: entryWithDefaults }));
+    expect(byDefault).toHaveBeenCalledWith(
+      expect.objectContaining({ context, entry: entryWithDefaults }),
+    );
   });
   it('provides multiple values', () => {
     builder.provide(cxConstAsset(entry, 'a'));
@@ -61,7 +60,6 @@ describe('cxArray', () => {
     expect([...context.get(entry)]).toEqual(['value']);
   });
   it('removes the asset', () => {
-
     const value1 = 'value1';
     const value2 = 'value2';
 
@@ -71,7 +69,6 @@ describe('cxArray', () => {
     expect([...context.get(entry)]).toEqual([value1]);
   });
   it('retains the constructed value when specifier removed', () => {
-
     const value1 = 'value1';
     const value2 = 'value2';
 
@@ -88,27 +85,26 @@ describe('cxArray', () => {
     expect(context.get(entry, { or: ['fallback'] })).toEqual(['fallback']);
   });
   it('throws if there is no default value', () => {
-
     const entryWithoutDefaults = { perContext: cxArray({ byDefault: noop }) };
 
-    expect(() => context.get(entryWithoutDefaults)).toThrow(new CxReferenceError(entryWithoutDefaults));
+    expect(() => context.get(entryWithoutDefaults)).toThrow(
+      new CxReferenceError(entryWithoutDefaults),
+    );
   });
   it('prefers fallback value over default one', () => {
     expect(
-        context.get(
-            { perContext: cxArray({ byDefault: () => ['default', 'value'] }) },
-            { or: ['fallback', 'value'] },
-        ),
+      context.get(
+        { perContext: cxArray({ byDefault: () => ['default', 'value'] }) },
+        { or: ['fallback', 'value'] },
+      ),
     ).toEqual(['fallback', 'value']);
   });
   it('prefers `null` fallback value over default one', () => {
-    expect(context.get(
-        { perContext: cxArray({ byDefault: () => ['default', 'value'] }) },
-        { or: null },
-    )).toBeNull();
+    expect(
+      context.get({ perContext: cxArray({ byDefault: () => ['default', 'value'] }) }, { or: null }),
+    ).toBeNull();
   });
   it('rebuilds the value in another context', () => {
-
     const value1 = 'value1';
     const value2 = 'value2';
     const mockProvider = jest.fn((_target: CxEntry.Target<readonly string[], string>) => value1);

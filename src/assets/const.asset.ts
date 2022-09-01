@@ -12,22 +12,20 @@ import { Supply } from '@proc7ts/supply';
  * @returns New context entry asset.
  */
 export function cxConstAsset<TAsset>(
-    entry: CxEntry<unknown, TAsset>,
-    value: TAsset | null | undefined,
-    supply?: Supply,
+  entry: CxEntry<unknown, TAsset>,
+  value: TAsset | null | undefined,
+  supply?: Supply,
 ): CxAsset<unknown, TAsset> {
   return {
     entry,
-    placeAsset: value != null
-        ? (_target, collector) => collector(value)
-        : CxAsset$provideNone,
+    placeAsset: value != null ? (_target, collector) => collector(value) : CxAsset$provideNone,
     supply,
   };
 }
 
 function CxAsset$provideNone<TValue, TAsset, TContext extends CxValues>(
-    _target: CxEntry.Target<TValue, TAsset, TContext>,
-    _collector: CxAsset.Collector<TAsset>,
+  _target: CxEntry.Target<TValue, TAsset, TContext>,
+  _collector: CxAsset.Collector<TAsset>,
 ): void {
   // No assets.
 }

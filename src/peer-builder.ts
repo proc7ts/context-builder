@@ -13,7 +13,8 @@ import { CxPeer } from './peer';
  *
  * @typeParam TContext - Context type the assets provided for.
  */
-export class CxPeerBuilder<TContext extends CxValues = CxValues> implements CxModifier<TContext>, CxPeer<TContext> {
+export class CxPeerBuilder<TContext extends CxValues = CxValues>
+  implements CxModifier<TContext>, CxPeer<TContext> {
 
   /**
    * @internal
@@ -51,7 +52,10 @@ export class CxPeerBuilder<TContext extends CxValues = CxValues> implements CxMo
   }
 
   get rankCount(): number {
-    return this._rankCount ||= this._peers.reduce((rankCount, peer) => rankCount + peer.rankCount, 1);
+    return (this._rankCount ||= this._peers.reduce(
+      (rankCount, peer) => rankCount + peer.rankCount,
+      1,
+    ));
   }
 
   get supply(): Supply {
@@ -67,26 +71,26 @@ export class CxPeerBuilder<TContext extends CxValues = CxValues> implements CxMo
   }
 
   eachAsset<TValue, TAsset>(
-      target: CxEntry.Target<TValue, TAsset, TContext>,
-      cache: CxBuilder.Cache,
-      callback: CxAsset.Callback<TAsset>,
+    target: CxEntry.Target<TValue, TAsset, TContext>,
+    cache: CxBuilder.Cache,
+    callback: CxAsset.Callback<TAsset>,
   ): void {
     this._record(target.entry).eachAsset(target, cache, callback);
   }
 
   eachRecentAsset<TValue, TAsset>(
-      target: CxEntry.Target<TValue, TAsset, TContext>,
-      cache: CxBuilder.Cache,
-      callback: CxAsset.Callback<TAsset>,
+    target: CxEntry.Target<TValue, TAsset, TContext>,
+    cache: CxBuilder.Cache,
+    callback: CxAsset.Callback<TAsset>,
   ): void {
     this._record(target.entry).eachRecentAsset(target, cache, callback);
   }
 
   trackAssets<TValue, TAsset>(
-      target: CxEntry.Target<TValue, TAsset, TContext>,
-      cache: CxBuilder.Cache,
-      receiver: CxAsset.Receiver<TAsset>,
-      tracking?: CxTracking,
+    target: CxEntry.Target<TValue, TAsset, TContext>,
+    cache: CxBuilder.Cache,
+    receiver: CxAsset.Receiver<TAsset>,
+    tracking?: CxTracking,
   ): Supply {
     return this._record(target.entry).trackAssets(target, cache, receiver, tracking);
   }
@@ -94,12 +98,13 @@ export class CxPeerBuilder<TContext extends CxValues = CxValues> implements CxMo
   /**
    * @internal
    */
-  _record<TValue, TAsset>(entry: CxEntry<TValue, TAsset>): CxEntry$Record<TValue, TAsset, TContext> {
-
+  _record<TValue, TAsset>(
+    entry: CxEntry<TValue, TAsset>,
+  ): CxEntry$Record<TValue, TAsset, TContext> {
     let record: CxEntry$Record<TValue, TAsset, TContext> | undefined = this._records.get(entry);
 
     if (!record) {
-      this._records.set(entry, record = new CxEntry$Record(this, this.cache, entry));
+      this._records.set(entry, (record = new CxEntry$Record(this, this.cache, entry)));
     }
 
     return record;

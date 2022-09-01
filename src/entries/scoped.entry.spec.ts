@@ -1,11 +1,17 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { cxDefaultScoped, CxEntry, CxRequestMethod, cxScoped, cxSingle, CxValues } from '@proc7ts/context-values';
+import {
+  cxDefaultScoped,
+  CxEntry,
+  CxRequestMethod,
+  cxScoped,
+  cxSingle,
+  CxValues,
+} from '@proc7ts/context-values';
 import { Mock } from 'jest-mock';
 import { cxConstAsset } from '../assets';
 import { CxBuilder } from '../builder';
 
 describe('cxScoped', () => {
-
   let builder: CxBuilder;
   let context: CxValues;
   let scope: CxEntry<CxValues>;
@@ -38,7 +44,9 @@ describe('cxScoped', () => {
     expect(set).toHaveBeenCalledWith('test', CxRequestMethod.Assets);
     set.mockReset();
     expect(context.get(entry2, { or: 'fallback' })).toBe('fallback');
-    expect(context.get(entry2, { or: 'fallback', by: CxRequestMethod.Assets, set })).toBe('fallback');
+    expect(context.get(entry2, { or: 'fallback', by: CxRequestMethod.Assets, set })).toBe(
+      'fallback',
+    );
     expect(set).toHaveBeenCalledWith('fallback', CxRequestMethod.Fallback);
   });
   it('obtains default value in the same scope', () => {
@@ -50,7 +58,9 @@ describe('cxScoped', () => {
     expect(set).toHaveBeenCalledWith('default', CxRequestMethod.Defaults);
     set.mockReset();
     expect(context.get(entry2, { or: 'fallback' })).toBe('fallback');
-    expect(context.get(entry2, { or: 'fallback', by: CxRequestMethod.Assets, set })).toBe('fallback');
+    expect(context.get(entry2, { or: 'fallback', by: CxRequestMethod.Assets, set })).toBe(
+      'fallback',
+    );
     expect(set).toHaveBeenCalledWith('fallback', CxRequestMethod.Fallback);
   });
   it('requests default value in the same scope', () => {
@@ -58,11 +68,12 @@ describe('cxScoped', () => {
     expect(context.get(entry, { by: CxRequestMethod.Defaults, set })).toBe('default');
     expect(set).toHaveBeenCalledWith('default', CxRequestMethod.Defaults);
     set.mockReset();
-    expect(context.get(entry2, { or: 'fallback', by: CxRequestMethod.Defaults, set })).toBe('fallback');
+    expect(context.get(entry2, { or: 'fallback', by: CxRequestMethod.Defaults, set })).toBe(
+      'fallback',
+    );
     expect(set).toHaveBeenCalledWith('fallback', CxRequestMethod.Fallback);
   });
   it('obtains value from another scope', () => {
-
     const builder2 = new CxBuilder(get => ({ get }), builder);
     const context2 = builder2.context;
 
@@ -74,23 +85,25 @@ describe('cxScoped', () => {
     expect(set).toHaveBeenCalledWith('right', CxRequestMethod.Assets);
     set.mockReset();
     expect(context2.get(entry2, { or: 'fallback' })).toBe('fallback');
-    expect(context2.get(entry2, { or: 'fallback', by: CxRequestMethod.Assets, set })).toBe('fallback');
+    expect(context2.get(entry2, { or: 'fallback', by: CxRequestMethod.Assets, set })).toBe(
+      'fallback',
+    );
     expect(set).toHaveBeenCalledWith('fallback', CxRequestMethod.Fallback);
   });
   it('obtains default value from another scope', () => {
-
     const builder2 = new CxBuilder(get => ({ get }), builder);
     const context2 = builder2.context;
 
     expect(context2.get(entry, { by: CxRequestMethod.Assets })).toBe('default');
     expect(context2.get(entry, { by: CxRequestMethod.Defaults })).toBe('default');
-    expect(context2.get(entry2, { or: 'fallback', by: CxRequestMethod.Defaults, set })).toBe('fallback');
+    expect(context2.get(entry2, { or: 'fallback', by: CxRequestMethod.Defaults, set })).toBe(
+      'fallback',
+    );
     expect(set).toHaveBeenCalledWith('fallback', CxRequestMethod.Fallback);
   });
 });
 
 describe('cxDefaultScoped', () => {
-
   let builder: CxBuilder;
   let context: CxValues;
   let scope: CxEntry<CxValues>;
@@ -123,7 +136,6 @@ describe('cxDefaultScoped', () => {
     expect(context.get(entry2, { or: 'fallback', by: CxRequestMethod.Defaults })).toBe('fallback');
   });
   it('does not request the value from another scope', () => {
-
     const builder2 = new CxBuilder(get => ({ get }), builder);
     const context2 = builder2.context;
 
@@ -136,7 +148,6 @@ describe('cxDefaultScoped', () => {
     expect(context2.get(entry2, { or: 'fallback', by: CxRequestMethod.Assets })).toBe('fallback');
   });
   it('obtains default value from another scope', () => {
-
     const builder2 = new CxBuilder(get => ({ get }), builder);
     const context2 = builder2.context;
 

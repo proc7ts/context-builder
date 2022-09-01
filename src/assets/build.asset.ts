@@ -16,17 +16,16 @@ import { Supply } from '@proc7ts/supply';
  * @returns New context entry asset.
  */
 export function cxBuildAsset<TValue, TAsset = TValue, TContext extends CxValues = CxValues>(
-    entry: CxEntry<TValue, TAsset>,
-    build: (
-        this: void,
-        target: CxEntry.Target<TValue, TAsset, TContext>,
-    ) => TAsset | null | undefined,
-    supply?: Supply,
+  entry: CxEntry<TValue, TAsset>,
+  build: (
+    this: void,
+    target: CxEntry.Target<TValue, TAsset, TContext>,
+  ) => TAsset | null | undefined,
+  supply?: Supply,
 ): CxAsset<TValue, TAsset, TContext> {
   return {
     entry,
     buildAsset(target) {
-
       const asset = build(target);
 
       return asset != null && (collector => collector(asset));

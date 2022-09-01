@@ -1,12 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
-import { CxEntry, cxRecent, CxReferenceError, CxRequestMethod, CxTracker, CxValues } from '@proc7ts/context-values';
+import {
+  CxEntry,
+  cxRecent,
+  CxReferenceError,
+  CxRequestMethod,
+  CxTracker,
+  CxValues,
+} from '@proc7ts/context-values';
 import { asis, noop, valueProvider } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 import { cxBuildAsset, cxConstAsset } from '../assets';
 import { CxBuilder } from '../builder';
 
 describe('cxRecent', () => {
-
   let builder: CxBuilder;
   let context: CxValues;
 
@@ -23,7 +29,6 @@ describe('cxRecent', () => {
   });
 
   describe('without default value', () => {
-
     let entry: CxEntry<string>;
 
     beforeEach(() => {
@@ -34,7 +39,9 @@ describe('cxRecent', () => {
       expect(() => context.get(entry)).toThrow(new CxReferenceError(entry));
     });
     it('supports `Assets` request method', () => {
-      expect(() => context.get(entry, { by: CxRequestMethod.Assets })).toThrow(new CxReferenceError(entry));
+      expect(() => context.get(entry, { by: CxRequestMethod.Assets })).toThrow(
+        new CxReferenceError(entry),
+      );
       expect(context.get(entry, { by: CxRequestMethod.Assets, or: null })).toBeNull();
 
       builder.provide(cxConstAsset(entry, 'test'));
@@ -42,21 +49,27 @@ describe('cxRecent', () => {
       expect(context.get(entry, { by: CxRequestMethod.Assets, or: null })).toBe('test');
     });
     it('supports `Defaults` request method', () => {
-      expect(() => context.get(entry, { by: CxRequestMethod.Defaults })).toThrow(new CxReferenceError(entry));
+      expect(() => context.get(entry, { by: CxRequestMethod.Defaults })).toThrow(
+        new CxReferenceError(entry),
+      );
       expect(context.get(entry, { by: CxRequestMethod.Defaults, or: null })).toBeNull();
 
       builder.provide(cxConstAsset(entry, 'test'));
-      expect(() => context.get(entry, { by: CxRequestMethod.Defaults })).toThrow(new CxReferenceError(entry));
+      expect(() => context.get(entry, { by: CxRequestMethod.Defaults })).toThrow(
+        new CxReferenceError(entry),
+      );
       expect(context.get(entry, { by: CxRequestMethod.Defaults, or: null })).toBeNull();
     });
   });
 
   describe('with default value', () => {
-
     let entry: CxEntry<string>;
 
     beforeEach(() => {
-      entry = { perContext: cxRecent({ byDefault: () => 'default' }), toString: () => '[CxEntry test]' };
+      entry = {
+        perContext: cxRecent({ byDefault: () => 'default' }),
+        toString: () => '[CxEntry test]',
+      };
     });
 
     it('provides default value initially', () => {
@@ -85,16 +98,13 @@ describe('cxRecent', () => {
       expect(context.get(entry)).toBe('value1');
     });
     it('is unavailable if context disposed', () => {
-
       const reason = new Error('Disposed');
 
       builder.supply.off(reason);
 
-      expect(() => context.get(entry)).toThrow(new CxReferenceError(
-          entry,
-          'The [CxEntry test] is no longer available',
-          reason,
-      ));
+      expect(() => context.get(entry)).toThrow(
+        new CxReferenceError(entry, 'The [CxEntry test] is no longer available', reason),
+      );
     });
     it('becomes unavailable after context disposal', () => {
       expect(context.get(entry)).toBe('default');
@@ -103,15 +113,14 @@ describe('cxRecent', () => {
 
       builder.supply.off(reason);
 
-      expect(() => context.get(entry)).toThrow(new CxReferenceError(
-          entry,
-          'The [CxEntry test] is no longer available',
-          reason,
-      ));
+      expect(() => context.get(entry)).toThrow(
+        new CxReferenceError(entry, 'The [CxEntry test] is no longer available', reason),
+      );
     });
     it('supports `Assets` request method', () => {
-      expect(() => context.get(entry, { by: CxRequestMethod.Assets }))
-          .toThrow(new CxReferenceError(entry, 'No value provided for [CxEntry test]'));
+      expect(() => context.get(entry, { by: CxRequestMethod.Assets })).toThrow(
+        new CxReferenceError(entry, 'No value provided for [CxEntry test]'),
+      );
       expect(context.get(entry, { by: CxRequestMethod.Assets, or: null })).toBeNull();
 
       builder.provide(cxConstAsset(entry, 'test'));
@@ -128,7 +137,6 @@ describe('cxRecent', () => {
     });
 
     describe('context derivation', () => {
-
       let builder2: CxBuilder;
       let context2: CxValues;
 
@@ -169,7 +177,6 @@ describe('cxRecent', () => {
   });
 
   describe('with internal state', () => {
-
     let entry: CxEntry<string>;
 
     beforeEach(() => {
@@ -177,7 +184,8 @@ describe('cxRecent', () => {
         perContext: cxRecent<string, string, { message: string }>({
           create: recent => ({ message: recent }),
           byDefault: () => ({ message: 'default' }),
-          assign: ({ to }) => receiver => to(({ message }, by) => receiver(message + '!', by)),
+          assign:
+            ({ to }) => receiver => to(({ message }, by) => receiver(message + '!', by)),
         }),
       };
     });
@@ -219,7 +227,6 @@ describe('cxRecent', () => {
     });
 
     describe('context derivation', () => {
-
       let builder2: CxBuilder;
       let context2: CxValues;
 
@@ -270,7 +277,6 @@ describe('cxRecent', () => {
   });
 
   describe('tracking with default value', () => {
-
     let entry: CxEntry<CxTracker.Mandatory<string>, string>;
 
     beforeEach(() => {
@@ -285,7 +291,6 @@ describe('cxRecent', () => {
     });
 
     it('tracks value changes', () => {
-
       let current!: string;
       let currentMethod!: CxRequestMethod;
 
@@ -309,7 +314,6 @@ describe('cxRecent', () => {
   });
 
   describe('tracking without default value', () => {
-
     let entry: CxEntry<CxTracker<string>, string>;
 
     beforeEach(() => {
@@ -323,7 +327,6 @@ describe('cxRecent', () => {
     });
 
     it('tracks value changes', () => {
-
       let current: string | undefined;
       let currentMethod: CxRequestMethod | undefined;
 

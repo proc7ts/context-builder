@@ -12,7 +12,9 @@ import { CxPeerBuilder } from './peer-builder';
  *
  * @typeParam TContext - A type of context to build.
  */
-export class CxBuilder<TContext extends CxValues = CxValues> extends CxPeerBuilder<TContext> implements CxValues {
+export class CxBuilder<TContext extends CxValues = CxValues>
+  extends CxPeerBuilder<TContext>
+  implements CxValues {
 
   /**
    * @internal
@@ -27,7 +29,9 @@ export class CxBuilder<TContext extends CxValues = CxValues> extends CxPeerBuild
   /**
    * @internal
    */
-  private readonly _bound: () => CxPeer = lazyValue(() => new CxBuilder$BoundPeer(this, this.cache));
+  private readonly _bound: () => CxPeer = lazyValue(
+    () => new CxBuilder$BoundPeer(this, this.cache),
+  );
 
   /**
    * Constructs context builder.
@@ -38,14 +42,11 @@ export class CxBuilder<TContext extends CxValues = CxValues> extends CxPeerBuild
    * explicitly}. Peers listed later have lesser {@link CxAsset.Provided.rank rank values} than the ones listed earlier.
    */
   constructor(
-      createContext: (this: void, getValue: CxAccessor, builder: CxBuilder<TContext>) => TContext,
-      ...peers: CxPeer<TContext>[]
+    createContext: (this: void, getValue: CxAccessor, builder: CxBuilder<TContext>) => TContext,
+    ...peers: CxPeer<TContext>[]
   ) {
     super(...peers);
-    this._cx = lazyValue(() => createContext(
-        (entry, request) => this.get(entry, request),
-        this,
-    ));
+    this._cx = lazyValue(() => createContext((entry, request) => this.get(entry, request), this));
   }
 
   /**
@@ -81,14 +82,12 @@ export class CxBuilder<TContext extends CxValues = CxValues> extends CxPeerBuild
 }
 
 export namespace CxBuilder {
-
   /**
    * Context cache the {@link CxPeer context peer} may use to store intermediate data.
    *
    * There is only one cache instance exists per context.
    */
   export interface Cache {
-
     /**
      * Obtains a value previously {@link put cached} under the given `key`.
      *
@@ -106,7 +105,5 @@ export namespace CxBuilder {
      * @param supply - Value supply. The value will be removed from cache once this supply cut off.
      */
     put(key: unknown, value: unknown, supply: Supply): void;
-
   }
-
 }

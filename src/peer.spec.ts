@@ -5,7 +5,6 @@ import { CxBuilder } from './builder';
 import { CxPeerBuilder } from './peer-builder';
 
 describe('CxPeer', () => {
-
   class TestContext1 implements CxValues {
 
     readonly test1: { readonly id: number };
@@ -14,18 +13,17 @@ describe('CxPeer', () => {
       this.test1 = { id };
     }
 
-  }
+}
 
   class TestContext2 implements CxValues {
 
-    constructor(readonly get: CxAccessor) {
-    }
+    constructor(readonly get: CxAccessor) {}
 
     get test2(): { readonly id: 2 } {
       return { id: 2 };
     }
 
-  }
+}
 
   const entry: CxEntry<string> = { perContext: cxSingle() };
 
@@ -40,7 +38,6 @@ describe('CxPeer', () => {
   });
 
   describe('context-bound peer', () => {
-
     let builder2: CxBuilder<TestContext2>;
     let context2: TestContext2;
 
@@ -69,10 +66,8 @@ describe('CxPeer', () => {
 
     describe('eachAsset', () => {
       it('iterates over assets', () => {
-
         const entry: CxEntry<string> = {
           perContext: cxEvaluated(target => {
-
             let value = '';
 
             target.eachAsset(asset => {
@@ -93,10 +88,8 @@ describe('CxPeer', () => {
 
     describe('eachRecentAsset', () => {
       it('iterates over assets in most-recent-first order', () => {
-
         const entry: CxEntry<string> = {
           perContext: cxEvaluated(target => {
-
             let value = '';
 
             target.eachRecentAsset(asset => {
@@ -117,14 +110,11 @@ describe('CxPeer', () => {
 
     describe('trackAssetList', () => {
       it('tracks assets', () => {
-
         const entry: CxEntry<string> = {
           perContext: target => {
-
             let value!: string;
 
             target.trackAssetList(assets => {
-
               let newValue = '';
 
               for (const provided of assets) {
@@ -160,7 +150,6 @@ describe('CxPeer', () => {
   });
 
   describe('derived peer', () => {
-
     let builder2: CxBuilder<TestContext1>;
     let context2: TestContext1;
 
@@ -183,10 +172,8 @@ describe('CxPeer', () => {
 
     describe('eachAsset', () => {
       it('iterates over assets', () => {
-
         const entry: CxEntry<string> = {
           perContext: cxEvaluated(target => {
-
             let value = '';
 
             target.eachAsset(asset => {
@@ -207,10 +194,8 @@ describe('CxPeer', () => {
 
     describe('eachRecentAsset', () => {
       it('iterates over assets', () => {
-
         const entry: CxEntry<string> = {
           perContext: cxEvaluated(target => {
-
             let value = '';
 
             target.eachRecentAsset(asset => {
@@ -231,14 +216,11 @@ describe('CxPeer', () => {
 
     describe('trackAssetList', () => {
       it('iterates over assets in most-recent-first order', () => {
-
         const entry: CxEntry<string> = {
           perContext: target => {
-
             let value!: string;
 
             target.trackAssetList(assets => {
-
               let newValue = '';
 
               for (const provided of assets) {

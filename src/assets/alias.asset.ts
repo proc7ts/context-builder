@@ -12,22 +12,19 @@ import { Supply } from '@proc7ts/supply';
  * @returns New context entry asset.
  */
 export function cxAliasAsset<TAsset>(
-    entry: CxEntry<unknown, TAsset>,
-    alias: CxEntry<TAsset, unknown>,
-    supply?: Supply,
+  entry: CxEntry<unknown, TAsset>,
+  alias: CxEntry<TAsset, unknown>,
+  supply?: Supply,
 ): CxAsset<unknown, TAsset> {
   return {
     entry,
     placeAsset(target, collector) {
       try {
-        target.get(
-            alias,
-            {
-              set(asset: TAsset) {
-                collector(asset);
-              },
-            },
-        );
+        target.get(alias, {
+          set(asset: TAsset) {
+            collector(asset);
+          },
+        });
       } catch (reason) {
         if (reason instanceof CxReferenceError) {
           throw new CxReferenceError(target.entry, undefined, reason);

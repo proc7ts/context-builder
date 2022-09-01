@@ -25,9 +25,9 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
   private readonly senders = new Map<Supply, CxEntry$AssetSender<TValue, TAsset, TContext>>();
 
   constructor(
-      readonly builder: CxPeerBuilder<TContext>,
-      readonly cache: CxBuilder.Cache,
-      readonly entry: CxEntry<TValue, TAsset>,
+    readonly builder: CxPeerBuilder<TContext>,
+    readonly cache: CxBuilder.Cache,
+    readonly entry: CxEntry<TValue, TAsset>,
   ) {
     this.supply = new Supply().needs(builder.supply);
     this.target = new CxEntry$Target(this, new Supply().needs(builder.supply));
@@ -35,7 +35,6 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
   }
 
   provide(asset: CxAsset<TValue, TAsset, TContext>): Supply {
-
     const { supply = new Supply() } = asset;
 
     if (supply.needs(this).isOff) {
@@ -45,18 +44,13 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
     const placer = CxAsset$placerOf(asset, supply);
 
     if (placer) {
-
       const placerSupply = new Supply().as(supply);
 
       this.placers.set(placerSupply, placer);
       placerSupply.whenOff(() => this.placers.delete(placerSupply));
 
       for (const [trackingSupply, sender] of this.senders) {
-        this.sendAssets(
-            sender,
-            placer,
-            new Supply().needs(supply).needs(trackingSupply),
-        );
+        this.sendAssets(sender, placer, new Supply().needs(supply).needs(trackingSupply));
       }
     }
 
@@ -66,7 +60,6 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
   }
 
   get(request: CxRequest<TValue> = {}): TValue | null {
-
     const { by = CxRequestMethod.Fallback, or, set = CxEntry$dontSet } = request;
     const definition = this.define();
 
@@ -74,18 +67,13 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
     let result: TValue | null | undefined;
 
     if (by >= 0 /* unless default value requested */) {
-
       // Request explicitly provided value.
-      definition.assign?.(
-          (value: TValue, by = CxRequestMethod.Assets): void => {
-            resultBy = by;
-            result = value;
-          },
-          request,
-      );
+      definition.assign?.((value: TValue, by = CxRequestMethod.Assets): void => {
+        resultBy = by;
+        result = value;
+      }, request);
 
       if (resultBy != null /* value received */) {
-
         if (resultBy >= 0 /* either explicitly provided, or fallback value received */) {
           // Report and return it.
           set(result!, resultBy);
@@ -95,8 +83,11 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
 
         // Default value received...
 
-        if (by /* ...but explicitly provided value requested */
-            && or === undefined /* ...and no fallback specified */) {
+        if (
+          by
+          /* ...but explicitly provided value requested */ && or
+            === undefined /* ...and no fallback specified */
+        ) {
           // This is not acceptable.
           throw new CxReferenceError(this.entry, `No value provided for ${this.entry}`);
         }
@@ -115,27 +106,20 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
     if (resultBy == null /* unless (default) value received already */) {
       if (definition.assignDefault) {
         // Request default value.
-        definition.assignDefault(
-            (value: TValue, by = CxRequestMethod.Defaults): void => {
-              resultBy = by;
-              result = value;
-            },
-            request,
-        );
+        definition.assignDefault((value: TValue, by = CxRequestMethod.Defaults): void => {
+          resultBy = by;
+          result = value;
+        }, request);
       } else if (by < 0 /* default value requested and there is no `assignDefault()` method */) {
         // Request the value with `assign()` method, is it may provide default value instead.
-        definition.assign?.(
-            (value: TValue, by = CxRequestMethod.Assets): void => {
-              resultBy = by;
-              result = value;
-            },
-            request,
-        );
+        definition.assign?.((value: TValue, by = CxRequestMethod.Assets): void => {
+          resultBy = by;
+          result = value;
+        }, request);
       }
     }
 
     if (resultBy != null /* value received (from either `assign()` or `assignDefault()` call) */) {
-
       if (resultBy <= 0 /* either default, or fallback value received */) {
         // Report and return it.
         set(result!, resultBy);
@@ -144,7 +128,6 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
       }
 
       if (or === undefined /* no fallback specified */) {
-
         // Explicitly provided value received...
 
         if (by < 0 /* ...but default value requested */) {
@@ -173,18 +156,20 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
   }
 
   eachAsset(
-      target: CxEntry.Target<TValue, TAsset, TContext>,
-      cache: CxBuilder.Cache,
-      callback: CxAsset.Callback<TAsset>,
+    target: CxEntry.Target<TValue, TAsset, TContext>,
+    cache: CxBuilder.Cache,
+    callback: CxAsset.Callback<TAsset>,
   ): void {
     if (target.supply.isOff) {
       return;
     }
 
     let goOn = true;
-    const collector: CxAsset.Collector<TAsset> = asset => goOn = !target.supply.isOff
-        && callback(asset) !== false
-        && !target.supply.isOff;
+    const collector: CxAsset.Collector<TAsset> = asset => {
+      goOn = !target.supply.isOff && callback(asset) !== false && !target.supply.isOff;
+
+      return goOn;
+    };
 
     for (const peer of this.builder._peers) {
       peer.eachAsset(target, cache, collector);
@@ -202,18 +187,20 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
   }
 
   eachRecentAsset(
-      target: CxEntry.Target<TValue, TAsset, TContext>,
-      cache: CxBuilder.Cache,
-      callback: CxAsset.Callback<TAsset>,
+    target: CxEntry.Target<TValue, TAsset, TContext>,
+    cache: CxBuilder.Cache,
+    callback: CxAsset.Callback<TAsset>,
   ): void {
     if (target.supply.isOff) {
       return;
     }
 
     let goOn = true;
-    const collector: CxAsset.Collector<TAsset> = asset => goOn = !target.supply.isOff
-        && callback(asset) !== false
-        && !target.supply.isOff;
+    const collector: CxAsset.Collector<TAsset> = asset => {
+      goOn = !target.supply.isOff && callback(asset) !== false && !target.supply.isOff;
+
+      return goOn;
+    };
 
     // Iterate in most-recent-first order.
     for (const placer of [...this.placers.values()].reverse()) {
@@ -235,12 +222,11 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
   }
 
   trackAssets(
-      target: CxEntry.Target<TValue, TAsset, TContext>,
-      cache: CxBuilder.Cache,
-      receiver: CxAsset.Receiver<TAsset>,
-      { supply = new Supply() }: CxTracking = {},
+    target: CxEntry.Target<TValue, TAsset, TContext>,
+    cache: CxBuilder.Cache,
+    receiver: CxAsset.Receiver<TAsset>,
+    { supply = new Supply() }: CxTracking = {},
   ): Supply {
-
     const rcv: EventReceiver.Generic<[CxAsset.Provided<TAsset>]> = {
       supply,
       receive(_ctx, asset) {
@@ -261,34 +247,29 @@ export class CxEntry$Record<TValue, TAsset, TContext extends CxValues> implement
     const peers = this.builder._peers;
 
     for (let i = peers.length - 1; i >= 0; --i) {
-
       const peer = peers[i];
       const firstRank = rankOffset;
 
       rankOffset += peer.rankCount;
       peer.trackAssets(
-          target,
-          cache,
-          provided => receiver(new CxAsset$Derived(provided, firstRank + provided.rank)),
-          supply,
+        target,
+        cache,
+        provided => receiver(new CxAsset$Derived(provided, firstRank + provided.rank)),
+        supply,
       );
     }
 
     for (const [placerSupply, placer] of this.placers) {
-      this.sendAssets(
-          sender,
-          placer,
-          new Supply().needs(placerSupply).needs(supply),
-      );
+      this.sendAssets(sender, placer, new Supply().needs(placerSupply).needs(supply));
     }
 
     return supply;
   }
 
   private sendAssets(
-      [target, cache, emitter]: CxEntry$AssetSender<TValue, TAsset, TContext>,
-      placer: CxAsset$Placer<TValue, TAsset, TContext>,
-      supply: Supply,
+    [target, cache, emitter]: CxEntry$AssetSender<TValue, TAsset, TContext>,
+    placer: CxAsset$Placer<TValue, TAsset, TContext>,
+    supply: Supply,
   ): void {
     emitter.send(new CxAsset$Provided(target, cache, placer, supply));
   }

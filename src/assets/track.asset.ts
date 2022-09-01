@@ -18,29 +18,28 @@ import { Supply } from '@proc7ts/supply';
  * @returns New context entry asset.
  */
 export function cxTrackAsset<TValue, TAsset = TValue, TContext extends CxValues = CxValues>(
-    entry: CxEntry<TValue, TAsset>,
-    track: (
-        this: void,
-        target: CxEntry.Target<TValue, TAsset, TContext>,
-        receiver: (this: void, ...assets: TAsset[]) => void,
-        supply: Supply,
-    ) => void,
-    supply = new Supply(),
+  entry: CxEntry<TValue, TAsset>,
+  track: (
+    this: void,
+    target: CxEntry.Target<TValue, TAsset, TContext>,
+    receiver: (this: void, ...assets: TAsset[]) => void,
+    supply: Supply,
+  ) => void,
+  supply = new Supply(),
 ): CxAsset<TValue, TAsset, TContext> {
   return {
     entry,
     buildAsset(target, update) {
-
       let assets: TAsset[] = [];
       let sendUpdate: () => void = noop;
 
       track(
-          target,
-          (...updates) => {
-            assets = updates;
-            sendUpdate();
-          },
-          new Supply().needs(supply).needs(target),
+        target,
+        (...updates) => {
+          assets = updates;
+          sendUpdate();
+        },
+        new Supply().needs(supply).needs(target),
       );
 
       sendUpdate = update; // Start actually sending updates only after receiver registration.

@@ -1,12 +1,17 @@
 import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
-import { cxDynamic, CxEntry, CxReferenceError, CxRequestMethod, CxValues } from '@proc7ts/context-values';
+import {
+  cxDynamic,
+  CxEntry,
+  CxReferenceError,
+  CxRequestMethod,
+  CxValues,
+} from '@proc7ts/context-values';
 import { noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 import { cxBuildAsset, cxConstAsset } from '../assets';
 import { CxBuilder } from '../builder';
 
 describe('cxDynamic', () => {
-
   let builder: CxBuilder;
   let context: CxValues;
 
@@ -23,7 +28,6 @@ describe('cxDynamic', () => {
   });
 
   describe('without default array', () => {
-
     let entry: CxEntry<readonly number[], number>;
 
     beforeEach(() => {
@@ -39,7 +43,9 @@ describe('cxDynamic', () => {
       expect(() => context.get(entry)).toThrow(new CxReferenceError(entry));
     });
     it('supports `Assets` request method', () => {
-      expect(() => context.get(entry, { by: CxRequestMethod.Assets })).toThrow(new CxReferenceError(entry));
+      expect(() => context.get(entry, { by: CxRequestMethod.Assets })).toThrow(
+        new CxReferenceError(entry),
+      );
       expect(context.get(entry, { by: CxRequestMethod.Assets, or: null })).toBeNull();
 
       builder.provide(cxConstAsset(entry, 0));
@@ -47,17 +53,20 @@ describe('cxDynamic', () => {
       expect(context.get(entry, { by: CxRequestMethod.Assets, or: null })).toEqual([0]);
     });
     it('supports `Defaults` request method', () => {
-      expect(() => context.get(entry, { by: CxRequestMethod.Defaults })).toThrow(new CxReferenceError(entry));
+      expect(() => context.get(entry, { by: CxRequestMethod.Defaults })).toThrow(
+        new CxReferenceError(entry),
+      );
       expect(context.get(entry, { by: CxRequestMethod.Defaults, or: null })).toBeNull();
 
       builder.provide(cxConstAsset(entry, 0));
-      expect(() => context.get(entry, { by: CxRequestMethod.Defaults })).toThrow(new CxReferenceError(entry));
+      expect(() => context.get(entry, { by: CxRequestMethod.Defaults })).toThrow(
+        new CxReferenceError(entry),
+      );
       expect(context.get(entry, { by: CxRequestMethod.Defaults, or: null })).toBeNull();
     });
   });
 
   describe('with default empty array', () => {
-
     let entry: CxEntry<readonly number[], number>;
 
     beforeEach(() => {
@@ -92,16 +101,13 @@ describe('cxDynamic', () => {
       expect(context.get(entry)).toEqual([2]);
     });
     it('is unavailable if context disposed', () => {
-
       const reason = new Error('Disposed');
 
       builder.supply.off(reason);
 
-      expect(() => context.get(entry)).toThrow(new CxReferenceError(
-          entry,
-          'The [CxEntry test] is no longer available',
-          reason,
-      ));
+      expect(() => context.get(entry)).toThrow(
+        new CxReferenceError(entry, 'The [CxEntry test] is no longer available', reason),
+      );
     });
     it('becomes unavailable after context disposal', () => {
       expect(context.get(entry)).toEqual([]);
@@ -110,15 +116,14 @@ describe('cxDynamic', () => {
 
       builder.supply.off(reason);
 
-      expect(() => context.get(entry)).toThrow(new CxReferenceError(
-          entry,
-          'The [CxEntry test] is no longer available',
-          reason,
-      ));
+      expect(() => context.get(entry)).toThrow(
+        new CxReferenceError(entry, 'The [CxEntry test] is no longer available', reason),
+      );
     });
     it('supports `Assets` request method', () => {
-      expect(() => context.get(entry, { by: CxRequestMethod.Assets }))
-          .toThrow(new CxReferenceError(entry, 'No value provided for [CxEntry test]'));
+      expect(() => context.get(entry, { by: CxRequestMethod.Assets })).toThrow(
+        new CxReferenceError(entry, 'No value provided for [CxEntry test]'),
+      );
       expect(context.get(entry, { by: CxRequestMethod.Assets, or: null })).toBeNull();
 
       builder.provide(cxConstAsset(entry, 1));
@@ -135,7 +140,6 @@ describe('cxDynamic', () => {
     });
 
     describe('context derivation', () => {
-
       let builder2: CxBuilder;
       let context2: CxValues;
 
@@ -169,7 +173,6 @@ describe('cxDynamic', () => {
   });
 
   describe('with internal state', () => {
-
     let entry: CxEntry<number, number>;
 
     beforeEach(() => {
@@ -177,7 +180,8 @@ describe('cxDynamic', () => {
         perContext: cxDynamic<number, number, { sum: number }>({
           create: assets => ({ sum: assets.reduce((prev, asset) => prev + asset, 0) }),
           byDefault: () => ({ sum: 0 }),
-          assign: ({ to }) => receiver => to(({ sum }, by) => receiver(sum, by)),
+          assign:
+            ({ to }) => receiver => to(({ sum }, by) => receiver(sum, by)),
         }),
       };
     });
@@ -222,7 +226,6 @@ describe('cxDynamic', () => {
     });
 
     describe('context derivation', () => {
-
       let builder2: CxBuilder;
       let context2: CxValues;
 

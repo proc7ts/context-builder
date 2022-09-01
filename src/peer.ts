@@ -8,7 +8,6 @@ import { CxBuilder } from './builder';
  * @typeParam TContext - Context type the assets provided for.
  */
 export interface CxPeer<TContext extends CxValues = CxValues> extends SupplyPeer {
-
   /**
    * The number of {@link CxAsset.Provided.rank asset ranks} this peer contains.
    */
@@ -32,9 +31,9 @@ export interface CxPeer<TContext extends CxValues = CxValues> extends SupplyPeer
    * @param callback - Assets callback.
    */
   eachAsset<TValue, TAsset>(
-      target: CxEntry.Target<TValue, TAsset, TContext>,
-      cache: CxBuilder.Cache,
-      callback: CxAsset.Callback<TAsset>,
+    target: CxEntry.Target<TValue, TAsset, TContext>,
+    cache: CxBuilder.Cache,
+    callback: CxAsset.Callback<TAsset>,
   ): void;
 
   /**
@@ -49,9 +48,9 @@ export interface CxPeer<TContext extends CxValues = CxValues> extends SupplyPeer
    * @param callback - Assets callback.
    */
   eachRecentAsset<TValue, TAsset>(
-      target: CxEntry.Target<TValue, TAsset, TContext>,
-      cache: CxBuilder.Cache,
-      callback: CxAsset.Callback<TAsset>,
+    target: CxEntry.Target<TValue, TAsset, TContext>,
+    cache: CxBuilder.Cache,
+    callback: CxAsset.Callback<TAsset>,
   ): void;
 
   /**
@@ -65,10 +64,9 @@ export interface CxPeer<TContext extends CxValues = CxValues> extends SupplyPeer
    * @returns Assets supply. Stops assets tracking once cut off.
    */
   trackAssets<TValue, TAsset>(
-      target: CxEntry.Target<TValue, TAsset, TContext>,
-      cache: CxBuilder.Cache,
-      receiver: CxAsset.Receiver<TAsset>,
-      tracking?: CxTracking,
+    target: CxEntry.Target<TValue, TAsset, TContext>,
+    cache: CxBuilder.Cache,
+    receiver: CxAsset.Receiver<TAsset>,
+    tracking?: CxTracking,
   ): Supply;
-
 }

@@ -4,15 +4,16 @@ import { Supply } from '@proc7ts/supply';
 import { CxBuilder } from '../builder';
 import { CxAsset$Placer } from './asset.placer';
 
-export class CxAsset$Provided<TValue, TAsset, TContext extends CxValues> implements CxAsset.Provided<TAsset> {
+export class CxAsset$Provided<TValue, TAsset, TContext extends CxValues>
+  implements CxAsset.Provided<TAsset> {
 
   private _getRecent = this._evalRecent();
 
   constructor(
-      private readonly _target: CxEntry.Target<TValue, TAsset, TContext>,
-      private readonly _cache: CxBuilder.Cache,
-      private readonly _placer: CxAsset$Placer<TValue, TAsset, TContext>,
-      readonly supply: Supply,
+    private readonly _target: CxEntry.Target<TValue, TAsset, TContext>,
+    private readonly _cache: CxBuilder.Cache,
+    private readonly _placer: CxAsset$Placer<TValue, TAsset, TContext>,
+    readonly supply: Supply,
   ) {
     this._getRecent = this._evalRecent();
   }
@@ -30,7 +31,6 @@ export class CxAsset$Provided<TValue, TAsset, TContext extends CxValues> impleme
   }
 
   eachRecentAsset(callback: CxAsset.Callback<TAsset>): void {
-
     const assets: TAsset[] = [];
 
     this.eachAsset(asset => {
@@ -56,7 +56,6 @@ export class CxAsset$Provided<TValue, TAsset, TContext extends CxValues> impleme
 
   private _evalRecent(): () => CxAsset.Evaluated<TAsset> | undefined {
     return lazyValue(() => {
-
       let recent: CxAsset.Evaluated<TAsset> | undefined;
 
       this.eachRecentAsset(asset => {
@@ -77,8 +76,7 @@ export class CxAsset$Provided<TValue, TAsset, TContext extends CxValues> impleme
 
 export class CxAsset$Derived<TAsset> implements CxAsset.Provided<TAsset> {
 
-  constructor(private readonly $: CxAsset.Provided<any>, readonly rank: number) {
-  }
+  constructor(private readonly $: CxAsset.Provided<any>, readonly rank: number) {}
 
   get supply(): Supply {
     return this.$.supply;

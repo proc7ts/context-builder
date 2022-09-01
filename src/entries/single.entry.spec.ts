@@ -5,7 +5,6 @@ import { cxBuildAsset, cxConstAsset } from '../assets';
 import { CxBuilder } from '../builder';
 
 describe('cxSingle', () => {
-
   let builder: CxBuilder;
   let context: CxValues;
 
@@ -21,7 +20,6 @@ describe('cxSingle', () => {
   });
 
   it('provides value', () => {
-
     const value = 'test value';
 
     builder.provide(cxConstAsset(entry, value));
@@ -29,7 +27,6 @@ describe('cxSingle', () => {
     expect(context.get(entry)).toBe(value);
   });
   it('selects the last provided value if more than one provided', () => {
-
     const value1 = 'value1';
     const value2 = 'value2';
 
@@ -40,7 +37,6 @@ describe('cxSingle', () => {
     expect(context.get(entry)).toBe(value2);
   });
   it('removes the asset', () => {
-
     const value1 = 'value1';
     const value2 = 'value2';
 
@@ -50,7 +46,6 @@ describe('cxSingle', () => {
     expect(context.get(entry)).toBe(value1);
   });
   it('retains the constructed value when asset removed', () => {
-
     const value1 = 'value1';
     const value2 = 'value2';
 
@@ -64,7 +59,6 @@ describe('cxSingle', () => {
     expect(context.get(entry)).toBe(value2);
   });
   it('throws if there is neither default nor fallback value', () => {
-
     const entry1 = { perContext: cxSingle() };
 
     expect(() => context.get(entry1)).toThrow(new CxReferenceError(entry1));
@@ -83,7 +77,6 @@ describe('cxSingle', () => {
     expect(context.get(entry, { or: 'miss' })).toBe('miss');
   });
   it('provides default value if no value provided', () => {
-
     const defaultValue = 'default';
     const byDefault = jest.fn((_target: CxEntry.Target<string>) => defaultValue);
     const entryWithDefaults = { perContext: cxSingle({ byDefault }) };
@@ -91,25 +84,29 @@ describe('cxSingle', () => {
     builder.provide(cxConstAsset(entryWithDefaults, null));
 
     expect(context.get(entryWithDefaults)).toBe(defaultValue);
-    expect(byDefault).toHaveBeenCalledWith(expect.objectContaining({ entry: entryWithDefaults, context }));
+    expect(byDefault).toHaveBeenCalledWith(
+      expect.objectContaining({ entry: entryWithDefaults, context }),
+    );
   });
   it('provides default value if there is no provider', () => {
     expect(context.get({ perContext: cxSingle({ byDefault: () => 'default' }) })).toBe('default');
   });
   it('prefers fallback value over default one', () => {
-    expect(context.get({ perContext: cxSingle({ byDefault: () => 'default' }) }, { or: 'fallback' }))
-        .toBe('fallback');
+    expect(
+      context.get({ perContext: cxSingle({ byDefault: () => 'default' }) }, { or: 'fallback' }),
+    ).toBe('fallback');
   });
   it('prefers default value if fallback one is absent', () => {
-    expect(context.get({ perContext: cxSingle({ byDefault: () => 'default' }) }, {}))
-        .toBe('default');
+    expect(context.get({ perContext: cxSingle({ byDefault: () => 'default' }) }, {})).toBe(
+      'default',
+    );
   });
   it('prefers `null` fallback value over default one', () => {
-    expect(context.get({ perContext: cxSingle({ byDefault: () => 'default' }) }, { or: null }))
-        .toBeNull();
+    expect(
+      context.get({ perContext: cxSingle({ byDefault: () => 'default' }) }, { or: null }),
+    ).toBeNull();
   });
   it('caches the value', () => {
-
     const value = 'value';
     const mockProvider = jest.fn(() => value);
 
@@ -121,7 +118,6 @@ describe('cxSingle', () => {
     expect(mockProvider).toHaveBeenCalledTimes(1);
   });
   it('caches default value', () => {
-
     const value = 'default value';
     const defaultProviderSpy = jest.fn(() => value);
     const entryWithDefault = { perContext: cxSingle({ byDefault: defaultProviderSpy }) };
@@ -131,7 +127,6 @@ describe('cxSingle', () => {
     expect(defaultProviderSpy).toHaveBeenCalledTimes(1);
   });
   it('does not cache fallback value', () => {
-
     const value1 = 'value1';
     const value2 = 'value2';
 
@@ -139,7 +134,6 @@ describe('cxSingle', () => {
     expect(context.get(entry, { or: value2 })).toBe(value2);
   });
   it('rebuilds the value in another context', () => {
-
     const value1 = 'value1';
     const value2 = 'value2';
     const mockProvider = jest.fn(() => value1);
@@ -156,5 +150,4 @@ describe('cxSingle', () => {
 
     expect(mockProvider).toHaveBeenCalledTimes(2);
   });
-
 });

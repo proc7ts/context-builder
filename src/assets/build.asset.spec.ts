@@ -7,7 +7,6 @@ import { cxBuildAsset } from './build.asset';
 import { cxConstAsset } from './const.asset';
 
 describe('cxBuildAsset', () => {
-
   let peer1: CxPeerBuilder;
   let builder1: CxBuilder;
   let peer2: CxPeerBuilder;

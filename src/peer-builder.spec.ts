@@ -2,7 +2,6 @@ import { beforeEach, describe, expect, it } from '@jest/globals';
 import { CxPeerBuilder } from './peer-builder';
 
 describe('CxPeerBuilder', () => {
-
   let peer: CxPeerBuilder;
 
   beforeEach(() => {
@@ -14,5 +13,4 @@ describe('CxPeerBuilder', () => {
       expect(() => peer.context).toThrow(new TypeError('Peer context is not available'));
     });
   });
-
 });

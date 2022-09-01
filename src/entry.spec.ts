@@ -1,11 +1,16 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
-import { CxAsset, CxEntry, CxReferenceError, CxRequestMethod, CxValues } from '@proc7ts/context-values';
+import {
+  CxAsset,
+  CxEntry,
+  CxReferenceError,
+  CxRequestMethod,
+  CxValues,
+} from '@proc7ts/context-values';
 import { Supply } from '@proc7ts/supply';
 import { cxConstAsset } from './assets';
 import { CxBuilder } from './builder';
 
 describe('CxEntry', () => {
-
   let builder: CxBuilder;
   let context: CxValues;
 
@@ -25,7 +30,6 @@ describe('CxEntry', () => {
   describe('Definition', () => {
     describe('assign', () => {
       it('is ignored when absent', () => {
-
         const entry: CxEntry<string> = {
           perContext() {
             return {
@@ -44,7 +48,6 @@ describe('CxEntry', () => {
         expect(context.get(entry, { or: null })).toBeNull();
       });
       it('is requested for default value when `assignDefault()` not defined', () => {
-
         const entry: CxEntry<string> = {
           perContext() {
             return {
@@ -56,21 +59,16 @@ describe('CxEntry', () => {
           toString: () => '[CxEntry test]',
         };
 
-        expect(context.get(entry))
-            .toBe('provided');
-        expect(context.get(entry, { or: null }))
-            .toBe('provided');
-        expect(context.get(entry, { by: CxRequestMethod.Assets }))
-            .toBe('provided');
-        expect(context.get(entry, { or: null, by: CxRequestMethod.Assets }))
-            .toBe('provided');
-        expect(() => context.get(entry, { by: CxRequestMethod.Defaults }))
-            .toThrow(new CxReferenceError(entry, 'The [CxEntry test] has no default value'));
-        expect(context.get(entry, { or: null, by: CxRequestMethod.Defaults }))
-            .toBeNull();
+        expect(context.get(entry)).toBe('provided');
+        expect(context.get(entry, { or: null })).toBe('provided');
+        expect(context.get(entry, { by: CxRequestMethod.Assets })).toBe('provided');
+        expect(context.get(entry, { or: null, by: CxRequestMethod.Assets })).toBe('provided');
+        expect(() => context.get(entry, { by: CxRequestMethod.Defaults })).toThrow(
+          new CxReferenceError(entry, 'The [CxEntry test] has no default value'),
+        );
+        expect(context.get(entry, { or: null, by: CxRequestMethod.Defaults })).toBeNull();
       });
       it('may provide default value', () => {
-
         const entry: CxEntry<string> = {
           perContext() {
             return {
@@ -82,24 +80,19 @@ describe('CxEntry', () => {
           toString: () => '[CxEntry test]',
         };
 
-        expect(context.get(entry))
-            .toBe('default');
-        expect(context.get(entry, { or: null }))
-            .toBeNull();
-        expect(() => context.get(entry, { by: CxRequestMethod.Assets }))
-            .toThrow(new CxReferenceError(entry, 'No value provided for [CxEntry test]'));
-        expect(context.get(entry, { or: null, by: CxRequestMethod.Assets }))
-            .toBeNull();
-        expect(context.get(entry, { by: CxRequestMethod.Defaults }))
-            .toBe('default');
-        expect(context.get(entry, { or: null, by: CxRequestMethod.Defaults }))
-            .toBe('default');
+        expect(context.get(entry)).toBe('default');
+        expect(context.get(entry, { or: null })).toBeNull();
+        expect(() => context.get(entry, { by: CxRequestMethod.Assets })).toThrow(
+          new CxReferenceError(entry, 'No value provided for [CxEntry test]'),
+        );
+        expect(context.get(entry, { or: null, by: CxRequestMethod.Assets })).toBeNull();
+        expect(context.get(entry, { by: CxRequestMethod.Defaults })).toBe('default');
+        expect(context.get(entry, { or: null, by: CxRequestMethod.Defaults })).toBe('default');
       });
     });
 
     describe('assignDefault', () => {
       it('may explicitly provide value', () => {
-
         const entry: CxEntry<string> = {
           perContext() {
             return {
@@ -111,24 +104,19 @@ describe('CxEntry', () => {
           toString: () => '[CxEntry test]',
         };
 
-        expect(context.get(entry))
-            .toBe('provided');
-        expect(context.get(entry, { or: null }))
-            .toBeNull();
-        expect(context.get(entry, { by: CxRequestMethod.Assets }))
-            .toBe('provided');
-        expect(context.get(entry, { or: null, by: CxRequestMethod.Assets }))
-            .toBeNull();
-        expect(() => context.get(entry, { by: CxRequestMethod.Defaults }))
-            .toThrow(new CxReferenceError(entry, 'The [CxEntry test] has no default value'));
-        expect(context.get(entry, { or: null, by: CxRequestMethod.Defaults }))
-            .toBeNull();
+        expect(context.get(entry)).toBe('provided');
+        expect(context.get(entry, { or: null })).toBeNull();
+        expect(context.get(entry, { by: CxRequestMethod.Assets })).toBe('provided');
+        expect(context.get(entry, { or: null, by: CxRequestMethod.Assets })).toBeNull();
+        expect(() => context.get(entry, { by: CxRequestMethod.Defaults })).toThrow(
+          new CxReferenceError(entry, 'The [CxEntry test] has no default value'),
+        );
+        expect(context.get(entry, { or: null, by: CxRequestMethod.Defaults })).toBeNull();
       });
     });
 
     describe('when empty', () => {
       it('never provides values', () => {
-
         const entry: CxEntry<string> = {
           perContext() {
             return {};
@@ -138,9 +126,13 @@ describe('CxEntry', () => {
 
         expect(() => context.get(entry)).toThrow(new CxReferenceError(entry));
         expect(context.get(entry, { or: null })).toBeNull();
-        expect(() => context.get(entry, { by: CxRequestMethod.Assets })).toThrow(new CxReferenceError(entry));
+        expect(() => context.get(entry, { by: CxRequestMethod.Assets })).toThrow(
+          new CxReferenceError(entry),
+        );
         expect(context.get(entry, { or: null, by: CxRequestMethod.Assets })).toBeNull();
-        expect(() => context.get(entry, { by: CxRequestMethod.Defaults })).toThrow(new CxReferenceError(entry));
+        expect(() => context.get(entry, { by: CxRequestMethod.Defaults })).toThrow(
+          new CxReferenceError(entry),
+        );
         expect(context.get(entry, { or: null, by: CxRequestMethod.Defaults })).toBeNull();
       });
     });
@@ -148,12 +140,10 @@ describe('CxEntry', () => {
 
   describe('Target', () => {
     describe('eachAsset', () => {
-
       const entry: CxEntry<string> = {
         perContext(target) {
           return {
             assign(assigner) {
-
               let result = '';
 
               target.eachAsset(asset => {
@@ -201,12 +191,10 @@ describe('CxEntry', () => {
 
     describe('eachRecentAsset', () => {
       it('is aborted when supply cut off', () => {
-
         const entry: CxEntry<string> = {
           perContext(target) {
             return {
               assign(assigner) {
-
                 let result = '';
 
                 target.eachRecentAsset(asset => {
@@ -231,12 +219,10 @@ describe('CxEntry', () => {
         expect(context.get(entry)).toBe('');
       });
       it('is aborted when supply cut off by asset', () => {
-
         const entry: CxEntry<string, number> = {
           perContext(target) {
             return {
               assign(assigner) {
-
                 let result = '';
 
                 target.eachRecentAsset(asset => {
@@ -272,10 +258,8 @@ describe('CxEntry', () => {
 
     describe('trackAssets', () => {
       it('is aborted when tracking supply cut off', () => {
-
         const entry: CxEntry<string> = {
           perContext(target) {
-
             const list: CxAsset.Provided<string>[] = [];
             let value = '';
 

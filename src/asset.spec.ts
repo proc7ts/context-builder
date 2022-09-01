@@ -5,7 +5,6 @@ import { cxBuildAsset, cxConstAsset } from './assets';
 import { CxBuilder } from './builder';
 
 describe('CxAsset', () => {
-
   let builder: CxBuilder;
   let context: CxValues;
 
@@ -24,7 +23,6 @@ describe('CxAsset', () => {
 
   describe('setupAsset', () => {
     it('performs additional setup', () => {
-
       const entry = { perContext: cxSingle<string>() };
       const nestedEntry = { perContext: cxSingle<string>() };
       const nestedSupply = new Supply();
@@ -47,7 +45,6 @@ describe('CxAsset', () => {
       expect(nestedSupply.isOff).toBe(true);
     });
     it('performs only setup', () => {
-
       const entry = { perContext: cxSingle<string>() };
       const nestedSupply = new Supply();
       const supply = builder.provide({
@@ -68,7 +65,6 @@ describe('CxAsset', () => {
 
   describe('supply', () => {
     it('makes aspect ignored when cut off initially', () => {
-
       const entry = { perContext: cxSingle<string>() };
       const nestedEntry = { perContext: cxSingle<string>() };
       const nestedSupply = new Supply();
@@ -93,14 +89,11 @@ describe('CxAsset', () => {
   describe('Provided', () => {
     describe('recentAsset', () => {
       it('returns most recent value asset', () => {
-
         const entry: CxEntry<number[], number> = {
           perContext(target) {
-
             let value: number[] = [];
 
             target.trackAssetList(assets => {
-
               const newValue: number[] = [];
 
               for (const { recentAsset } of assets) {
@@ -136,14 +129,11 @@ describe('CxAsset', () => {
     });
     describe('eachRecentAsset', () => {
       it('iterates over assets in most-recent-first order', () => {
-
         const entry: CxEntry<number[], number> = {
           perContext(target) {
-
             let value: number[] = [];
 
             target.trackAssetList(assets => {
-
               const newValue: number[] = [];
 
               for (const provided of assets) {

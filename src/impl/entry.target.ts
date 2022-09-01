@@ -7,13 +7,12 @@ import { CxEntry$assetsByRank, CxEntry$recentAsset } from './entry.assets-by-ran
 import { CxEntry$Record } from './entry.record';
 
 export class CxEntry$Target<TValue, TAsset, TContext extends CxValues>
-    implements CxEntry.Target<TValue, TAsset, TContext> {
+  implements CxEntry.Target<TValue, TAsset, TContext> {
 
   constructor(
-      private readonly _record: CxEntry$Record<TValue, TAsset, TContext>,
-      readonly supply: Supply,
-  ) {
-  }
+    private readonly _record: CxEntry$Record<TValue, TAsset, TContext>,
+    readonly supply: Supply,
+  ) {}
 
   get entry(): CxEntry<TValue, TAsset> {
     return this._record.entry;
@@ -24,7 +23,6 @@ export class CxEntry$Target<TValue, TAsset, TContext extends CxValues>
   }
 
   get recentAsset(): TAsset | undefined {
-
     let mostRecent: TAsset | undefined;
 
     this.eachRecentAsset(asset => {
@@ -36,7 +34,10 @@ export class CxEntry$Target<TValue, TAsset, TContext extends CxValues>
     return mostRecent;
   }
 
-  get<TValue, TAsset = TValue>(entry: CxEntry<TValue, TAsset>, request?: CxRequest<TValue>): TValue | null {
+  get<TValue, TAsset = TValue>(
+    entry: CxEntry<TValue, TAsset>,
+    request?: CxRequest<TValue>,
+  ): TValue | null {
     return this.context.get(entry, request);
   }
 
@@ -56,19 +57,22 @@ export class CxEntry$Target<TValue, TAsset, TContext extends CxValues>
     return this._record.builder.trackAssets(this, this._record.cache, receiver, tracking);
   }
 
-  trackRecentAsset(receiver: CxAsset.RecentReceiver<TAsset>, { supply = new Supply() }: CxTracking = {}): Supply {
+  trackRecentAsset(
+    receiver: CxAsset.RecentReceiver<TAsset>,
+    { supply = new Supply() }: CxTracking = {},
+  ): Supply {
     return CxEntry$assetsByRank(this, supply).read.do(
-        mapAfter_(CxEntry$recentAsset),
-        deduplicateAfter_(),
+      mapAfter_(CxEntry$recentAsset),
+      deduplicateAfter_(),
     )(receiver);
   }
 
-  trackAssetList(receiver: CxAsset.ListReceiver<TAsset>, { supply = new Supply() }: CxTracking = {}): Supply {
+  trackAssetList(
+    receiver: CxAsset.ListReceiver<TAsset>,
+    { supply = new Supply() }: CxTracking = {},
+  ): Supply {
     return CxEntry$assetsByRank(this, supply).read.do(
-        mapAfter_(assetByRank => itsElements(flatMapIt(
-            reverseArray(assetByRank),
-            rankAssets => rankAssets.values(),
-        ))),
+      mapAfter_(assetByRank => itsElements(flatMapIt(reverseArray(assetByRank), rankAssets => rankAssets.values()))),
     )(receiver);
   }
 

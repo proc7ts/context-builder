@@ -6,7 +6,6 @@ import { cxBuildAsset } from './build.asset';
 import { cxConstAsset } from './const.asset';
 
 describe('cxAliasAsset', () => {
-
   let builder: CxBuilder;
   let context: CxValues;
 
@@ -29,7 +28,9 @@ describe('cxAliasAsset', () => {
     expect(context.get(alias)).toBe('aliased');
   });
   it('throws when nothing to alias', () => {
-    expect(() => context.get(alias)).toThrow(new CxReferenceError(alias, undefined, new CxReferenceError(origin)));
+    expect(() => context.get(alias)).toThrow(
+      new CxReferenceError(alias, undefined, new CxReferenceError(origin)),
+    );
 
     let error!: CxReferenceError;
 
@@ -40,7 +41,9 @@ describe('cxAliasAsset', () => {
     }
 
     expect(error.entry).toBe(alias);
-    expect(error.message).toBe(new CxReferenceError(alias, undefined, new CxReferenceError(origin)).message);
+    expect(error.message).toBe(
+      new CxReferenceError(alias, undefined, new CxReferenceError(origin)).message,
+    );
 
     const reason = error.reason as CxReferenceError;
 
@@ -54,11 +57,13 @@ describe('cxAliasAsset', () => {
     expect(context.get(alias)).toBe('default');
   });
   it('throws if aliased entry does', () => {
-
     const error = new Error('Test');
 
-    builder.provide(cxBuildAsset(origin, () => { throw error; }));
+    builder.provide(
+      cxBuildAsset(origin, () => {
+        throw error;
+      }),
+    );
     expect(() => context.get(alias)).toThrow(error);
   });
-
 });

@@ -7,7 +7,6 @@ import { CxBuilder } from '../builder';
 import { cxTrackAsset } from './track.asset';
 
 describe('cxTrackAsset', () => {
-
   let builder: CxBuilder;
 
   beforeEach(() => {
@@ -15,7 +14,6 @@ describe('cxTrackAsset', () => {
   });
 
   describe('for `cxDynamic()` entry', () => {
-
     let entry: CxEntry<readonly number[], number>;
 
     beforeEach(() => {
@@ -26,7 +24,6 @@ describe('cxTrackAsset', () => {
     });
 
     it('supplies multiple assets', () => {
-
       const assets = new EventEmitter<number[]>();
 
       builder.provide(cxTrackAsset(entry, track(assets)));
@@ -41,7 +38,6 @@ describe('cxTrackAsset', () => {
   });
 
   describe('for `cxRecent()` entry', () => {
-
     let entry: CxEntry<number, number>;
 
     beforeEach(() => {
@@ -52,7 +48,6 @@ describe('cxTrackAsset', () => {
     });
 
     it('supplies most recent asset', () => {
-
       const assets = new EventEmitter<number[]>();
 
       builder.provide(cxTrackAsset(entry, track(assets)));
@@ -68,7 +63,6 @@ describe('cxTrackAsset', () => {
 
   describe('for custom entry', () => {
     it('supplies only requested assets', () => {
-
       const entry: CxEntry<number> = {
         perContext(target) {
           return {
@@ -100,13 +94,16 @@ describe('cxTrackAsset', () => {
     });
   });
 
-  function track<TValue, TAsset = TValue>(onAssets: EventSupplier<TAsset[]>): (
-      target: CxEntry.Target<TValue, TAsset>,
-      receiver: (...assets: TAsset[]) => void,
-      supply: Supply) => void {
+  function track<TValue, TAsset = TValue>(
+    onAssets: EventSupplier<TAsset[]>,
+  ): (
+    target: CxEntry.Target<TValue, TAsset>,
+    receiver: (...assets: TAsset[]) => void,
+    supply: Supply,
+  ) => void {
     return (_target, receiver, supply) => onSupplied(onAssets)({
-      receive: (_, ...assets) => receiver(...assets),
-      supply,
-    });
+        receive: (_, ...assets) => receiver(...assets),
+        supply,
+      });
   }
 });

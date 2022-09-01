@@ -5,13 +5,11 @@ import { CxBuilder } from '../builder';
 
 describe('CxGlobals', () => {
   it('has no default value', () => {
-
     const cxBuilder = new CxBuilder(get => ({ get }));
 
     expect(() => cxBuilder.get(CxGlobals)).toThrow(new CxReferenceError(CxGlobals));
   });
   it('can be provided', () => {
-
     const cxBuilder = new CxBuilder(get => ({ get }));
 
     cxBuilder.provide(cxConstAsset(CxGlobals, cxBuilder.context));
