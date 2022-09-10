@@ -33,10 +33,13 @@ export default {
     ],
   ],
   testEnvironment: 'node',
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.spec.json',
-      useESM: true,
-    },
+  transform: {
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        tsconfig: 'tsconfig.spec.json',
+        useESM: true,
+      },
+    ],
   },
 };
