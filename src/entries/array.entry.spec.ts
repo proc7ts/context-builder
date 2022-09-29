@@ -44,7 +44,10 @@ describe('cxArray', () => {
 
     expect(context.get(entryWithDefaults)).toEqual(defaultValue);
     expect(byDefault).toHaveBeenCalledWith(
-      expect.objectContaining({ context, entry: entryWithDefaults }),
+      expect.objectContaining({ context, entry: entryWithDefaults }) as unknown as CxEntry.Target<
+        readonly string[],
+        string
+      >,
     );
   });
   it('provides multiple values', () => {

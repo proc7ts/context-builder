@@ -85,7 +85,10 @@ describe('cxSingle', () => {
 
     expect(context.get(entryWithDefaults)).toBe(defaultValue);
     expect(byDefault).toHaveBeenCalledWith(
-      expect.objectContaining({ entry: entryWithDefaults, context }),
+      expect.objectContaining({
+        entry: entryWithDefaults,
+        context,
+      }) as unknown as CxEntry.Target<string>,
     );
   });
   it('provides default value if there is no provider', () => {
