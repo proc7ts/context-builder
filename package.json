@@ -21,6 +21,7 @@
     "types": "./dist/context-builder.d.ts",
     "default": "./dist/context-builder.js"
   },
+  "sideEffects": false,
   "peerDependencies": {
     "@proc7ts/context-values": "^7.0.1"
   },
